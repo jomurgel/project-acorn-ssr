@@ -44,7 +44,6 @@ $ npm run build
 ```
 
 ## Roadmap
-- [ ] Add Open Graph support inspiration — from [https://github.com/daliborgogic/vue-meta](daliborgogic).
 - [ ] Get up to 100/100 Lighthouse score.
 - [ ] Component-level caching for larger pages (posts).
 - [ ] Apple Icon Support
