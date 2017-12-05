@@ -13,6 +13,9 @@ With javascript applications there are some SEO, caching and extendability conce
 - Vue + vue-router + vuex + axios working together
 - WordPress REST API in action with post, pages, and menu endpoints.
 - Compiling SASS/SCSS inside individual templates and also inside the `assets/styles` folder for a global stylesheet(s) if desired.
+- Updated `.eslintrc.js` to keep things looking super clean.
+- SSR Favicon via [https://www.npmjs.com/package/serve-favicon](serve-favicon), set in `siteconfig.js`.
+- Open Graph and Twitter card support globally and per template component.
 
 ## SSR
 - Client-side state w/ DOM hydration.
@@ -20,8 +23,8 @@ With javascript applications there are some SEO, caching and extendability conce
 - Server Side Rendering (of course).
 - Server-side data pre-fetching (limited).
 
-## Other
-- Updated `.eslintrc.js` to keep things looking super clean.
+## Configure
+Configure site default title, base url and development port in the `siteconfig.js` inside the root folder.
 
 ## Development
 - Install: `npm install` or `yarn install` to install dependencies.
@@ -39,6 +42,13 @@ $ npm run start
 # Production Build
 $ npm run build
 ```
+
+## Roadmap
+- [ ] Add Open Graph support inspiration — from [https://github.com/daliborgogic/vue-meta](daliborgogic).
+- [ ] Get up to 100/100 Lighthouse score.
+- [ ] Component-level caching for larger pages (posts).
+- [ ] Apple Icon Support
+- [ ] `manifest.json` Support.
 
 ## Reference resources
 - [liamwang/vue-ssr-starter](https://github.com/liamwang/vue-ssr-starter)
