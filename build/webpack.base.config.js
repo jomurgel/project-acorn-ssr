@@ -53,9 +53,9 @@ const config = {
         use: isProd
           ? ExtractTextPlugin.extract({
             use: [{
-              loader: 'sass-loader'
-            }, {
               loader: 'css-loader?minimize'
+            }, {
+              loader: 'sass-loader'
             }],
             fallback: 'vue-style-loader'
           })
