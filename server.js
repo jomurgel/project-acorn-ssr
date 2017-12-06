@@ -7,7 +7,7 @@ const compression              = require( 'compression' )
 const { createBundleRenderer } = require( 'vue-server-renderer' )
 
 // Get siteconfig.js object.
-const { PORT: defaultPort, TITLE: defaultTitle, DESCRIPTION: defaultDescription, CARD_IMAGE: defaultCardImage, ICON: siteIcon } = require( './siteconfig' )
+const { PORT: defaultPort, TITLE: defaultTitle, DESCRIPTION: defaultDescription, CARD_IMAGE: defaultCardImage, ICON: siteIcon, SITE_URL: siteUrl } = require( './siteconfig' )
 
 const isProd        = process.env.NODE_ENV === 'production'
 const resolve       = file => path.resolve( __dirname, file )
@@ -136,7 +136,7 @@ function render( req, res ) {
     },
     url: req.url,
     card: defaultCardImage,
-    fullUrl: 'https://' + req.get('host') + req.originalUrl
+    fullUrl: siteUrl + req.originalUrl
   }
   renderer.renderToString( context, ( err, html ) => {
 
