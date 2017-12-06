@@ -129,6 +129,8 @@ function render( req, res ) {
     }
   }
 
+  const siteUrl = isProd ? siteUrl : req.protocol + '://' + req.get( 'host' )
+
   const context = {
     meta: {
       title: defaultTitle, // default title
