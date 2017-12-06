@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>{{ meta.title }}</title>
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+	<meta name="description" content="{{ meta.description }}" />
+	<meta property="og:title" content="{{ meta.title }}">
+	<meta property="og:description" content="{{ meta.description }}">
+	<meta property="og:image" content="{{ meta.card }}">
+	<meta property="og:url" content="{{ fullUrl }}">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<meta name="theme-color" content="#ee2d6d">
+</head>
+
+<body>
+<!--vue-ssr-outlet-->
+</body>
+
+</html>
