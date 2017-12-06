@@ -1,0 +1,23 @@
+//--------------------------------------------------------------
+// Variables
+//--------------------------------------------------------------
+
+//-----------------------------------------
+// Colors
+//-----------------------------------------
+$primary:   #ee2d6d;
+$secondary: #73cfe6;
+$pink:      #e221ff;
+$black:     #222222;
+$white:     #fefefe;
+$gray:      #373b3f;
+
+// Alternates
+$transparent-gray: #efefef;
+
+//-----------------------------------------
+// Gradients
+//-----------------------------------------
+$primary-gradient: linear-gradient(135deg, $primary 0%, $pink 100%);
+$secondary-gradient: linear-gradient(135deg, $white 0%, $transparent-gray 100%);
+

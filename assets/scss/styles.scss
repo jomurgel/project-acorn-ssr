@@ -1,0 +1,37 @@
+//--------------------------------------------------------------
+// Global Style Import (outside of component styles)
+//--------------------------------------------------------------
+
+// Import Sanatize Reset: https://jonathantneal.github.io/sanitize.css/
+@import 'node_modules/sanitize.scss/sanitize';
+
+// Import Skeleton Framework: https://www.npmjs.com/package/skeleton-scss/
+@import 'node_modules/skeleton-scss/scss/skeleton';
+
+// Mixins and Variables
+@import 'functions/index';
+
+//-----------------------------------------
+// Global View
+//-----------------------------------------
+.view {
+	margin-top: 50px;
+}
+
+//-----------------------------------------
+// Links
+//-----------------------------------------
+a {
+	color: $primary;
+	transition: color 0.3s ease-in-out;
+
+	.splash-page & {
+		color: $white;
+	}
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $black;
+	}
+}
