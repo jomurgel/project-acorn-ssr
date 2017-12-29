@@ -8,7 +8,8 @@ Vue.use( Vuex )
 
 const state = {
   posts: [],
-  menus: []
+  menus: [],
+  pages: []
 }
 
 const getters = generateGetters( Object.keys( state ) )

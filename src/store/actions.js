@@ -14,6 +14,15 @@ export default {
       console.log( error )
     })
   },
+  getPages: ({ commit, state }) => {
+    return http.get( modifier.pages ).then( ( response ) => {
+      if ( response.statusText === 'OK' ) {
+        commit( 'setPages', response.data )
+      }
+    }).catch( ( error ) => {
+      console.log( error )
+    })
+  },
   getMenus: ({ commit, state }) => {
     return http.get( modifier.menus ).then( ( response ) => {
       if ( response.statusText === 'OK' ) {
