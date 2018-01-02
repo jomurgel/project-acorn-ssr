@@ -7,7 +7,7 @@ http.defaults.baseURL = BASE_URL
 export default {
   getPosts: ({ commit, state }) => {
     return http.get( modifier.posts ).then( ( response ) => {
-      if ( response.statusText === 'OK' ) {
+      if ( response.data.length !== 0 ) {
         commit( 'setPosts', response.data )
       }
     }).catch( ( error ) => {
@@ -16,7 +16,7 @@ export default {
   },
   getPages: ({ commit, state }) => {
     return http.get( modifier.pages ).then( ( response ) => {
-      if ( response.statusText === 'OK' ) {
+      if ( response.data.length !== 0 ) {
         commit( 'setPages', response.data )
       }
     }).catch( ( error ) => {
@@ -25,7 +25,7 @@ export default {
   },
   getMenus: ({ commit, state }) => {
     return http.get( modifier.menus ).then( ( response ) => {
-      if ( response.statusText === 'OK' ) {
+      if ( response.data.length !== 0 ) {
         commit( 'setMenus', response.data )
       }
     }).catch( ( error ) => {
