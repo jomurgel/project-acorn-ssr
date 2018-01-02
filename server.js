@@ -135,9 +135,9 @@ function render( req, res ) {
     meta: {
       title: defaultTitle, // default title
       description: defaultDescription,
+      card: defaultCardImage
     },
     url: req.url,
-    card: defaultCardImage,
     fullUrl: siteUrl + req.originalUrl
   }
   renderer.renderToString( context, ( err, html ) => {

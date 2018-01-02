@@ -15,7 +15,6 @@
 import { returnQueriedMenu } from '@src/utilities/helpers'
 
 export default {
-  title: 'Navigation',
   props: ['location'],
   data() {
     return {

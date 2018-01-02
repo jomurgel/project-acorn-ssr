@@ -3,7 +3,7 @@ module.exports = {
   TITLE: 'Project Acorn | Vue + Wordpress',
   DESCRIPTION: 'Default Site Description',
   CARD_IMAGE: 'http://placehold.it/1280x768/ee2d6d/fff?text=PROJECT%20ACORN',
-  SITE_URL: 'https://node.jomurgel.com',
+  SITE_URL: 'http://localhost:8080',
   BASE_URL: 'https://vue-app.jomurgel.com/server/wp-json/',
   ICON: 'acorn.png', // roots to ./public/ folder
   AUTHOR: 'jomurgel',
