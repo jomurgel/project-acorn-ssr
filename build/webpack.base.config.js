@@ -4,11 +4,11 @@ const vueConfig            = require( './vue-loader.config' )
 const ExtractTextPlugin    = require( 'extract-text-webpack-plugin' )
 const FriendlyErrorsPlugin = require( 'friendly-errors-webpack-plugin' )
 
-const isProd = process.env.NODE_ENV === 'production'
-const resolve = dir => path.join( __dirname, '..', dir )
+const isProduction         = process.env.NODE_ENV === 'production'
+const resolve              = dir => path.join( __dirname, '..', dir )
 
 const config = {
-  devtool: isProd ? false : '#cheap-module-source-map',
+  devtool: isProduction ? false : '#cheap-module-source-map',
   entry: {
     styles: './assets/scss/styles.scss'
   },
@@ -50,7 +50,7 @@ const config = {
       },
       {
         test: /\.(scss|css)$/,
-        use: isProd
+        use: isProduction
           ? ExtractTextPlugin.extract({
             use: [{
               loader: 'css-loader?minimize'
@@ -86,9 +86,9 @@ const config = {
   },
   performance: {
     maxEntrypointSize: 300000,
-    hints: isProd ? 'warning' : false
+    hints: isProduction ? 'warning' : false
   },
-  plugins: isProd
+  plugins: isProduction
     ? [
       new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false }
