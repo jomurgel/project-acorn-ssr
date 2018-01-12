@@ -54,7 +54,7 @@ $ npm run build
 - [ ] Apple Icon Support
 - [ ] `manifest.json` Support.
 
-## Reference resources
+## Referenced
 - [liamwang/vue-ssr-starter](https://github.com/liamwang/vue-ssr-starter)
 - [Nuxt.js](https://nuxtjs.org/)
 - [vuejs/vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0)
