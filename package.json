@@ -1,5 +1,5 @@
 {
-  "name": "vue-ssr-starter",
+  "name": "project-acorn-ssr",
   "version": "1.0.0",
   "description": "A Vue.js SPA built around the WordPress REST API with Vuex, Vue Router, Axios and SSR.",
   "author": "jomurgel <dev@jomurgel.com>",
@@ -50,6 +50,7 @@
     "skeleton-scss": "^2.0.4",
     "start": "^5.1.0",
     "style-loader": "^0.19.1",
+    "sw-precache-webpack-plugin": "^0.11.4",
     "vue": "^2.5.13",
     "vue-analytics": "^5.8.0",
     "vue-router": "^2.6.0",
