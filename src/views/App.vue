@@ -24,8 +24,10 @@ export default {
 </script>
 
 <style lang="scss" global>
+
 // Import global styles.
 @import './assets/scss/styles.scss';
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease-in-out;
