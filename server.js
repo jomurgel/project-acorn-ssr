@@ -9,7 +9,7 @@ const { createBundleRenderer } = require( 'vue-server-renderer' )
 // Get siteconfig.js object.
 const { PORT: defaultPort, TITLE: defaultTitle, DESCRIPTION: defaultDescription, CARD_IMAGE: defaultCardImage, ICON: siteIcon, SITE_URL: siteUrl } = require( './siteconfig' )
 
-const isProd        = process.env.NODE_ENV === 'production'
+const isProduction  = process.env.NODE_ENV === 'production'
 const resolve       = file => path.resolve( __dirname, file )
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
 
