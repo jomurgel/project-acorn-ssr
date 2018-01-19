@@ -9,6 +9,8 @@ spriteEl.style.display = 'none'
 spriteEl.innerHTML = sprite
 document.body.appendChild( spriteEl )
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 // global progress bar
 const bar = Vue.prototype.$bar = new Vue( ProgressBar ).$mount()
 document.body.appendChild( bar.$el )
@@ -48,7 +50,9 @@ router.onReady( () => {
 
     const matched = router.getMatchedComponents( to )
     const prevMatched = router.getMatchedComponents( from )
+
     let diffed = false
+
     const activated = matched.filter( ( c, i ) => {
       return diffed || ( diffed = ( prevMatched[i] !== c ) )
     })
@@ -73,3 +77,18 @@ router.onReady( () => {
   // actually mount to DOM
   app.$mount( '#app' )
 })
+
+// service worker
+if ( isProduction && 'serviceWorker' in navigator ) {
+  navigator.serviceWorker.register( '/service-worker.js' )
+} else {
+  navigator.serviceWorker.getRegistrations()
+    .then( function( registrations ) {
+
+      console.log( 'Unregistering service workers for development' )
+
+      for ( let registration of registrations ) {
+        registration.unregister()
+      }
+    })
+}
