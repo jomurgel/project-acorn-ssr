@@ -1,24 +1,38 @@
 <template>
-  <ul v-if="setMenu">
+  <ul>
     <li>
       <router-link :to="{ path: '/' }"><icon name="acorn" /></router-link>
     </li>
+    <template v-if="setMenu">
     <li v-for="item of setMenu.items" :key="item.object_slug">
-      <router-link :to="{ path: '/' + item.title.toLowerCase() }">
+      <router-link :to="{ path: '/' + item.object_slug }">
           {{ item.title }}
       </router-link>
     </li>
+    <li>
+      <router-link :to="{ path: '/dfdsa' }">404</router-link>
+    </li>
+    </template>
+    <template v-else>
+      <li>
+        <a :href="addMenu" target="_blank">
+          Add a {{ this.$props.location }} menu
+        </a>
+      </li>
+    </template>
   </ul>
 </template>
 
 <script>
 import { returnQueriedMenu } from '@src/utilities/helpers'
+import { BASE_URL } from '@root/webconfig.js'
 
 export default {
   props: ['location'],
   data() {
     return {
-      'menu': this.$store.state.menus
+      'menu': this.$store.state.menus,
+      'addMenu': BASE_URL + '/wp-admin/nav-menus.php'
     }
   },
   computed: {
