@@ -19,7 +19,7 @@ With javascript applications there are some SEO, caching and extendability conce
 - WordPress REST API in action with post, pages, and menu endpoints.
 - Compiling SASS/SCSS inside individual templates and also inside the `assets/styles` folder for a global stylesheet(s) if desired.
 - Updated `.eslintrc.js` to keep things looking super clean.
-- SSR Favicon via [https://www.npmjs.com/package/serve-favicon](serve-favicon), set in `siteconfig.js`.
+- SSR Favicon via [https://www.npmjs.com/package/serve-favicon](serve-favicon), set in `webconfig.js`.
 - Open Graph and Twitter card support globally and per template component.
 
 ## SSR
@@ -29,7 +29,7 @@ With javascript applications there are some SEO, caching and extendability conce
 - Server-side data pre-fetching (limited).
 
 ## Configure
-Configure site default title, base url and development port in the `siteconfig.js` inside the root folder.
+Configure site default title, base url and development port in the `webconfig.js` inside the root folder.
 
 ## Development
 - Install: `npm install` or `yarn install` to install dependencies.
@@ -60,4 +60,4 @@ $ npm run build
 - [vuejs/vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0)
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
+[MIT](https://opensource.org/licenses/MIT)
