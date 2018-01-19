@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <div class="container">
+    <noscript>Javascript is not enabled. Please enable javascript in order to view this website.</noscript>
+    <div class="container" v-show="loaded">
       <themeHeader />
       <transition name="fade" mode="out-in">
         <router-view class="view" />
