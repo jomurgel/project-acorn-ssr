@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import App from './views/App'
-import Global from './views/global'
+import Common from './views/common'
 import createStore from './store'
 import createRouter from './router'
 import { sync } from 'vuex-router-sync'
 import metaMixin from './utilities/metaMixin'
 import * as filters from './utilities/filters'
 
-// mixin for handling title
+Vue.config.productionTip = false
+
+// mixin for handling head meta
 Vue.mixin( metaMixin )
 
 // common components
-Vue.use( Global )
+Vue.use( Common )
 
 // register global utility filters.
 Object.keys( filters ).forEach( key => {
@@ -20,7 +22,6 @@ Object.keys( filters ).forEach( key => {
 
 // Expose a factory function that creates a fresh set of store, router,
 // app instances on each call (which is called for each SSR request)
-export function createApp() {
 export function createApp( ssrContext ) {
 
   // create store and router instances
