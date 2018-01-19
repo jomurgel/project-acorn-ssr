@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { TITLE, AUTHOR, AUTHOR_URL } from '@root/siteconfig'
+import { TITLE, AUTHOR, AUTHOR_URL } from '@root/webconfig'
 
 export default {
   data() {
@@ -31,6 +31,6 @@ export default {
 .site-footer {
   border-top: 1px solid #efefef;
   margin-top: 50px;
-  padding-top: 25px;
+  padding: 25px 0;
 }
 </style>
