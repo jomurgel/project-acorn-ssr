@@ -2,6 +2,7 @@ const webpack            = require( 'webpack' )
 const merge              = require( 'webpack-merge' )
 const base               = require( './webpack.base.config' )
 const VueSSRClientPlugin = require( 'vue-server-renderer/client-plugin' )
+const SWPrecachePlugin   = require( 'sw-precache-webpack-plugin' )
 
 const config = merge( base, {
   entry: {
@@ -28,6 +29,28 @@ const config = merge( base, {
         )
       }
     }),
+
+    // auto generate service worker
+		new SWPrecachePlugin({
+			cacheId: "project-acorn-ssr",
+			filename: "service-worker.js",
+			minify: true,
+
+			staticFileGlobs: [
+				"dist/**.css",
+				"dist/**.js",
+				"dist/img/**/*"
+			],
+
+			runtimeCaching: [{
+				urlPattern: /\/.*/,
+				handler: "networkFirst"
+			}],
+
+			dontCacheBustUrlsMatching: /./,
+      navigateFallback: "/",
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+		}),
 
     /**
      * Extract webpack runtime & manifest to avoid vendor chunk hash changing on every build.
