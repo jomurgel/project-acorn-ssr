@@ -1,6 +1,6 @@
 <template>
   <svg :class="'icon icon-' + name" :width="width" :height="height">
-    <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#i-' + name"></use>
+    <use xmlns:xlink="https://www.w3.org/1999/xlink" :xlink:href="'#i-' + name"></use>
   </svg>
 </template>
 
