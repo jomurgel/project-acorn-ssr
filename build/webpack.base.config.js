@@ -9,9 +9,6 @@ const resolve              = dir => path.join( __dirname, '..', dir )
 
 const config = {
   devtool: isProduction ? false : '#cheap-module-source-map',
-  entry: {
-    styles: './assets/scss/styles.scss'
-  },
   output: {
     path: resolve( 'dist' ),
     publicPath: '/dist/',
@@ -19,12 +16,13 @@ const config = {
   },
   resolve: {
     modules: [resolve( 'src' ), 'node_modules'],
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json', '.scss'],
     alias: {
       '@src': resolve( 'src' ),
       '@public': resolve( 'public' ),
       '@assets': resolve( 'assets' ),
-      '@root': path.resolve( __dirname, '..' )
+      '@root': path.resolve( __dirname, '..' ),
+      styles: resolve( './assets/scss/styles.scss' )
     }
   },
   module: {
@@ -54,12 +52,12 @@ const config = {
           ? ExtractTextPlugin.extract({
             use: [{
               loader: 'css-loader?minimize'
-            }, {
+            },{
               loader: 'sass-loader'
             }],
             fallback: 'vue-style-loader'
           })
-          : ['vue-style-loader', 'css-loader', 'sass-loader']
+          : ['vue-style-loader', 'sass-loader', 'css-loader']
       },
       {
         test: /sprite\.svg$/,
