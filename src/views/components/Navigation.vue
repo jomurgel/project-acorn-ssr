@@ -5,9 +5,7 @@
     </li>
     <template v-if="setMenu">
     <li v-for="item of setMenu.items" :key="item.object_slug">
-      <router-link :to="{ path: '/' + item.object_slug }">
-          {{ item.title }}
-      </router-link>
+      <router-link :to="{ path: '/' + item.object_slug }">{{ item.title }}</router-link>
     </li>
     <li>
       <router-link :to="{ path: '/dfdsa' }">404</router-link>
@@ -63,10 +61,6 @@ ul {
 
     &:last-child {
       margin-right: 0;
-    }
-
-    a {
-      text-decoration: none;
     }
   }
 }
