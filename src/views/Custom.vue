@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { TITLE } from '@root/siteconfig'
+import { TITLE } from '@root/webconfig'
 
 export default {
   data() {
@@ -15,9 +15,9 @@ export default {
   },
   meta() {
     const meta = {
-      title: TITLE,
-      description: 'Description for home',
-      card: 'http://placehold.it/1280x768/f60/fff?text=HOME'
+      title: 'Home',
+      description: 'Description for Home',
+      card: 'https://placehold.it/1280x768/f60/fff?text=HOME'
     }
     return meta
   }
