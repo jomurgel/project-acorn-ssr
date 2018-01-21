@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div class="container">
     <noscript>Javascript is not enabled. Please enable javascript in order to view this website.</noscript>
     <div class="container" v-show="loaded">
       <themeHeader />
@@ -13,12 +12,27 @@
 </template>
 
 <script>
-import themeHeader from './components/Header'
-import themeFooter from './components/Footer'
+import themeHeader from '@src/views/components/Header'
+import themeFooter from '@src/views/components/Footer'
+
 export default {
+  data() {
+    return {
+      loaded: false
+    }
+  },
   components: {
     themeHeader,
     themeFooter
+  },
+  methods: {
+    isLoaded: function() {
+      this.loaded = true
+      return this.loaded
+    }
+  },
+  beforeMount() {
+    this.isLoaded()
   }
 }
 </script>
@@ -26,7 +40,7 @@ export default {
 <style lang="scss" global>
 
 // Import global styles.
-@import './assets/scss/styles.scss';
+@import '~styles';
 
 .fade-enter-active,
 .fade-leave-active {
