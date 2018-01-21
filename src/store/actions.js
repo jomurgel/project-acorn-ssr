@@ -1,31 +1,56 @@
-import http from 'axios'
-import { BASE_URL } from '@root/siteconfig'
+import { HTTP } from '../utilities/baseurl'
 import { modifier } from '../utilities/helpers'
 
-http.defaults.baseURL = BASE_URL
-
 export default {
-  getPosts: ({ commit, state }) => {
-    return http.get( modifier.posts ).then( ( response ) => {
-      if ( response.data.length !== 0 ) {
-        commit( 'setPosts', response.data )
+  getPages: ({ commit, state }) => {
+    return HTTP.get( modifier.pages ).then( ( response ) => {
+      if ( response.status === 200 && response.data.length > 0 ) {
+        const array = []
+        response.data.map( ( item ) => {
+          const filtered = {
+            id: item.id,
+            title: item.title.rendered,
+            excerpt: item.excerpt.rendered,
+            slug: item.slug,
+            content: item.content.rendered,
+            featured_image: item.featured_image
+          }
+          return array.push( filtered )
+        })
+        commit( 'setPages', array )
+      } else {
+        // console.log( response )
       }
     }).catch( ( error ) => {
       console.log( error )
     })
   },
-  getPages: ({ commit, state }) => {
-    return http.get( modifier.pages ).then( ( response ) => {
-      if ( response.data.length !== 0 ) {
-        commit( 'setPages', response.data )
+  getPosts: ({ commit, state }) => {
+    return HTTP.get( modifier.posts ).then( ( response ) => {
+      if ( response.status === 200 && response.data.length > 0 ) {
+        const array = []
+        response.data.map( ( item ) => {
+          const filtered = {
+            id: item.id,
+            title: item.title.rendered,
+            excerpt: item.excerpt.rendered,
+            slug: item.slug,
+            content: item.content.rendered,
+            featured_image: item.featured_image
+          }
+          return array.push( filtered )
+        })
+        commit( 'setPosts', array )
+      } else {
+        // console.log( response )
       }
     }).catch( ( error ) => {
       console.log( error )
     })
   },
   getMenus: ({ commit, state }) => {
-    return http.get( modifier.menus ).then( ( response ) => {
-      if ( response.data.length !== 0 ) {
+    return HTTP.get( modifier.menus ).then( ( response ) => {
+      if ( response.status === 200 ) {
         commit( 'setMenus', response.data )
       }
     }).catch( ( error ) => {
