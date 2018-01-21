@@ -1,6 +1,23 @@
 import { CARD_IMAGE } from '@root/webconfig'
 
-// Get the menu associated with a slug.
+/**
+ * Set api locations for posts, menus, and pages.
+ *
+ * @export variable modifier
+ */
+export const modifier = {
+  posts: 'wp/v2/posts',
+  menus: 'wp-api-menus/v2/menus',
+  pages: 'wp/v2/pages'
+}
+
+/**
+ * Get the menu associated with a slug.
+ *
+ * @export function
+ * @param  {array} array array of menus.
+ * @param  {string} slug specific menu to search.
+ */
 export function returnQueriedMenu( array, slug ) {
 
   // Setup vars
@@ -14,26 +31,41 @@ export function returnQueriedMenu( array, slug ) {
   return newMenu[0]
 }
 
-export const modifier = {
-  posts: 'wp/v2/posts',
-  menus: 'wp-api-menus/v2/menus',
-  pages: 'wp/v2/pages'
-}
-
+/**
+ * Return title for Single posts/pages.
+ *
+ * @export  function
+ * @param   {object} data post object.
+ * @returns {string} title or empty string.
+ */
 export function setTitle( data ) {
 
-  // Assuming we have data, return WordPress title, else 404.
+  // Assuming we have data, return WordPress title.
   // Helpful for error handling components.
   return data ? data.title : ''
 }
 
+/**
+ * Return description for Single post/pages.
+ *
+ * @export  function
+ * @param   {object} data post object.
+ * @returns {string} description or empty string.
+ */
 export function setDescription( data ) {
 
-  // Assuming we have data, return WordPress title, else 404.
+  // Assuming we have data, return WordPress title.
   // Helpful for error handling components.
   return data ? data.excerpt.replace( /<(?:.|\n)*?>/gm, '' ).split( /\s+/ ).slice( 0, 15 ).join( ' ' ) + '...' : ''
 }
 
+/**
+ * Return featured image for Single post/pages.
+ *
+ * @export  function
+ * @param   {object} data post object.
+ * @returns {string} featured image url or default config image url.
+ */
 export function setFeaturedImage( data ) {
 
   // Get root to make sure we have a featured image.
@@ -45,6 +77,14 @@ export function setFeaturedImage( data ) {
   return source
 }
 
+/**
+ * Return single post object.
+ *
+ * @export  function
+ * @param   {array} posts array of posts or pages.
+ * @param   {string} data post object.
+ * @returns {string} description or empty string.
+ */
 export function setSinglePost( slug, posts ) {
 
   const post = posts.filter( function( e ) {
