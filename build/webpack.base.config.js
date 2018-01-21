@@ -9,6 +9,9 @@ const resolve              = dir => path.join( __dirname, '..', dir )
 
 const config = {
   devtool: isProduction ? false : '#cheap-module-source-map',
+	entry: {
+		app: "./src/entry-client.js"
+	},
   output: {
     path: resolve( 'dist' ),
     publicPath: '/dist/',
@@ -22,7 +25,9 @@ const config = {
       '@public': resolve( 'public' ),
       '@assets': resolve( 'assets' ),
       '@root': path.resolve( __dirname, '..' ),
-      styles: resolve( './assets/scss/styles.scss' )
+			'@views': path.resolve( __dirname, '../src/views' ),
+      'styles': path.resolve( __dirname, '../assets/scss/styles.scss' ),
+      'functions': path.resolve( __dirname, '../assets/scss/functions/index.scss' )
     }
   },
   module: {
@@ -50,11 +55,7 @@ const config = {
         test: /\.(scss|css)$/,
         use: isProduction
           ? ExtractTextPlugin.extract({
-            use: [{
-              loader: 'css-loader?minimize'
-            },{
-              loader: 'sass-loader'
-            }],
+            use: ['css-loader?minimize', 'sass-loader'],
             fallback: 'vue-style-loader'
           })
           : ['vue-style-loader', 'sass-loader', 'css-loader']
@@ -64,7 +65,7 @@ const config = {
         loader: 'raw-loader'
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         exclude: /sprite\.svg$/,
         loader: 'url-loader',
         options: {
