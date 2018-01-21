@@ -24,14 +24,14 @@ export function setTitle( data ) {
 
   // Assuming we have data, return WordPress title, else 404.
   // Helpful for error handling components.
-  return data ? data.title : 'Oops! a 404'
+  return data ? data.title : ''
 }
 
 export function setDescription( data ) {
 
   // Assuming we have data, return WordPress title, else 404.
   // Helpful for error handling components.
-  return data ? data.excerpt.replace( /<(?:.|\n)*?>/gm, '' ).split( /\s+/ ).slice( 0, 15 ).join( ' ' ) + '...' : 'Looks like something\'s gone wrong.'
+  return data ? data.excerpt.replace( /<(?:.|\n)*?>/gm, '' ).split( /\s+/ ).slice( 0, 15 ).join( ' ' ) + '...' : ''
 }
 
 export function setFeaturedImage( data ) {
