@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './views/App'
+import App from '_App'
 import Common from './views/common'
 import createStore from './store'
 import createRouter from './router'
