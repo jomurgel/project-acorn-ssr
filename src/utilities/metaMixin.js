@@ -22,11 +22,11 @@ const serverMetaMixin = {
     if ( meta ) {
 
       this.$ssrContext.meta = {
-        title: `${meta.title} - ${TITLE}`,
-        description: meta.description,
-        card: meta.card
+        title: meta.title ? `${meta.title} - ${TITLE}` : TITLE,
+        description: meta.description ? `${meta.description}` : DESCRIPTION,
+        card: meta.card ? `${meta.card}` : CARD_IMAGE,
+        statusCode: meta.statusCode ? meta.statusCode : 200
       }
-
     }
   }
 }
