@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { HTTP } from '../utilities/baseurl'
-import { modifier } from '../utilities/helpers'
+import { HTTP } from '../api/baseurl'
+import { modifier } from '../api/location'
 
 Vue.use( Router )
 

@@ -1,5 +1,5 @@
-import { HTTP } from '../utilities/baseurl'
-import { modifier } from '../utilities/helpers'
+import { HTTP } from '../api/baseurl'
+import { modifier } from '../api/location'
 
 export default {
   getPages: ({ commit, state }) => {
@@ -18,8 +18,6 @@ export default {
           return array.push( filtered )
         })
         commit( 'setPages', array )
-      } else {
-        // console.log( response )
       }
     }).catch( ( error ) => {
       console.log( error )
@@ -41,8 +39,6 @@ export default {
           return array.push( filtered )
         })
         commit( 'setPosts', array )
-      } else {
-        // console.log( response )
       }
     }).catch( ( error ) => {
       console.log( error )
