@@ -1,5 +1,5 @@
 // Import defaults.
-import { TITLE } from '@root/siteconfig'
+import { TITLE, DESCRIPTION, CARD_IMAGE } from '@root/webconfig'
 
 const getMeta = vm => {
   const { meta } = vm.$options
