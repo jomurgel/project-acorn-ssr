@@ -42,10 +42,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~functions';
+
 .icon-acorn {
   vertical-align: bottom;
 
-  a & {
+  a {
     color: #000;
   }
 }
@@ -61,6 +63,10 @@ ul {
 
     &:last-child {
       margin-right: 0;
+    }
+
+    a:hover {
+      color: $pink;
     }
   }
 }
