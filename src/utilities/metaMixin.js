@@ -31,12 +31,30 @@ const serverMetaMixin = {
   }
 }
 
+function clientMeta( data ) {
+
+  const meta = getMeta( data )
+
+  if ( meta ) {
+    document.title = meta.title ? `${meta.title} - ${TITLE}` : TITLE
+    document.querySelector( 'meta[name=description]' ).setAttribute( 'content', meta.description ? `${meta.description}` : DESCRIPTION )
+    document.querySelector( 'meta[name=og:title]' ).setAttribute( 'content', meta.title ? `${meta.title} - ${TITLE}` : TITLE )
+    document.querySelector( 'meta[name=og:description]' ).setAttribute( 'content', meta.description ? `${meta.description}` : DESCRIPTION )
+    document.querySelector( 'meta[name=og:image]' ).setAttribute( 'content', meta.card ? `${meta.card}` : CARD_IMAGE )
+  }
+
+  // Always update URL.
+  document.querySelector( 'meta[name=og:url]' ).setAttribute( 'content', window.location.href )
+}
+
 const clientMetaMixin = {
 
   mounted() {
-    const meta = getMeta( this )
-    if ( meta ) {
-      document.title = `${meta.title} - ${TITLE}`
+    clientMeta( this )
+  },
+  watch: {
+    '$route': function( to, from ) {
+      clientMeta( this )
     }
   }
 }
