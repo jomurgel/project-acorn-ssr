@@ -1,7 +1,5 @@
 ![acorn-vue](https://user-images.githubusercontent.com/5230729/33617130-23b70b74-d99c-11e7-8964-a3adaad9cf65.png)
 
-*NOTE:* Though the core of this SPA works the page, posts, and single post pages still need hooked up to the API along with some other finessing as of 12/5/2017.
-
 # Project Acorn + Vue.js
 A Vue.js SPA built around the WordPress REST API intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn).
 
