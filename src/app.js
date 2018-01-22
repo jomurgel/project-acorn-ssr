@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from '_App'
+import VueAnalytics from 'vue-analytics'
 import Common from './views/common'
 import createStore from './store'
 import createRouter from './router'
@@ -8,6 +9,11 @@ import metaMixin from './utilities/metaMixin'
 import * as filters from './utilities/filters'
 
 Vue.config.productionTip = false
+
+// Setup analytics.
+Vue.use( VueAnalytics, {
+  id: 'UA-XXXXX-X'
+})
 
 // mixin for handling head meta
 Vue.mixin( metaMixin )
