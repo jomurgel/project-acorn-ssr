@@ -5,7 +5,7 @@ A Vue.js SPA and PWA built around the WordPress REST API intended to be used in 
 
 <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version 1.0.0" />
 
-[https://node.jomurgel.com/](demo).
+[demo](https://node.jomurgel.com/).
 
 ## Why?
 With javascript applications there are some SEO, caching, and extendability concerns that have arisen that I felt were necessary to address before really putting my weight behind [Vue.js](https://vuejs.org/). I don't really feel like there is a point to building a javascript website if you're not discoverable on the web, or Google/Bing search accomodating. This solves many of those problems.
