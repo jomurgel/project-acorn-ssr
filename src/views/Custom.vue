@@ -17,7 +17,7 @@ export default {
     const meta = {
       title: 'Home',
       description: 'Description for Home',
-      card: 'https://placehold.it/1280x768/f60/fff?text=HOME'
+      card: 'https://placehold.it/1280x768/ee2d6d/fff?text=HOME'
     }
     return meta
   }
