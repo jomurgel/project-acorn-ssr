@@ -19,7 +19,8 @@
     "vue-router",
     "vuex",
     "webpack",
-    "wordpress"
+    "wordpress",
+    "spa"
   ],
   "license": "MIT",
   "bugs": {
