@@ -1,4 +1,6 @@
+const path               = require( 'path' )
 const webpack            = require( 'webpack' )
+const glob               = require( 'glob' )
 const merge              = require( 'webpack-merge' )
 const base               = require( './webpack.base.config' )
 const VueSSRClientPlugin = require( 'vue-server-renderer/client-plugin' )
@@ -27,24 +29,30 @@ const config = merge( base, {
     }),
     // auto generate service worker
     new SWPrecachePlugin({
-      cacheId: "project-acorn-ssr",
-      filename: "service-worker.js",
+      cacheId: 'project-acorn-ssr',
+      filename: 'service-worker.js',
+      filepath: path.resolve( __dirname, '../dist/service-worker.js' ),
       minify: true,
 
       staticFileGlobs: [
-        "dist/**.css",
-        "dist/**.js",
-        "dist/img/**/*"
+        'dist/**.css',
+        'dist/**.js',
+        'dist/img/**/*'
       ],
 
       runtimeCaching: [{
         urlPattern: /\/.*/,
-        handler: "networkFirst"
+        handler: 'networkFirst'
       }],
 
       dontCacheBustUrlsMatching: /./,
-      navigateFallback: "/",
+      navigateFallback: '/',
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      dynamicUrlToDependencies: {
+        '/': [
+          ...glob.sync( path.resolve( __dirname, '../dist/*.js' ) )
+        ]
+      }
     }),
     /**
      * Extract webpack runtime & manifest to avoid vendor chunk hash changing on every build.
