@@ -3,13 +3,12 @@
 # Project Acorn + Vue.js
 A Vue.js SPA and PWA built around the WordPress REST API intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but  can also be used as a SPA.
 
-
 <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version 1.0.0" />
 
 [https://node.jomurgel.com/](demo).
 
 ## Why?
-With javascript applications there are some SEO, caching and extendability concerns that have arisen that I felt were necessary to address before really putting my weight behind [Vue.js](https://vuejs.org/). 
+With javascript applications there are some SEO, caching, and extendability concerns that have arisen that I felt were necessary to address before really putting my weight behind [Vue.js](https://vuejs.org/). I don't really feel like there is a point to building a javascript website if you're not discoverable on the web, or Google/Bing search accomodating. This solves many of those problems.
 
 ## What's included?
 - Google Analytics baked in using [Vue Analytics](https://github.com/MatteoGabriele/vue-analytics).
