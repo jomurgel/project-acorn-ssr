@@ -1,7 +1,7 @@
 ![acorn-vue](https://user-images.githubusercontent.com/5230729/33617130-23b70b74-d99c-11e7-8964-a3adaad9cf65.png)
 
 # Project Acorn + Vue.js
-A Vue.js SPA built around the WordPress REST API intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn).
+A Vue.js SPA and PWA built around the WordPress REST API intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but  can also be used as a SPA.
 
 
 <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version 1.0.0" />
@@ -18,16 +18,19 @@ With javascript applications there are some SEO, caching and extendability conce
 - Compiling SASS/SCSS inside individual templates and also inside the `assets/styles` folder for a global stylesheet(s) if desired.
 - Updated `.eslintrc.js` to keep things looking super clean.
 - SSR Favicon via [https://www.npmjs.com/package/serve-favicon](serve-favicon), set in `webconfig.js`.
-- Open Graph and Twitter card support globally and per template component.
+- Open Graph and Twitter card support globally and per template component.  UPdates meta title, description, image, etc.
 
 ## SSR
+- Async data/api fetching.
 - Client-side state w/ DOM hydration.
 - Preload and prefetch resources.
 - Server Side Rendering (of course).
 - Server-side data pre-fetching (limited).
+- Set `statusCode` in `meta` to return HTTP status code other than 200.
+- Service Worker using [https://github.com/goldhand/sw-precache-webpack-plugin](sw-precache-webpack-plugin).
 
 ## Configure
-Configure site default title, base url and development port in the `webconfig.js` inside the root folder.
+Configure site port, default title, description, share image, site url, base url,favicon, author, and author url in the `webconfig.js` inside the root folder.
 
 ## Development
 - Install: `npm install` or `yarn install` to install dependencies.
@@ -39,18 +42,20 @@ $ npm run dev
 #Compile SVG Sprite
 $ npm run svg
 
+# Production Build
+$ npm run build
+
 # Start Server in Production Mode
 $ npm run start
 
-# Production Build
-$ npm run build
+# Build and run in production mode.
+$ npm run go
 ```
 
 ## Roadmap
-- [ ] Get up to 100/100 Lighthouse score.
-- [ ] Component-level caching for larger pages (posts).
-- [ ] Apple Icon Support
-- [ ] `manifest.json` Support.
+- [ ] Increase [https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en](Lighthouse) score.
+- [ ] Component-level caching for larger pages/posts.
+- [ ] Better documentation.
 
 ## Referenced
 - [liamwang/vue-ssr-starter](https://github.com/liamwang/vue-ssr-starter)
