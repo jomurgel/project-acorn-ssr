@@ -26,23 +26,23 @@ const config = merge( base, {
       }
     }),
     // auto generate service worker
-		new SWPrecachePlugin({
-			cacheId: "project-acorn-ssr",
-			filename: "service-worker.js",
-			minify: true,
+    new SWPrecachePlugin({
+      cacheId: "project-acorn-ssr",
+      filename: "service-worker.js",
+      minify: true,
 
-			staticFileGlobs: [
-				"dist/**.css",
-				"dist/**.js",
-				"dist/img/**/*"
-			],
+      staticFileGlobs: [
+        "dist/**.css",
+        "dist/**.js",
+        "dist/img/**/*"
+      ],
 
-			runtimeCaching: [{
-				urlPattern: /\/.*/,
-				handler: "networkFirst"
-			}],
+      runtimeCaching: [{
+        urlPattern: /\/.*/,
+        handler: "networkFirst"
+      }],
 
-			dontCacheBustUrlsMatching: /./,
+      dontCacheBustUrlsMatching: /./,
       navigateFallback: "/",
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
