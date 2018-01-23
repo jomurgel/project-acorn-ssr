@@ -1,10 +1,10 @@
 {
-  "name": "Project Acorn",
-  "short_name": "Acorn",
-  "theme_color": "#2196f3",
+  "name": "Project Acorn SSR",
+  "short_name": "Acorn SSR",
+  "theme_color": "#ee2d6d",
   "background_color": "#ffffff",
   "display": "standalone",
-  "Scope": "/",
+  "scope": "/",
   "start_url": "/",
   "icons": [
     {
