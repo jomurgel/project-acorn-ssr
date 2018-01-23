@@ -6,6 +6,8 @@ A Vue.js SPA and PWA built around the WordPress REST API intended to be used in 
 
 <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version 1.0.0" />
 
+[https://node.jomurgel.com/](demo).
+
 ## Why?
 With javascript applications there are some SEO, caching and extendability concerns that have arisen that I felt were necessary to address before really putting my weight behind [Vue.js](https://vuejs.org/). 
 
@@ -28,6 +30,8 @@ With javascript applications there are some SEO, caching and extendability conce
 - Server-side data pre-fetching (limited).
 - Set `statusCode` in `meta` to return HTTP status code other than 200.
 - Service Worker using [https://github.com/goldhand/sw-precache-webpack-plugin](sw-precache-webpack-plugin).
+
+![Lighthouse Score So Far](https://user-images.githubusercontent.com/5230729/35288237-5affd8d0-0021-11e8-9f84-c994a52ea92a.png)
 
 ## Configure
 Configure site port, default title, description, share image, site url, base url,favicon, author, and author url in the `webconfig.js` inside the root folder.
@@ -53,7 +57,7 @@ $ npm run go
 ```
 
 ## Roadmap
-- [ ] Increase [https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en](Lighthouse) score.
+- [ ] Increase [https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en](Lighthouse) score within the Progressive Web App.
 - [ ] Component-level caching for larger pages/posts.
 - [ ] Better documentation.
 
