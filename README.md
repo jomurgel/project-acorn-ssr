@@ -14,12 +14,18 @@ With javascript applications there are some SEO, caching, and extendability conc
 - Google Analytics baked in using [Vue Analytics](https://github.com/MatteoGabriele/vue-analytics).
 - Loading animations appropriated from [Nuxt.js](https://nuxtjs.org/).
 - Uses [SVG Sprite](https://github.com/jkphl/svg-sprite) to optimize and compile SVG icons into a single sprite for easy-use with some additional inspiration from [Vue SVG Sprite](https://www.npmjs.com/package/vue-svg-sprite) and [liamwang](https://github.com/liamwang/vue-ssr-starter).
-- Vue + vue-router + vuex + axios working together
+- Vue + [vue-router](https://router.vuejs.org/en/) + [vuex](https://vuex.vuejs.org/en/intro.html) + [axios](https://github.com/axios/axios) working together
 - WordPress REST API in action with post, pages, and menu endpoints.
 - Compiling SASS/SCSS inside individual templates and also inside the `assets/styles` folder for a global stylesheet(s) if desired.
 - Updated `.eslintrc.js` to keep things looking super clean.
 - SSR Favicon via [https://www.npmjs.com/package/serve-favicon](serve-favicon), set in `webconfig.js`.
 - Open Graph and Twitter card support globally and per template component.  UPdates meta title, description, image, etc.
+
+## 404 Handling
+- As part of the `meta()` function you have the ability to set the `statusCode` to `404`.
+- If I'm wrong please open an issue, but I don't believe that the [Vue Router's](https://router.vuejs.org/en/) 404/fallback handling is intended to be used the way that this app is built, in that pages and blog posts utilize the `/:slug` convention. This means that `/about` and `/d;ljdf` are both considered slugs and only one, in this example, is valid.
+- The `Page.vue` and `Single.Vue` templates runs a check on `beforeRouteUpdate` against the store data to confirm that the slug is valid else redirects to the `404.vue` component.
+- The Router `index.js` file does a `beforeEnter` check utlizing an API request and runs a similar check. I don't feel like this is an optimal use of an API request, but as the store data is not yet available, it is a necessary evil. These requests are only made between component chaneges. Line item added to roadmap below.
 
 ## SSR
 - Async data/api fetching.
@@ -59,7 +65,7 @@ $ npm run go
 - [ ] Increase [https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en](Lighthouse) score within the Progressive Web App.
 - [ ] Component-level caching for larger pages/posts.
 - [ ] Better documentation.
-- [ ] Better 404/Error handling within routes.
+- [ ] Better 404/Error handling within router. Limit requests.
 - [x] Only fetch api if we don't have data.
 - [ ] Put time limit on api fetching.
 
