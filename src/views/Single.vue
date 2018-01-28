@@ -23,6 +23,7 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
+    // If we're looking at the blog get posts.
     if ( route.path.includes( 'blog' ) ) {
       return store.dispatch( 'getPosts' )
     } else {
