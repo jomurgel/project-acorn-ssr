@@ -59,6 +59,9 @@ $ npm run go
 - [ ] Increase [https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en](Lighthouse) score within the Progressive Web App.
 - [ ] Component-level caching for larger pages/posts.
 - [ ] Better documentation.
+- [ ] Better 404/Error handling within routes.
+- [x] Only fetch api if we don't have data.
+- [ ] Put time limit on api fetching.
 
 ## Referenced
 - [liamwang/vue-ssr-starter](https://github.com/liamwang/vue-ssr-starter)
