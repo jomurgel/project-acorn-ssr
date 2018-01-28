@@ -62,7 +62,7 @@ $ npm run go
 ```
 
 ## Roadmap
-- [ ] Increase [https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en](Lighthouse) score within the Progressive Web App.
+- [ ] Increase [Lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en) score within the Progressive Web App.
 - [ ] Component-level caching for larger pages/posts.
 - [ ] Better documentation.
 - [ ] Better 404/Error handling within router. Limit requests.
