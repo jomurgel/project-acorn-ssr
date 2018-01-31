@@ -35,12 +35,15 @@ function clientMeta( data ) {
 
   const meta = getMeta( data )
 
+  // Retrieve list of <meta> in head.
+  let metaList = document.getElementsByTagName( 'meta' )
+
   if ( meta ) {
     document.title = meta.title ? `${meta.title} - ${TITLE}` : TITLE
-    document.querySelector( 'meta[name=description]' ).setAttribute( 'content', meta.description ? `${meta.description}` : DESCRIPTION )
-    document.querySelector( 'meta[name=og:title]' ).setAttribute( 'content', meta.title ? `${meta.title} - ${TITLE}` : TITLE )
-    document.querySelector( 'meta[name=og:description]' ).setAttribute( 'content', meta.description ? `${meta.description}` : DESCRIPTION )
-    document.querySelector( 'meta[name=og:image]' ).setAttribute( 'content', meta.card ? `${meta.card}` : CARD_IMAGE )
+    metaList[3].content = meta.description ? `${meta.description}` : DESCRIPTION // description
+    metaList[4].content = meta.title ? `${meta.title} - ${TITLE}` : TITLE // og:title
+    metaList[5].content = meta.description ? `${meta.description}` : DESCRIPTION // og:description
+    metaList[6].content = meta.card ? `${meta.card}` : CARD_IMAGE // og:image
   }
 
   // Always update URL.
