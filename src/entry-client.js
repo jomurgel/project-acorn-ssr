@@ -80,7 +80,7 @@ router.onReady( () => {
 
 // service worker
 if ( isProduction && 'serviceWorker' in navigator ) {
-  navigator.serviceWorker.register( '../dist/service-worker.js' )
+  navigator.serviceWorker.register( '/service-worker.js' )
 } else {
   navigator.serviceWorker.getRegistrations()
     .then( function( registrations ) {

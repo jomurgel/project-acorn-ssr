@@ -31,7 +31,6 @@ const config = merge( base, {
     new SWPrecachePlugin({
       cacheId: 'project-acorn-ssr',
       filename: 'service-worker.js',
-      filepath: path.resolve( __dirname, '../dist/service-worker.js' ),
       minify: true,
 
       staticFileGlobs: [

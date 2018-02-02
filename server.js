@@ -74,7 +74,7 @@ app.use( favicon( './public/' + siteIcon ) )
 app.use( '/dist', serve( './dist', true ) )
 app.use( '/public', serve( './public', true ) )
 
-app.use( '/dist/service-worker.js', serve( './dist/service-worker.js' ) )
+app.use( '/service-worker.js', serve( './dist/service-worker.js', true ) )
 
 // 1-second microcache.
 // https://www.nginx.com/blog/benefits-of-microcaching-nginx/
