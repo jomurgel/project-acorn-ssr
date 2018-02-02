@@ -23,14 +23,16 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    return store.dispatch( 'getPosts' )
+    // This happens last.
+    console.log( '4' )
+    return store.dispatch( 'getPages' )
   },
   computed: {
     ...mapGetters({
-      posts: 'posts'
+      pages: 'pages'
     }),
     type: function() {
-      return this.posts
+      return this.pages
     },
     page: function() {
       return setSinglePost( this.$route.params.slug, this.type )
