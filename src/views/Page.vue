@@ -10,8 +10,7 @@ import { mapGetters } from 'vuex'
 import {
   setTitle,
   setDescription,
-  setFeaturedImage,
-  setSinglePost } from '@src/utilities/helpers'
+  setFeaturedImage } from '@src/utilities/helpers'
 
 export default {
   meta() {
@@ -25,17 +24,15 @@ export default {
   asyncData({ store, route }) {
     // This happens last.
     console.log( '4' )
-    return store.dispatch( 'getPages' )
+    // console.log( store.state.pages )
+    return store.dispatch( 'getPage', route.params.slug )
   },
   computed: {
     ...mapGetters({
       pages: 'pages'
     }),
-    type: function() {
-      return this.pages
-    },
     page: function() {
-      return setSinglePost( this.$route.params.slug, this.type )
+      return this.$store.state.pages[this.$route.params.slug]
     },
     title: function() {
       return setTitle( this.page )
@@ -46,16 +43,16 @@ export default {
     featuredImage: function() {
       return setFeaturedImage( this.page )
     }
-  },
-  beforeRouteUpdate( to, from, next ) {
-    const pageArray = this.$store.state.pages
-    const test = pageArray.map( ( object ) => { return object.slug })
-
-    if ( test.indexOf( to.params.slug ) > -1 ) {
-      next()
-    } else {
-      next({ name: '404', params: { '0': to.path } })
-    }
   }
+  // beforeRouteUpdate( to, from, next ) {
+  //   const pageArray = this.$store.state.pages
+  //   const test = pageArray.map( ( object ) => { return object.slug })
+
+  //   if ( test.indexOf( to.params.slug ) > -1 ) {
+  //     next()
+  //   } else {
+  //     next({ name: '404', params: { '0': to.path } })
+  //   }
+  // }
 }
 </script>
