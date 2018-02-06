@@ -1,10 +1,12 @@
 import { HTTP } from '../api/baseurl'
+import router from '../router'
 import { modifier } from '../api/location'
 
 export default {
   getPage: ({ commit, state }, slug ) => {
-    return state.pages[slug] ||
+
     // Only get data if we don't already have it.
+    return state.pages[slug] ||
     HTTP.get( modifier.pages + '/?slug=' + slug ).then( ( response ) => {
       if ( response.status === 200 && response.data.length > 0 ) {
 
@@ -12,14 +14,15 @@ export default {
         const pageArray = []
 
         // Remove unecessary data from object.
-        response.data.map( ( item ) => {
+        response.data.map( ( page ) => {
           const filtered = {
-            id: item.id,
-            title: item.title.rendered,
-            excerpt: item.excerpt.rendered,
-            slug: item.slug,
-            content: item.content.rendered,
-            featured_image: item.featured_image
+            content: page.content.rendered,
+            excerpt: page.excerpt.rendered,
+            featuredImage: page.featured_image,
+            id: page.id,
+            modifiedDate: page.modified,
+            slug: page.slug,
+            title: page.title.rendered
           }
 
           // Return new array object.
@@ -32,6 +35,9 @@ export default {
         const slug = page.slug
 
         commit( 'setPage', { slug, page })
+      } else {
+        // If we don't recieve data push to 404 page.
+        router.push({ name: '404' })
       }
     }).catch( ( error ) => {
       console.log( error )
