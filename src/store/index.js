@@ -3,13 +3,13 @@ import Vuex from 'vuex'
 import actions from './actions'
 import mutations from './mutations'
 import { generateGetters } from './getters'
-
 Vue.use( Vuex )
 
 const state = {
-  posts: [],
+  date: Date.now(),
+  posts: {},
   menus: [],
-  pages: []
+  pages: {}
 }
 
 const getters = generateGetters( Object.keys( state ) )
