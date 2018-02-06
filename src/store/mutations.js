@@ -1,8 +1,15 @@
 import Vue from 'vue'
 
 export default {
-  setPosts: ( state, posts ) => {
-    state.posts = posts
+  setPost: ( state, { slug, post }) => {
+    Vue.set( state.posts, slug, post )
+  },
+  setPosts: ( state, { posts }) => {
+    posts.forEach( post => {
+      if ( post ) {
+        Vue.set( state.posts, post.slug, post )
+      }
+    })
   },
   setPage: ( state, { slug, page }) => {
     Vue.set( state.pages, slug, page )
