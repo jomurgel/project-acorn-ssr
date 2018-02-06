@@ -23,33 +23,23 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    return store.dispatch( 'getPosts' )
+    return store.dispatch( 'getPost', route.params.slug )
   },
   computed: {
     ...mapGetters({
       posts: 'posts'
     }),
-    type: function() {
-      return this.posts
-    },
-    page: function() {
-      return setSinglePost( this.$route.params.slug, this.type )
+    post: function() {
+      return this.$store.state.posts[this.$route.params.slug]
     },
     title: function() {
-      return setTitle( this.page )
+      return setTitle( this.post )
     },
     description: function() {
-      return setDescription( this.page )
+      return setDescription( this.post )
     },
     featuredImage: function() {
-  beforeRouteUpdate( to, from, next ) {
-    const pageArray = this.$store.state.pages
-    const test = pageArray.map( ( object ) => { return object.slug })
-
-    if ( test.indexOf( to.params.slug ) > -1 ) {
-      next()
-    } else {
-      next({ name: '404', params: { '0': to.path } })
+      return setFeaturedImage( this.post )
     }
   }
 }
