@@ -58,7 +58,7 @@ export function setDescription( data ) {
 export function setFeaturedImage( data ) {
 
   // Get root to make sure we have a featured image.
-  let source = data ? data.featured_image : ''
+  let source = data ? data.featuredImage : ''
 
   // Double check else output our default set in webconfig.js.
   source = source ? source.media.sizes.medium.source_url : CARD_IMAGE
