@@ -43,29 +43,84 @@ export default {
       console.log( error )
     })
   },
-  getPosts: ({ commit, state }) => {
+  getPost: ({ commit, state }, slug ) => {
+
     // Only get data if we don't already have it.
-    if ( state.posts.length === 0 ) {
-      return HTTP.get( modifier.posts ).then( ( response ) => {
+    return state.posts[slug] ||
+    HTTP.get( modifier.posts + '/?slug=' + slug ).then( ( response ) => {
+      if ( response.status === 200 && response.data.length > 0 ) {
+
+        // Set placeholder array.
+        const postArray = []
+
+        // Remove unecessary data from object.
+        response.data.map( ( post ) => {
+          const filtered = {
+            content: post.content.rendered,
+            excerpt: post.excerpt.rendered,
+            featuredImage: post.featured_image,
+            id: post.id,
+            modifiedDate: post.modified,
+            slug: post.slug,
+            title: post.title.rendered
+          }
+
+          // Return new array object.
+          return postArray.push( filtered )
+        })
+
+        // Get object in array.
+        const post = postArray[0]
+        // Grab object slug.
+        const slug = post.slug
+
+        commit( 'setPost', { slug, post })
+      } else {
+        // If we don't recieve data push to 404 post.
+        router.push({ name: '404' })
+      }
+    }).catch( ( error ) => {
+      console.log( error )
+    })
+  },
+  getPosts: ({ commit, state }) => {
+
+    // Only get data if we don't already have it.
+    return state.posts.length > 10
+      ? state.posts.length
+      : HTTP.get( modifier.posts ).then( ( response ) => {
         if ( response.status === 200 && response.data.length > 0 ) {
-          const array = []
-          response.data.map( ( item ) => {
+
+          // Set placeholder array.
+          const postArray = []
+
+          // Remove unecessary data from object.
+          response.data.map( ( post ) => {
             const filtered = {
-              id: item.id,
-              title: item.title.rendered,
-              excerpt: item.excerpt.rendered,
-              slug: item.slug,
-              content: item.content.rendered,
-              featured_image: item.featured_image
+              content: post.content.rendered,
+              excerpt: post.excerpt.rendered,
+              featuredImage: post.featured_image,
+              id: post.id,
+              modifiedDate: post.modified,
+              slug: post.slug,
+              title: post.title.rendered
             }
-            return array.push( filtered )
+
+            // Return new array object.
+            return postArray.push( filtered )
           })
-          commit( 'setPosts', array )
+
+          // Get object in array.
+          const posts = postArray
+
+          commit( 'setPosts', { posts })
+        } else {
+          // If we don't recieve data push to 404 post.
+          router.push({ name: '404' })
         }
       }).catch( ( error ) => {
         console.log( error )
       })
-    }
   },
   getMenus: ({ commit, state }) => {
     return HTTP.get( modifier.menus ).then( ( response ) => {
