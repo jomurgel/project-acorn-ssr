@@ -1,9 +1,11 @@
+import Vue from 'vue'
+
 export default {
   setPosts: ( state, posts ) => {
     state.posts = posts
   },
-  setPages: ( state, pages ) => {
-    state.pages = pages
+  setPage: ( state, { slug, page }) => {
+    Vue.set( state.pages, slug, page )
   },
   setMenus: ( state, menus ) => {
     state.menus = menus
