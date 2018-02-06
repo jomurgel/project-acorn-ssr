@@ -65,20 +65,3 @@ export function setFeaturedImage( data ) {
 
   return source
 }
-
-/**
- * Return single post object.
- *
- * @export  function
- * @param   {array} posts array of posts or pages.
- * @param   {string} data post object.
- * @returns {string} description or empty string.
- */
-export function setSinglePost( slug, posts ) {
-
-  const post = posts.filter( function( e ) {
-    return e.slug === slug
-  })
-
-  return post[0]
-}
