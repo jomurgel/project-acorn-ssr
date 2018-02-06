@@ -1,50 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { HTTP } from '../api/baseurl'
-import { modifier } from '../api/location'
 
 Vue.use( Router )
 
 const createView = relativePath => () => import( '@src/views/' + relativePath )
 
+// let apiTest = []
+
 const routes = [
   {
     path: '/',
+    name: 'root',
     component: createView( 'Custom' )
   },
   {
     path: '/blog',
+    name: 'blog',
     component: createView( 'Blog' )
   },
   {
     path: '/blog/:slug',
-    component: createView( 'Single' ),
-    beforeEnter: ( to, from, next ) => {
-      HTTP.get( modifier.posts ).then( ( response ) => {
-        const postArray = response.data
-        const test = postArray.map( ( object ) => { return object.slug })
-
-        if ( test.indexOf( to.params.slug ) === -1 ) {
-          next({ name: '404' })
-        }
-        next()
-      })
-    }
+    name: 'single',
+    component: createView( 'Single' )
   },
   {
     path: '/:slug',
-    component: createView( 'Single' ),
-    beforeEnter: ( to, from, next ) => {
-      HTTP.get( modifier.pages ).then( ( response ) => {
-        const pageArray = response.data
-        const test = pageArray.map( ( object ) => { return object.slug })
-
-        if ( test.indexOf( to.params.slug ) === -1 ) {
-          next({ name: '404' })
-        }
-        next()
-      })
-    }
+    name: 'page',
+    component: createView( 'Page' )
   },
   {
     // Catch-all, though the 404 component is
@@ -59,8 +41,10 @@ const routes = [
   }
 ]
 
-export default () => new Router({
+const router = new Router({
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
+
+export default router
