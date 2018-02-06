@@ -11,8 +11,7 @@ import { mapGetters } from 'vuex'
 import {
   setTitle,
   setDescription,
-  setFeaturedImage,
-  setSinglePost } from '@src/utilities/helpers'
+  setFeaturedImage } from '@src/utilities/helpers'
 
 export default {
   meta() {
@@ -43,9 +42,6 @@ export default {
       return setDescription( this.page )
     },
     featuredImage: function() {
-      return setFeaturedImage( this.page )
-    }
-  },
   beforeRouteUpdate( to, from, next ) {
     const pageArray = this.$store.state.pages
     const test = pageArray.map( ( object ) => { return object.slug })
