@@ -3,6 +3,7 @@
     <h1>{{ title }}</h1>
     <div v-html="page.content"></div>
   </div>
+  <div v-else><!-- 404 Handler --></div>
 </template>
 
 <script>
@@ -22,9 +23,6 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    // This happens last.
-    console.log( '4' )
-    // console.log( store.state.pages )
     return store.dispatch( 'getPage', route.params.slug )
   },
   computed: {
@@ -44,15 +42,5 @@ export default {
       return setFeaturedImage( this.page )
     }
   }
-  // beforeRouteUpdate( to, from, next ) {
-  //   const pageArray = this.$store.state.pages
-  //   const test = pageArray.map( ( object ) => { return object.slug })
-
-  //   if ( test.indexOf( to.params.slug ) > -1 ) {
-  //     next()
-  //   } else {
-  //     next({ name: '404', params: { '0': to.path } })
-  //   }
-  // }
 }
 </script>
