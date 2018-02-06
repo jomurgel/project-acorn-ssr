@@ -69,8 +69,8 @@ export default {
   },
   getMenus: ({ commit, state }) => {
     return HTTP.get( modifier.menus ).then( ( response ) => {
-      if ( response.status === 200 ) {
-        commit( 'setMenus', response.data && response.data.length > 0 )
+      if ( response.status === 200 && response.data.length > 0 ) {
+        commit( 'setMenus', response.data )
       }
     }).catch( ( error ) => {
       console.log( error )
