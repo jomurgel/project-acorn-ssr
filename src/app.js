@@ -3,7 +3,7 @@ import App from '_App'
 import VueAnalytics from 'vue-analytics'
 import Common from './views/common'
 import createStore from './store'
-import createRouter from './router'
+import router from './router'
 import { sync } from 'vuex-router-sync'
 import metaMixin from './utilities/metaMixin'
 import * as filters from './utilities/filters'
@@ -32,7 +32,6 @@ export function createApp( ssrContext ) {
 
   // create store and router instances
   const store  = createStore()
-  const router = createRouter()
 
   // sync the router with the vuex store.
   // this registers `store.state.route`
