@@ -1,8 +1,9 @@
 <template>
-  <div v-if="page" :key="page.id">
+  <div v-if="post" :key="post.id" class="post">
     <h1>{{ title }}</h1>
-    <div v-html="page.content"></div>
+    <div v-html="post.content"></div>
   </div>
+  <div v-else><!-- 404 Handler --></div>
 </template>
 
 <script>
