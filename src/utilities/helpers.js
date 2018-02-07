@@ -65,3 +65,18 @@ export function setFeaturedImage( data ) {
 
   return source
 }
+
+/**
+ * Return size of object.
+ *
+ * @param {*} obj object full of posts.
+ */
+export function ObjectSize( obj ) {
+  let size = 0
+  let key
+
+  for ( key in obj ) {
+    if ( obj.hasOwnProperty( key ) ) size ++
+  }
+  return size
+}
