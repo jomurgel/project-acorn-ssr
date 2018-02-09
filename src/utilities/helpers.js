@@ -71,12 +71,12 @@ export function setFeaturedImage( data ) {
  *
  * @param {*} obj object full of posts.
  */
-export function ObjectSize( obj ) {
+export function objectSize( object ) {
   let size = 0
   let key
 
-  for ( key in obj ) {
-    if ( obj.hasOwnProperty( key ) ) size ++
+  for ( key in object ) {
+    if ( object.hasOwnProperty( key ) ) size ++
   }
   return size
 }
