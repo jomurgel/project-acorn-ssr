@@ -7,5 +7,6 @@ module.exports = {
   BASE_URL: 'https://vue-app.jomurgel.com/server', // no trailing slash
   ICON: 'acorn.png', // roots to ./public/ folder
   AUTHOR: 'jomurgel',
-  AUTHOR_URL: 'https://jomurgel.com'
+  AUTHOR_URL: 'https://jomurgel.com',
+  POSTS_PER_PAGE: 2
 }
