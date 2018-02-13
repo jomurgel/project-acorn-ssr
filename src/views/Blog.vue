@@ -8,7 +8,7 @@
     </div>
     <ul class="pagination">
       <li v-for="n in totalPages" :key="n">
-        <router-link :to="{ path: $route.fullPath, query: { page: n } }">
+        <router-link :to="{ name: $route.name + '/' + n }">
           {{ n }}
         </router-link>
       </li>
