@@ -31,7 +31,7 @@ export default {
     }
   },
   asyncData({ store, route }) {
-    return store.dispatch( 'getPosts', route.query['page'] || 1 )
+    return store.dispatch( 'getPosts', route.params.id || 1 )
   },
   meta() {
     const meta = {
@@ -46,7 +46,7 @@ export default {
       postsArray: 'posts'
     }),
     posts() {
-      return returnPostsByPage( this.postsArray, this.$route.query['page'] || 1 )
+      return returnPostsByPage( this.postsArray, this.$route.params.id || 1 )
     }
   }
 }
