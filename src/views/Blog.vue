@@ -6,15 +6,32 @@
       </h2>
       <div v-html="post.excerpt"></div>
     </div>
+    <ul class="pagination">
+      <li v-for="n in totalPages" :key="n">
+        <router-link :to="{ path: $route.fullPath, query: { page: n } }">
+          {{ n }}
+        </router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { POSTS_PER_PAGE } from '@root/webconfig'
+import { returnPostsByPage } from '@src/utilities/helpers'
 
 export default {
-  asyncData({ store }) {
-    return store.dispatch( 'getPosts' )
+  data() {
+    return {
+      currentPage: 1,
+      itemsPerPage: POSTS_PER_PAGE,
+      totalItems: this.$store.state.postCount,
+      totalPages: Math.round( this.$store.state.postCount / POSTS_PER_PAGE )
+    }
+  },
+  asyncData({ store, route }) {
+    return store.dispatch( 'getPosts', route.query['page'] || 1 )
   },
   meta() {
     const meta = {
@@ -26,8 +43,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      posts: 'posts'
-    })
+      postsArray: 'posts'
+    }),
+    posts() {
+      return returnPostsByPage( this.postsArray, this.$route.query['page'] || 1 )
+    }
   }
 }
 </script>
