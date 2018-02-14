@@ -30,7 +30,10 @@ export default {
       posts: 'posts'
     }),
     post: function() {
-      return this.$store.state.posts[this.$route.params.slug]
+      let filteredPosts = this.$store.state.posts.filter( post => post.slug === this.$route.params.slug )
+
+      // Return single post object.
+      return filteredPosts[0]
     },
     title: function() {
       return setTitle( this.post )
