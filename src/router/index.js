@@ -5,8 +5,6 @@ Vue.use( Router )
 
 const createView = relativePath => () => import( '@src/views/' + relativePath )
 
-// let apiTest = []
-
 const routes = [
   {
     path: '/',
@@ -14,7 +12,7 @@ const routes = [
     component: createView( 'Custom' )
   },
   {
-    path: '/blog',
+    path: '/blog/:page(\\d+)?',
     name: 'blog',
     component: createView( 'Blog' )
   },
@@ -41,10 +39,9 @@ const routes = [
   }
 ]
 
-const router = new Router({
+export default () => new Router({
   mode: 'history',
+  fallback: false,
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
-
-export default router
