@@ -23,7 +23,7 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    return store.dispatch( 'getPost', route.params.slug )
+    return store.dispatch( 'getPosts' )
   },
   computed: {
     ...mapGetters({
