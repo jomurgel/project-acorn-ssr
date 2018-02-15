@@ -1,18 +1,26 @@
 import Vue from 'vue'
 
 export default {
-  setPosts: ( state, { posts }) => {
+  setPosts: ( state, [ posts, count ] ) => {
     posts.forEach( post => {
       if ( post ) {
-        Vue.set( state.posts, post.slug, post )
+
+        // Set object data into array.
+        state.posts.push( post )
+
+        // Set page number value.
+        post['pageNumber'] = count
       }
     })
   },
-  setBlogPullStatus: ( state, blogPull ) => {
-    state.blogPull = blogPull
+  setPostCount: ( state, count ) => {
+    state.postCount = count
   },
-  setBlogPullTimeStamp: ( state, blogPullDate ) => {
-    state.blogPullDate = blogPullDate
+  setBlogPullStatus: ( state, pull ) => {
+    state.blogPull = pull
+  },
+  setBlogPullTimeStamp: ( state, pullTime ) => {
+    state.blogPullTime = pullTime
   },
   setPage: ( state, { slug, page }) => {
     Vue.set( state.pages, slug, page )
