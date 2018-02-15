@@ -8,9 +8,10 @@ Vue.use( Vuex )
 
 const state = {
   date: ( new Date() ).getTime(),
+  postCount: 0,
   blogPull: false,
-  blogPullDate: '',
-  posts: {},
+  blogPullTime: '',
+  posts: [],
   menus: [],
   pages: {}
 }
