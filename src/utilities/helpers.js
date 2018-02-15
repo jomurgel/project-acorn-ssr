@@ -67,6 +67,42 @@ export function setFeaturedImage( data ) {
 }
 
 /**
+ * Return posts by current page number.
+ *
+ * @param {*} obj object full of posts.
+ * @param int route current page.
+ */
+export function returnPostsByPage( array, route ) {
+
+  let posts = array
+
+  // Loop through menu items and grab array where slug = menu location.
+  const selectedPosts = posts.filter( element => {
+    element.pageNumber === route
+  })
+
+  return selectedPosts
+}
+
+/**
+ * Return bool if page has already been pulled.
+ *
+ * @param {*} obj object full of posts.
+ * @param int route current page.
+ */
+export function getPagePullStatus( array, count ) {
+
+  let posts = array
+
+  // Loop through menu items and grab array where slug = menu location.
+  let doesCountExist = posts.some( ( post ) => {
+    return post.pageNumber === count
+  })
+
+  return doesCountExist
+}
+
+/**
  * Return size of object.
  *
  * @param {*} obj object full of posts.
