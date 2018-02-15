@@ -1,37 +1,40 @@
 <template>
   <div class="posts">
+    <div class="news-list-nav">
+      <router-link v-if="page > 1" :to="'/' + type + '/' + (page - 1)">< prev</router-link>
+      <a v-else class="disabled">< prev</a>
+      <span>{{ page }}/{{ maxPage }}</span>
+      <router-link v-if="hasMore" :to="'/' + type + '/' + (page + 1)">more ></router-link>
+      <a v-else class="disabled">more ></a>
+    </div>
+    <hr/>
     <div v-for="post in posts" :key="post.id" class="post">
       <h2>
-        <router-link :to="$route.path + '/' + post.slug"> {{ post.title }}</router-link>
+        <router-link :to="{ path: 'blog/' + post.slug }"> {{ post.title }}</router-link>
       </h2>
       <div v-html="post.excerpt"></div>
     </div>
-    <ul class="pagination">
+    <!-- <ul class="pagination">
       <li v-for="n in totalPages" :key="n">
-        <router-link :to="{ name: $route.name + '/' + n }">
+        <router-link :to="{ name: 'blog', query: { page: n } }">
           {{ n }}
         </router-link>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { POSTS_PER_PAGE } from '@root/webconfig'
-import { returnPostsByPage } from '@src/utilities/helpers'
 
 export default {
   data() {
     return {
-      currentPage: 1,
-      itemsPerPage: POSTS_PER_PAGE,
-      totalItems: this.$store.state.postCount,
-      totalPages: Math.round( this.$store.state.postCount / POSTS_PER_PAGE )
+      transition: 'slide-right',
+      displayedPage: Number( this.$route.params.page ) || 1,
+      displayedItems: this.$store.getters.posts,
+      type: 'blog'
     }
-  },
-  asyncData({ store, route }) {
-    return store.dispatch( 'getPosts', route.params.id || 1 )
   },
   meta() {
     const meta = {
@@ -41,12 +44,49 @@ export default {
     }
     return meta
   },
+  asyncData({ store, route }) {
+    console.log( '1' )
+    return store.dispatch( 'getPosts', route.query['page'] || 1 )
+  },
   computed: {
-    ...mapGetters({
-      postsArray: 'posts'
-    }),
+    page() {
+      return Number( this.$route.params.page ) || 1
+    },
+    maxPage() {
+      return Math.ceil( this.$store.state.postCount / POSTS_PER_PAGE )
+    },
+    hasMore() {
+      return this.page < this.maxPage
+    },
     posts() {
-      return returnPostsByPage( this.postsArray, this.$route.params.id || 1 )
+      return this.displayedItems.filter( e => e.pageNumber === this.displayedPage )
+    }
+  },
+  beforeMount() {
+    if ( this.$root._isMounted ) {
+      console.log( '2' )
+      this.loadItems( this.page || 1 )
+    }
+  },
+  watch: {
+    page( to, from ) {
+      console.log( '3' )
+      this.loadItems( to, from )
+    }
+  },
+  methods: {
+    loadItems( to = this.page, from = -1, next ) {
+
+      this.$store.dispatch( 'getPosts', this.page ).then( () => {
+
+        if ( this.page < 0 || this.page > this.maxPage ) {
+          this.$router.replace( `/${this.type}/1` )
+          return
+        }
+
+        this.displayedPage = to
+        this.displayedItems = this.$store.getters.posts
+      })
     }
   }
 }
