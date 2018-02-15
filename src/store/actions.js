@@ -1,6 +1,7 @@
 import { HTTP } from '../api/baseurl'
+import { POSTS_PER_PAGE } from '@root/webconfig'
 import { modifier } from '../api/location'
-import { objectSize } from '../utilities/helpers'
+import { getPagePullStatus } from '../utilities/helpers'
 import { makePostRequest } from '../api/index'
 
 export default {
@@ -19,34 +20,51 @@ export default {
   getPost: ({ commit, state }, slug ) => {
 
     // Only get data if we don't already have it.
-    return state.posts[slug] ||
+    return state.posts.filter( post => post.slug === slug ) ||
       makePostRequest( modifier.posts + '/?slug=' + slug ).then( response => {
 
         // Get object in array.
         const posts = response
 
-        commit( 'setPosts', { posts })
+        commit( 'setPosts', [ posts ] )
 
       })
   },
-  getPosts: ({ commit, state }) => {
+  getPosts: ({ commit, state }, count ) => {
+
+    // Make int.
+    const pageCount = parseInt( count )
 
     // Get post object length.
-    const postsLength = objectSize( state.posts )
-    const havePosts   = state.blogPull === true && state.blogPullDate - state.date < 24 * 60 * 60 * 1000
+    const postsLength = state.posts.length
 
-    if ( postsLength === 0 || ! havePosts ) {
+    // Check if we've already pulled our page.
+    const hasPage = getPagePullStatus( state.posts, pageCount )
 
-      makePostRequest( modifier.posts ).then( response => {
+    // Check if we have un-expired posts.
+    const havePosts = state.blogPull === true && state.blogPullDate - state.date < 24 * 60 * 60 * 1000
 
-        const posts = response
+    // Our total postes per page.
+    const perPage = POSTS_PER_PAGE
+
+    if ( ( hasPage === false || postsLength === 0 ) && ! havePosts ) {
+
+      makePostRequest( modifier.posts + '/?per_page=' + perPage + '&page=' + count ).then( response => {
+
+        const posts          = response
+        const totalPostCount = parseInt( posts[0].totalPosts )
+
+        // Set total number of posts.
+        commit( 'setPostCount', totalPostCount )
 
         // Set blog pull status to true.
         commit( 'setBlogPullStatus', true )
 
         // Set date of that pull.
         commit( 'setBlogPullTimeStamp', ( new Date() ).getTime() )
-        commit( 'setPosts', { posts })
+
+        // Set post data and page location.
+        commit( 'setPosts', [ posts, count ] )
 
       })
     }
