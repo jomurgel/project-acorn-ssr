@@ -24,7 +24,13 @@ const routes = [
   {
     path: '/:slug',
     name: 'page',
-    component: createView( 'Page' )
+    component: createView( 'Page' ),
+    beforeEnter: ( to, from, next ) => {
+      if ( to.name === 'page' && to.path === '/404' ) {
+        next({ name: '404' })
+      }
+      next()
+    }
   },
   {
     // Catch-all, though the 404 component is
@@ -39,9 +45,11 @@ const routes = [
   }
 ]
 
-export default () => new Router({
+const router = new Router({
   mode: 'history',
   fallback: false,
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
+
+export default router
