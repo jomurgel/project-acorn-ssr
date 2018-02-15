@@ -1,6 +1,8 @@
 import { HTTP } from '../api/baseurl'
 import router from '../router'
 
+const newRouter = router()
+
 // Return promise from post data.
 // Works with posts (all) and individual pages or posts.
 export function makePostRequest( url ) {
@@ -10,7 +12,7 @@ export function makePostRequest( url ) {
     if ( response.status !== 200 || response.data.length === 0 ) {
 
       // If we don't recieve data push to 404 post.
-      router.push({ name: '404' })
+      newRouter.push({ name: '404' })
     }
 
     const totalPostCount = response.headers['x-wp-total']
@@ -23,6 +25,7 @@ export function makePostRequest( url ) {
         featuredImage: post.featured_image,
         id: post.id,
         modifiedDate: post.modified,
+        pageNumber: null,
         slug: post.slug,
         title: post.title.rendered,
         totalPosts: totalPostCount
