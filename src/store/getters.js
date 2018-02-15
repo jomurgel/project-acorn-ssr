@@ -5,6 +5,7 @@ export const generateGetters = keys => {
   return keys.reduce( ( getters, key ) => {
 
     getters[key] = state => state[key]
+
     return getters
   }, {})
 }
