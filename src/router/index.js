@@ -19,14 +19,24 @@ const routes = [
   {
     path: '/blog/:slug',
     name: 'single',
-    component: createView( 'Single' )
+    component: createView( 'Single' ),
+    beforeEnter: ( to, from, next ) => {
+
+      // If we land on our single component, but have no slug, 404.
+      if ( to.name === 'single' && to.slug === undefined ) {
+        next({ name: '404' })
+      }
+      next()
+    }
   },
   {
     path: '/:slug',
     name: 'page',
     component: createView( 'Page' ),
     beforeEnter: ( to, from, next ) => {
-      if ( to.name === 'page' && to.path === '/404' ) {
+
+      // If we land on our single component, but have no slug, 404.
+      if ( to.name === 'page' && to.slug === undefined ) {
         next({ name: '404' })
       }
       next()
@@ -45,11 +55,9 @@ const routes = [
   }
 ]
 
-const router = new Router({
+export default new Router({
   mode: 'history',
   fallback: false,
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
-
-export default router
