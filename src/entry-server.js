@@ -30,6 +30,7 @@ export default context => {
 
       // no matched routes
       if ( ! matchedComponents.length ) {
+
         // eslint-disable-next-line
         reject({ code: 404 })
       }
@@ -38,6 +39,7 @@ export default context => {
 
         // call `asyncData()` on all matched route component
         Promise.all( matchedComponents.map( component => {
+
           if ( component.asyncData ) {
             return component.asyncData({
               store,
