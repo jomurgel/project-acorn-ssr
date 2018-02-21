@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from './actions'
 import mutations from './mutations'
-import { generateGetters } from './getters'
+import getters from './getters'
+import { POSTS_PER_PAGE } from '@root/webconfig'
 
 Vue.use( Vuex )
 
@@ -11,12 +12,11 @@ const state = {
   postCount: 0,
   blogPull: false,
   blogPullTime: '',
+  postsPerPage: POSTS_PER_PAGE,
   posts: [],
   menus: [],
   pages: {}
 }
-
-const getters = generateGetters( Object.keys( state ) )
 
 export default () => new Vuex.Store({
   state,
