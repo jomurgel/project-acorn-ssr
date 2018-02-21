@@ -8,7 +8,6 @@ export function makePostRequest( url ) {
   return HTTP.get( url ).then( ( response ) => {
 
     if ( response.status !== 200 || response.data.length === 0 ) {
-
       // If we don't recieve data push to 404 post.
       router.push({ name: '404' })
     }
@@ -23,7 +22,7 @@ export function makePostRequest( url ) {
         featuredImage: post.featured_image,
         id: post.id,
         modifiedDate: post.modified,
-        pageNumber: null,
+        pageNumber: 0,
         slug: post.slug,
         title: post.title.rendered,
         totalPosts: totalPostCount
