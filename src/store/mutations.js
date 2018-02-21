@@ -1,17 +1,24 @@
 import Vue from 'vue'
 
 export default {
+  setActivePosts: ( state, { posts, count }) => {
+    Vue.set( state.posts, count, posts )
+  },
   setPosts: ( state, [ posts, count ] ) => {
+
     posts.forEach( post => {
       if ( post ) {
 
-        // Set object data into array.
-        state.posts.push( post )
-
         // Set page number value.
         post['pageNumber'] = count
+
+        // Set object data into array.
+        state.posts.push( post )
       }
     })
+  },
+  setPost: ( state, { slug, post }) => {
+    state.posts.push( post )
   },
   setPostCount: ( state, count ) => {
     state.postCount = count
