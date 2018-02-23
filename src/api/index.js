@@ -7,9 +7,13 @@ export function makePostRequest( url ) {
 
   return HTTP.get( url ).then( ( response ) => {
 
-    if ( response.status !== 200 || response.data.length === 0 ) {
-      // If we don't recieve data push to 404 post.
-      router.push({ name: '404' })
+    // 404 if we have a good response, but no data.
+    // OR no response.
+    // OR anything other than a 200 response.
+    if ( ( response.status === 200 && response.data.length === 0 ) || response.length === 0 || response.status !== 200 ) {
+
+      // Push to 404 component.
+      router.push({ name: '404', params: { slug: '404' } })
     }
 
     const totalPostCount = response.headers['x-wp-total']
