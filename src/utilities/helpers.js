@@ -98,3 +98,23 @@ export function objectSize( object ) {
   }
   return size
 }
+
+/**
+ * Finds unique post between two arrays.
+ *
+ * @export
+ * @param {any} array list of posts.
+ * @returns unique posts.
+ */
+export function findUniquePost( array ) {
+
+  var posts = array.map( function( postOne ) {
+    return postOne.slug
+  })
+
+  return ! posts.some( function( postOne ) {
+    return posts.filter( function( postTwo ) {
+      return postTwo === postOne
+    }).length > 1
+  })
+}
