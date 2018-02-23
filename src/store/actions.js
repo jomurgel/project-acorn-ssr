@@ -1,5 +1,3 @@
-import { HTTP } from '../api/baseurl'
-import { POSTS_PER_PAGE } from '@root/webconfig'
 import { modifier } from '../api/location'
 import { getPagePullStatus } from '../utilities/helpers'
 import { makePostRequest } from '../api/index'
@@ -8,27 +6,38 @@ export default {
   getPage: ({ commit, state }, slug ) => {
 
     return state.pages[slug] ||
-      makePostRequest( modifier.pages + '/?slug=' + slug ).then( response => {
+      makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
 
-        // Get object in array.
-        const page = response[0]
+        if ( response.length > 0 ) {
 
-        commit( 'setPage', { slug, page })
+          // Get object in array.
+          const page = response[0]
 
+          commit( 'setPage', { slug, page })
+        }
       })
   },
   getPost: ({ commit, state }, slug ) => {
 
-    // Only get data if we don't already have it.
-    return state.posts.filter( post => post.slug === slug ) ||
-      makePostRequest( modifier.posts + '/?slug=' + slug ).then( response => {
+    // Find post by slug in posts state array.
+    const currentPost = state.posts.filter( post => { return post.slug === slug })[0]
 
-        // Get object in array.
-        const posts = response
+    if ( currentPost === undefined ) {
 
-        commit( 'setPosts', [ posts ] )
+      // Only get data if we don't already have it.
+      return makePostRequest( modifier.posts + '?slug=' + slug ).then( response => {
 
+        if ( response.length > 0 ) {
+
+          // Get object in array.
+          const post = response[0]
+
+          commit( 'setPost', { slug, post })
+        }
       })
+    }
+
+    return currentPost
   },
   getPosts: ({ commit, state }, count ) => {
 
@@ -45,11 +54,11 @@ export default {
     const havePosts = state.blogPull === true && state.blogPullDate - state.date < 24 * 60 * 60 * 1000
 
     // Our total postes per page.
-    const perPage = POSTS_PER_PAGE
+    const perPage = state.postsPerPage
 
     if ( ( hasPage === false || postsLength === 0 ) && ! havePosts ) {
 
-      makePostRequest( modifier.posts + '/?per_page=' + perPage + '&page=' + count ).then( response => {
+      return makePostRequest( modifier.posts + '/?per_page=' + perPage + '&page=' + count ).then( response => {
 
         const posts          = response
         const totalPostCount = parseInt( posts[0].totalPosts )
@@ -74,12 +83,14 @@ export default {
 
   },
   getMenus: ({ commit, state }) => {
-    return HTTP.get( modifier.menus ).then( ( response ) => {
-      if ( response.status === 200 && response.data.length > 0 ) {
-        commit( 'setMenus', response.data )
-      }
-    }).catch( ( error ) => {
-      console.log( error )
-    })
+
+    return state.menus ||
+      makePostRequest( modifier.menus ).then( response => {
+
+        if ( response.length > 0 ) {
+
+          commit( 'setMenus', response.data )
+        }
+      })
   }
 }
