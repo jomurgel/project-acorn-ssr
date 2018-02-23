@@ -14,7 +14,6 @@ I intended to build a website framework for the "real world" which handles analy
 
 ## Table of Contents
   * [Getting Started](#getting-started)
-  * [Configuration](#configuration)
   * [Documentation](#documentation)
   * [Contributing](#contributing)
   * [Roadmap](#roadmap)
@@ -44,9 +43,6 @@ $ npm run go
 ```
 
 View and test at [http://localhost:8080](http://localhost:8080).
-
-## Configuration
-Once spun up, the other important piece of the puzzle is to configure your site. This is done in the root directory's [webconfig.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/webconfig.js) file. More info and specifics can be found in the [wiki](https://github.com/jomurgel/project-acorn-ssr/wiki).
 
 ## Documentation
 Check out a [demo](https://node.jomurgel.com/) and the [wiki](https://github.com/jomurgel/project-acorn-ssr/wiki).
