@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination-group">
+  <div class="pagination-group" v-if="maxPage > 1">
     <router-link v-if="currentPage > 1" :to="'/blog/' + ( currentPage - 1 )">prev</router-link>
 
     <span> {{ currentPage }}/{{ maxPage }} </span>
