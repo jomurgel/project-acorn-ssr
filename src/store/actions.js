@@ -84,8 +84,6 @@ export default {
   },
   getMenus: ({ commit, state }) => {
 
-    console.log( ( new Date() ).getTime() - state.menuPullTime )
-
     // Let's check to see if the
     // menu modified date is more than 10 min old.
     let hasBeenUpdated = true
