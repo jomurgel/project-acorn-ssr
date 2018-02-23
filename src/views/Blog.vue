@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import { POSTS_PER_PAGE } from '@root/webconfig'
+import { mapGetters } from 'vuex'
+import pagination from './components/Pagination'
 
 export default {
   components: {
@@ -33,52 +34,37 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    console.log( '1' )
-    return store.dispatch( 'getPosts', route.query['page'] || 1 )
+    return store.dispatch( 'getPosts', parseInt( route.params.page ) || 1 )
   },
   computed: {
+    ...mapGetters({
+      posts: 'activePosts'
+    }),
     page() {
-      return Number( this.$route.params.page ) || 1
+      return parseInt( this.$route.params.page ) || 1
     },
     maxPage() {
-      return Math.ceil( this.$store.state.postCount / POSTS_PER_PAGE )
+      return Math.ceil( this.$store.state.postCount / this.$store.state.postsPerPage )
     },
     hasMore() {
       return this.page < this.maxPage
-    },
-    posts() {
-      return this.displayedItems.filter( e => e.pageNumber === this.displayedPage )
-    }
-  },
-  beforeMount() {
-    if ( this.$root._isMounted ) {
-      console.log( '2' )
-      this.loadItems( this.page || 1 )
-    }
-  },
-  watch: {
-    page( to, from ) {
-      console.log( '3' )
-      this.loadItems( to, from )
-    }
-  },
-  methods: {
-    loadItems( to = this.page, from = -1, next ) {
-
-      this.$store.dispatch( 'getPosts', this.page ).then( () => {
-
-        if ( this.page < 0 || this.page > this.maxPage ) {
-          this.$router.replace( `/${this.type}/1` )
-          return
-        }
-
-        this.displayedPage = to
-        this.displayedItems = this.$store.getters.posts
-      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  li {
+    list-style: none;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0;
+  }
 </style>
