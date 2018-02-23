@@ -21,13 +21,8 @@
 import { POSTS_PER_PAGE } from '@root/webconfig'
 
 export default {
-  data() {
-    return {
-      transition: 'slide-right',
-      displayedPage: Number( this.$route.params.page ) || 1,
-      displayedItems: this.$store.getters.posts,
-      type: 'blog'
-    }
+  components: {
+    pagination
   },
   meta() {
     const meta = {
