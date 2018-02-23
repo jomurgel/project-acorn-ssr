@@ -38,6 +38,14 @@ export default {
     featuredImage: function() {
       return setFeaturedImage( this.post )
     }
+  },
+  beforeRouteEnter( to, from, next ) {
+    next( vm => {
+      if ( ! vm.$store.getters.singlePost ) {
+        next({ name: '404', params: { slug: '404' } })
+      }
+    })
+    next()
   }
 }
 </script>

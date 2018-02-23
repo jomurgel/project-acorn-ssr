@@ -41,6 +41,14 @@ export default {
     featuredImage: function() {
       return setFeaturedImage( this.page )
     }
+  },
+  beforeRouteEnter( to, from, next ) {
+    next( vm => {
+      if ( ! vm.$store.state.pages[to.params.slug] ) {
+        next({ name: '404', params: { slug: '404' } })
+      }
+    })
+    next()
   }
 }
 </script>
