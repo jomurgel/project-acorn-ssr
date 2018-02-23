@@ -7,12 +7,13 @@ import createRouter from './router'
 import { sync } from 'vuex-router-sync'
 import metaMixin from './utilities/metaMixin'
 import * as filters from './utilities/filters'
+import { ANALYTICS } from '@root/webconfig'
 
 Vue.config.productionTip = false
 
 // Setup analytics.
 Vue.use( VueAnalytics, {
-  id: 'UA-XXXXX-X'
+  id: ANALYTICS
 })
 
 // mixin for handling head meta

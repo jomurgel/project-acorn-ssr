@@ -8,5 +8,6 @@ module.exports = {
   ICON: 'acorn.png', // roots to ./public/ folder
   AUTHOR: 'jomurgel',
   AUTHOR_URL: 'https://jomurgel.com',
-  POSTS_PER_PAGE: 2
+  POSTS_PER_PAGE: 2,
+  ANALYTICS: 'UA-XXXXX-X'
 }
