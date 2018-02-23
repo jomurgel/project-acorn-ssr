@@ -1,6 +1,6 @@
 import { modifier } from '../api/location'
 import { getPagePullStatus } from '../utilities/helpers'
-import { makePostRequest } from '../api/index'
+import { makePostRequest, makeMenuRequest } from '../api/index'
 
 export default {
   getPage: ({ commit, state }, slug ) => {
@@ -84,13 +84,11 @@ export default {
   },
   getMenus: ({ commit, state }) => {
 
-    return state.menus ||
-      makePostRequest( modifier.menus ).then( response => {
+    // No fallback needed, fires only once on app init.
+    return makeMenuRequest( modifier.menus ).then( response => {
 
-        if ( response.length > 0 ) {
-
-          commit( 'setMenus', response.data )
-        }
-      })
+      // Set menu array.
+      commit( 'setMenus', response )
+    })
   }
 }

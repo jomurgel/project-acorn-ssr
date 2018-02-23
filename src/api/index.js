@@ -43,3 +43,17 @@ export function makePostRequest( url ) {
     console.log( error )
   })
 }
+
+// Return promise from menu data.
+// Works with menues only
+export function makeMenuRequest( url ) {
+
+  return HTTP.get( url ).then( ( response ) => {
+
+    // Return array.
+    return response.data
+
+  }).catch( ( error ) => {
+    console.log( error )
+  })
+}
