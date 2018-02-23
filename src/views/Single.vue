@@ -39,6 +39,12 @@ export default {
       return setFeaturedImage( this.post )
     }
   },
+  beforeRouteUpdate( to, from, next ) {
+    if ( ! this.$store.getters.singlePost ) {
+      next({ name: '404', params: { slug: '404' } })
+    }
+    next()
+  },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
       if ( ! vm.$store.getters.singlePost ) {
