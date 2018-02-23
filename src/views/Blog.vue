@@ -1,26 +1,19 @@
 <template>
   <div class="posts">
-    <div class="news-list-nav">
-      <router-link v-if="page > 1" :to="'/' + type + '/' + (page - 1)">< prev</router-link>
-      <a v-else class="disabled">< prev</a>
-      <span>{{ page }}/{{ maxPage }}</span>
-      <router-link v-if="hasMore" :to="'/' + type + '/' + (page + 1)">more ></router-link>
-      <a v-else class="disabled">more ></a>
-    </div>
+    <transition name="fade" mode="out-in">
+      <div class="post-list" :key="page" v-if="page > 0">
+        <transition-group tag="ul" name="post">
+          <li v-for="post in posts" :key="post.id" class="post">
+            <h2>
+              <router-link :to="'/blog/' + post.slug"> {{ post.title }}</router-link>
+            </h2>
+            <div v-html="post.excerpt"></div>
+          </li>
+        </transition-group>
+      </div>
+    </transition>
     <hr/>
-    <div v-for="post in posts" :key="post.id" class="post">
-      <h2>
-        <router-link :to="{ path: 'blog/' + post.slug }"> {{ post.title }}</router-link>
-      </h2>
-      <div v-html="post.excerpt"></div>
-    </div>
-    <!-- <ul class="pagination">
-      <li v-for="n in totalPages" :key="n">
-        <router-link :to="{ name: 'blog', query: { page: n } }">
-          {{ n }}
-        </router-link>
-      </li>
-    </ul> -->
+    <pagination :current-page="page" :max-page="maxPage" :has-more="hasMore" />
   </div>
 </template>
 
