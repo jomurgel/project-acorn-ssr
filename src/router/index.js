@@ -53,7 +53,7 @@ const routes = [
   }
 ]
 
-export default new Router({
+export default () => new Router({
   mode: 'history',
   fallback: false,
   scrollBehavior: () => ({ y: 0 }),
