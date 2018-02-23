@@ -47,7 +47,10 @@ export function createApp( ssrContext ) {
   // Setup analytics.
   Vue.use( VueAnalytics, {
     id: ANALYTICS,
-    router
+    router,
+    autoTracking: {
+      skipSamePath: true
+    }
   })
 
   // expose the app, the router and the store.
