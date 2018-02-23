@@ -50,8 +50,8 @@ export default {
     // Check if we've already pulled our page.
     const hasPage = getPagePullStatus( state.posts, pageCount )
 
-    // Check if we have un-expired posts.
-    const havePosts = state.blogPull === true && state.blogPullDate - state.date < 24 * 60 * 60 * 1000
+    // Check if we have un-expired posts. More than 24 hours old.
+    const havePosts = state.blogPull === true && ( new Date() ).getTime() - state.blogPullDate >= 24 * 60 * 60 * 1000
 
     // Our total postes per page.
     const perPage = state.postsPerPage
@@ -84,11 +84,31 @@ export default {
   },
   getMenus: ({ commit, state }) => {
 
-    // No fallback needed, fires only once on app init.
-    return makeMenuRequest( modifier.menus ).then( response => {
+    console.log( ( new Date() ).getTime() - state.menuPullTime )
 
-      // Set menu array.
-      commit( 'setMenus', response )
-    })
+    // Let's check to see if the
+    // menu modified date is more than 24 hours old.
+    let hasBeenUpdated = true
+
+    // Set check if we have posts.
+    if ( state.menus.length > 0 ) {
+      hasBeenUpdated = ( new Date() ).getTime() - state.menuPullTime >= 24 * 60 * 60 * 1000
+    }
+
+    // If we have no menus OR we have menus and they're out of date.
+    if ( state.menus.length === 0 || hasBeenUpdated === true ) {
+
+      // No fallback needed, fires only once on app init.
+      return makeMenuRequest( modifier.menus ).then( response => {
+
+        // Set date of that pull.
+        commit( 'setMenuPullTimeStamp', ( new Date() ).getTime() )
+
+        // Set menu array.
+        commit( 'setMenus', response )
+      })
+    }
+
+    return state.menus
   }
 }

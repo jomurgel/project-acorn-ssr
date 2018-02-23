@@ -34,5 +34,8 @@ export default {
   },
   setMenus: ( state, menus ) => {
     state.menus = menus
+  },
+  setMenuPullTimeStamp: ( state, pullTime ) => {
+    state.menuPullTime = pullTime
   }
 }
