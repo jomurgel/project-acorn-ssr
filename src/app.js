@@ -11,11 +11,6 @@ import { ANALYTICS } from '@root/webconfig'
 
 Vue.config.productionTip = false
 
-// Setup analytics.
-Vue.use( VueAnalytics, {
-  id: ANALYTICS
-})
-
 // mixin for handling head meta
 Vue.mixin( metaMixin )
 
@@ -47,6 +42,12 @@ export function createApp( ssrContext ) {
     store,
     ssrContext,
     render: h => h( App )
+  })
+
+  // Setup analytics.
+  Vue.use( VueAnalytics, {
+    id: ANALYTICS,
+    router
   })
 
   // expose the app, the router and the store.
