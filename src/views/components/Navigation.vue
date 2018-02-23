@@ -8,7 +8,10 @@
       <router-link :to="{ path: '/' + item.object_slug }">{{ item.title }}</router-link>
     </li>
     <li>
-      <router-link :to="{ path: '/dfdsa' }">404</router-link>
+      <router-link :to="{ path: '/dfdsa' }">Page 404</router-link>
+    </li>
+    <li>
+      <router-link :to="{ path: '/blog/dfdsa' }">Single 404</router-link>
     </li>
     </template>
     <template v-else>
@@ -30,7 +33,7 @@ export default {
   data() {
     return {
       'menu': this.$store.state.menus,
-      'addMenu': BASE_URL + '/wp-admin/nav-menus.php'
+      'addMenu': BASE_URL + '/wp-admin/nav-menus.php' // Reroute to server install.
     }
   },
   computed: {
