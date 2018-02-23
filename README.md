@@ -10,7 +10,7 @@ This is a simple-ish Vue.js SPA and PWA built around the WordPress REST API inte
 
 I intended to build a website framework for the "real world" which handles analytics, SEO considerations, speed optimizations, server-side rendering, and better 404 handling.
 
-![Lighthouse Score So Far](https://user-images.githubusercontent.com/5230729/36620143-ea21ac14-18ae-11e8-9bb2-aa9a6de84b87.jpg)
+![Lighthouse Score So Far](https://user-images.githubusercontent.com/5230729/36620553-da7efd3c-18b0-11e8-9602-b19d485bccab.jpg)
 
 ## Table of Contents
   * [Getting Started](#getting-started)
