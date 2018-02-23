@@ -10,6 +10,8 @@ This is a simple-ish Vue.js SPA and PWA built around the WordPress REST API inte
 
 I intended to build a website framework for the "real world" which handles analytics, SEO considerations, speed optimizations, server-side rendering, and better 404 handling.
 
+![Lighthouse Score So Far](https://user-images.githubusercontent.com/5230729/36620143-ea21ac14-18ae-11e8-9bb2-aa9a6de84b87.jpg)
+
 ## Table of Contents
   * [Getting Started](#getting-started)
   * [Configuration](#configuration)
@@ -54,10 +56,6 @@ Contributions welcome. At this moment, other than adhering to the `.eslintrc` st
 
 ## Roadmap
 I've got big plans to keep this thing going and updated with updates to [vue.js](https://vuejs.org/v2/guide/), [vue-ssr](https://ssr.vuejs.org/en/), [vue-router](https://router.vuejs.org/en/), and [vuex](https://vuex.vuejs.org/en/intro.html). Feel free to [submit a ticket](https://github.com/jomurgel/project-acorn-ssr/issues) to add to the list below.
-
-- [ ] Increase [Lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en) score within the Progressive Web App.
-
-![Lighthouse Score So Far](https://user-images.githubusercontent.com/5230729/35288237-5affd8d0-0021-11e8-9f84-c994a52ea92a.png)
 
 - [ ] Better usage documentation (in progress).
 - [ ] Internazionalization
