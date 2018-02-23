@@ -87,12 +87,12 @@ export default {
     console.log( ( new Date() ).getTime() - state.menuPullTime )
 
     // Let's check to see if the
-    // menu modified date is more than 24 hours old.
+    // menu modified date is more than 10 min old.
     let hasBeenUpdated = true
 
     // Set check if we have posts.
     if ( state.menus.length > 0 ) {
-      hasBeenUpdated = ( new Date() ).getTime() - state.menuPullTime >= 24 * 60 * 60 * 1000
+      hasBeenUpdated = ( new Date() ).getTime() - state.menuPullTime >= 10 * 60 * 1000
     }
 
     // If we have no menus OR we have menus and they're out of date.
