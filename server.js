@@ -73,8 +73,8 @@ app.use( favicon( './public/' + siteIcon ) )
 // Set distribution and public directories.
 app.use( '/dist', serve( './dist', true ) )
 app.use( '/public', serve( './public', true ) )
-
-app.use( '/service-worker.js', serve( './dist/service-worker.js', true ) )
+app.use( '/manifest.json', serve( './public/manifest.json', true ) )
+app.use( '/service-worker.js', serve( './dist/service-worker.js' ) )
 
 // 1-second microcache.
 // https://www.nginx.com/blog/benefits-of-microcaching-nginx/
