@@ -1,5 +1,7 @@
 import { HTTP } from '../api/baseurl'
-import router from '../router'
+import createRouter from '../router'
+
+const router = createRouter()
 
 // Return promise from post data.
 // Works with posts (all) and individual pages or posts.
