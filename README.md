@@ -45,7 +45,9 @@ $ npm run go
 View and test at [http://localhost:8080](http://localhost:8080).
 
 ## Documentation
-Check out a [demo](https://node.jomurgel.com/) or get started with the [documentation](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/installation.md).
+Check out a [demo](https://node.jomurgel.com/) or get started with the documentation below.
+
+  * [Installation](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/installation.md)
 
 ## Contributing
 Contributions welcome. At this moment, other than adhering to the `.eslintrc` standards, normal Github processes apply. Branch from master or fork repo and issue pull request for review. New ideas, refactoring, or additional features are always welcome.

@@ -9,7 +9,7 @@ Next configure the [webconfig.js](https://github.com/jomurgel/project-acorn-ssr/
 
 ### Webconfig Options
 
-```
+``` javascript
 module.exports = {
   PORT: '8080',
   TITLE: 'Default Site Title',
