@@ -1,6 +1,8 @@
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/5230729/33617130-23b70b74-d99c-11e7-8964-a3adaad9cf65.png" alt="project acorn" title="project acorn" />
-	<h1>Project Acorn + Vue.js</h1>
+</p>
+<h1 align="center">Project Acorn + Vue.js</h1>
+<p align="center">
 	<img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version 1.1.5" />
 </p>
 
