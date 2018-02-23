@@ -108,12 +108,12 @@ export function objectSize( object ) {
  */
 export function findUniquePost( array ) {
 
-  var posts = array.map( function( postOne ) {
+  var posts = array.map( ( postOne ) => {
     return postOne.slug
   })
 
-  return ! posts.some( function( postOne ) {
-    return posts.filter( function( postTwo ) {
+  return ! posts.some( ( postOne ) => {
+    return posts.filter( ( postTwo ) => {
       return postTwo === postOne
     }).length > 1
   })
