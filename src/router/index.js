@@ -21,10 +21,9 @@ const routes = [
     name: 'single',
     component: createView( 'Single' ),
     beforeEnter: ( to, from, next ) => {
-
-      // If we land on our single component, but have no slug, 404.
-      if ( to.name === 'single' && to.slug === undefined ) {
-        next({ name: '404' })
+      // Handler for refresh or if we land and redirect to single component.
+      if ( to.params.slug === '404' ) {
+        next({ name: '404', params: { slug: '404' } })
       }
       next()
     }
@@ -34,10 +33,9 @@ const routes = [
     name: 'page',
     component: createView( 'Page' ),
     beforeEnter: ( to, from, next ) => {
-
-      // If we land on our single component, but have no slug, 404.
-      if ( to.name === 'page' && to.slug === undefined ) {
-        next({ name: '404' })
+      // Handler for refresh or if we land and redirect to page component.
+      if ( to.params.slug === '404' ) {
+        next({ name: '404', params: { slug: '404' } })
       }
       next()
     }
