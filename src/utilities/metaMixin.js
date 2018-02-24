@@ -47,7 +47,7 @@ function clientMeta( data ) {
   }
 
   // Always update URL.
-  document.querySelector( 'meta[name=og:url]' ).setAttribute( 'content', window.location.href )
+  metaList[7].content = window.location.href
 }
 
 const clientMetaMixin = {
