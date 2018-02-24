@@ -5,8 +5,23 @@ import { makePostRequest, makeMenuRequest } from '../api/index'
 export default {
   getPage: ({ commit, state }, slug ) => {
 
-    return state.pages[slug] ||
-      makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
+    // Let's check to see if the
+    // modified date is more than 24 hours old.
+    let needsUpdated = false
+
+    // Set check if we have unexpired posts.
+    if ( state.pages[slug] ) {
+
+      // Set modified date.
+      const postData = state.pages[slug]
+      const postModDate = new Date( postData.modifiedDate )
+
+      needsUpdated = ( new Date() ).getTime() - postModDate >= 24 * 60 * 60 * 1000
+    }
+
+    if ( ! state.pages[slug] || needsUpdated === true ) {
+
+      return makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
 
         if ( response.length > 0 ) {
 
@@ -16,6 +31,9 @@ export default {
           commit( 'setPage', { slug, page })
         }
       })
+    }
+
+    return state.pages[slug]
   },
   getPost: ({ commit, state }, slug ) => {
 
