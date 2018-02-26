@@ -1,9 +1,9 @@
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/5230729/33617130-23b70b74-d99c-11e7-8964-a3adaad9cf65.png" alt="project acorn" title="project acorn" />
+	<img src="https://user-images.githubusercontent.com/5230729/33617107-17ebf23c-d99c-11e7-8aa6-ec559bd23027.png" alt="project acorn" title="project acorn" />
 </p>
 <h1 align="center">Project Acorn + Vue.js</h1>
 <p align="center">
-	<img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version 1.1.5" />
+	<img src="https://img.shields.io/badge/version-1.1.5-green.svg" alt="Version 1.1.5" />
 </p>
 
 This is a simple-ish Vue.js SPA and PWA built around the WordPress REST API intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but can also be used independantly as a SPA with some modification.
