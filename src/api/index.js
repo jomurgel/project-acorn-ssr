@@ -1,6 +1,7 @@
 import { HTTP } from '../api/baseurl'
 import createRouter from '../router'
 
+// Create router.
 const router = createRouter()
 
 // Return promise from post data.
