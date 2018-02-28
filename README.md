@@ -6,7 +6,9 @@
 	<img src="https://img.shields.io/badge/version-1.1.5-green.svg" alt="Version 1.1.5" />
 </p>
 
-This is a simple-ish Vue.js SPA and PWA built around the WordPress REST API intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but can also be used independantly as a SPA with some modification.
+This is a simple-ish [Vue.js](https://vuejs.org/) SPA and PWA built around the WordPress REST API utilizing [vue-router](https://router.vuejs.org/en/), [vuex](https://vuex.vuejs.org/en/intro.html), and [axios](https://github.com/axios/axios), intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but can also be used independantly as a SPA with some modification.
+
+Some extra bells and whistles from [SVG Sprite](https://github.com/jkphl/svg-sprite) and [Nuxt.js](https://nuxtjs.org/).
 
 I intended to build a website framework for the "real world" which handles analytics, SEO considerations, speed optimizations, server-side rendering, and better 404 handling.
 
@@ -48,6 +50,7 @@ View and test at [http://localhost:8080](http://localhost:8080).
 Check out a [demo](https://node.jomurgel.com/) or get started with the documentation below.
 
   * [Installation](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/installation.md)
+  * [API Handling](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/api.md)
 
 ## Contributing
 Contributions welcome. At this moment, other than adhering to the `.eslintrc` standards, normal Github processes apply. Branch from master or fork repo and issue pull request for review. New ideas, refactoring, or additional features are always welcome.
