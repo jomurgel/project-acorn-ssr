@@ -8,6 +8,7 @@ The api directory contains three files for working with out API requests and end
 Our api index forms a global helper function to make a requests for posts, pages, etc called `makePostRequest`, handle some errors, reroute to 404 if necessary or return a response for use with our [Vuex](https://github.com/vuejs/vuex) store.
 
 Usage
+
 ``` javascript
  return makePostRequest( URL ).then( response => {
 	 // do something
@@ -15,6 +16,27 @@ Usage
 ```
 
 This checks to make sure our data exists or the request is valid and returns a filtered array (removing all of the uncessary post data) and keeping the store clean.
+
+Specifically we're returning a new object for each post item and cutting out the nested objects that the WordPress REST API sets up for many things. Most notably exceprt, title, and content where `post.content` is an object containing `rednered` data.
+
+``` javascript
+const postArray = response.data.map( ( post ) => {
+	const filtered = {
+	content: post.content.rendered,
+	excerpt: post.excerpt.rendered,
+	featuredImage: post.featured_image,
+	id: post.id,
+	modifiedDate: post.modified,
+	pageNumber: 0,
+	slug: post.slug,
+	title: post.title.rendered,
+	totalPosts: totalPostCount
+	}
+
+	// Return new array object.
+	return filtered
+})
+```
 
 If the request is invalid, or the data object is empty we route to the `404` component. More about that [here](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/router.md).
 
