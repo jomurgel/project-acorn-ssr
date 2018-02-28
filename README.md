@@ -51,6 +51,8 @@ Check out a [demo](https://node.jomurgel.com/) or get started with the documenta
 
   * [Installation](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/installation.md)
   * [API Handling](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/api.md)
+  * [Routing](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/router.md)
+  * [Vuex Store](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/store.md)
 
 ## Contributing
 Contributions welcome. At this moment, other than adhering to the `.eslintrc` standards, normal Github processes apply. Branch from master or fork repo and issue pull request for review. New ideas, refactoring, or additional features are always welcome.
