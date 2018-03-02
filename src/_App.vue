@@ -31,6 +31,7 @@ export default {
       return this.loaded
     }
   },
+  // Only handles Client-side.
   beforeMount() {
     this.isLoaded()
   }
