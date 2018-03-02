@@ -55,6 +55,7 @@ commit( 'setPosts', [ posts, count ] )
 ```
 
 ## mutations.js
-
+In Progress
 
 ## getters.js
+In Progress
