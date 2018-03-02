@@ -6,7 +6,6 @@ import createStore from './store'
 import createRouter from './router'
 import { sync } from 'vuex-router-sync'
 import metaMixin from './utilities/metaMixin'
-import * as filters from './utilities/filters'
 import { ANALYTICS } from '@root/webconfig'
 
 Vue.config.productionTip = false
@@ -16,11 +15,6 @@ Vue.mixin( metaMixin )
 
 // common components
 Vue.use( Common )
-
-// register global utility filters.
-Object.keys( filters ).forEach( key => {
-  Vue.filter( key, filters[key] )
-})
 
 // Expose a factory function that creates a fresh set of store, router,
 // app instances on each call (which is called for each SSR request)
