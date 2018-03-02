@@ -63,7 +63,6 @@ Contributions welcome. At this moment, other than adhering to the `.eslintrc` st
 ## Roadmap
 I've got big plans to keep this thing going and updated with updates to [vue.js](https://vuejs.org/v2/guide/), [vue-ssr](https://ssr.vuejs.org/en/), [vue-router](https://router.vuejs.org/en/), and [vuex](https://vuex.vuejs.org/en/intro.html). Feel free to [submit a ticket](https://github.com/jomurgel/project-acorn-ssr/issues) to add to the list below.
 
-- [ ] Better usage documentation (in progress).
 - [ ] Internazionalization
 - [ ] Optimize webpack/bundling.
 
