@@ -54,6 +54,8 @@ Check out a [demo](https://node.jomurgel.com/) or get started with the documenta
   * [Routing](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/router.md)
   * [Vuex Store](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/store.md)
   * [Utilities](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/utilities.md)
+  * [Views & Components](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/views.md)
+  * [Additional Notes](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/additional.md)
 
 ## Contributing
 Contributions welcome. At this moment, other than adhering to the `.eslintrc` standards, normal Github processes apply. Branch from master or fork repo and issue pull request for review. New ideas, refactoring, or additional features are always welcome.
@@ -66,7 +68,7 @@ I've got big plans to keep this thing going and updated with updates to [vue.js]
 - [ ] Optimize webpack/bundling.
 
 ## Credits
-- [Nuxt.js](https://nuxtjs.org/)
+- [nuxt.js](https://nuxtjs.org/)
 - [vuejs/vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0)
 - [Eric Fuller](https://github.com/efuller) for helping cleanup and refactor all the things.
 
