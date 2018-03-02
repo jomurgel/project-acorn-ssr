@@ -34,3 +34,9 @@ Where the name refers to a SVG file located in the `root > assets > icons` folde
 This file handles the dynamic registration/generation of the SVG component. 
 
 More documentation on that [here](https://vuejs.org/v2/api/#Vue-component).
+
+## Run SVG Compile
+``` bash
+#Compile SVG Sprite
+$ npm run svg
+```
