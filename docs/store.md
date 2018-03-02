@@ -23,6 +23,8 @@ const state = {
 ```
 
 ## actions.js
+[Vuex Reference: Actions](https://vuex.vuejs.org/en/actions.html).
+
 Our actions handles all of our API pulls for pages, single posts, all posts by page and menus.
 
 You can get the idea of how actions work in general in the [vuex docs](https://vuex.vuejs.org/en/actions.html), but the important bits revolved around our data checks and our `commits` which influence our `getters` and `mutations`.
@@ -55,7 +57,20 @@ commit( 'setPosts', [ posts, count ] )
 ```
 
 ## mutations.js
-In Progress
+[Vuex Reference: Mutations](https://vuex.vuejs.org/en/mutations.html).
+
+Our mutations handle data as expected. A couple of caveats to their functionalyt.
+
+The `setPage` mutation uses the [`Vue.set`](https://vuejs.org/v2/api/#Vue-set) function to adjust the object and `Array.push` to the store as we pull the data. We're only pulling page data here if the data is needed and not all at once.
+
+``` javascript
+setPage: ( state, { slug, page }) => {
+  Vue.set( state.pages, slug, page )
+},
+```
+
+The `setPosts` and `setActivePosts` functions works in a similar ways.
 
 ## getters.js
+[Vuex Reference: Getters](https://vuex.vuejs.org/en/getters.html).
 In Progress
