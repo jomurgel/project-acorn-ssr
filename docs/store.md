@@ -73,4 +73,53 @@ The `setPosts` and `setActivePosts` functions works in a similar ways.
 
 ## getters.js
 [Vuex Reference: Getters](https://vuex.vuejs.org/en/getters.html).
-In Progress
+
+The getters for `pages` is pretty standard, returning the state array.
+
+Our `posts` getter returns the state array, but does some extra checks to make sure that we're only returning unique results in the event that we visit a single post, but then visit the blog. Rather than dealing with duplicates at the time of pull, we're weeding out the posts in our getters here.
+
+``` javascript
+posts: ( state ) => {
+
+  let unique = findUniquePost( state.posts )
+
+  let newPostsArray = state.posts.forEach( ( post, index ) => {
+
+    if ( post && post['pageNumber'] === 0 && unique === false ) {
+      state.posts.splice( index, 1 )
+    }
+  })
+
+  return newPostsArray
+}
+```
+
+Our `activePosts` getter returns posts from our `posts` array which also share the page parameter with our blog.
+
+``` javascript
+activePosts: ( state ) => {
+
+  const page = parseInt( state.route.params.page ) || 1
+
+  let activePosts = state.posts.filter( e => {
+    return e.pageNumber === page
+  })
+
+  return activePosts
+}
+```
+
+Our `singlePosts` getter returns a single post who's slug matches the slug in the `posts` array.
+
+``` javascript
+singlePost: ( state ) => {
+
+  const post = state.route.params.slug
+
+  let singlePost = state.posts.filter( e => {
+    return e.slug === post
+  })
+
+  return singlePost[0]
+}
+```
