@@ -11,11 +11,14 @@ const state = {
   posts: {},
   navigation: {
     pullDate: '',
-    menus: []
+    menus: [] // array of menus.
   }, // array of menus.
   pages: {}, // page objects.
   postsPerPage: POSTS_PER_PAGE,
-  categories: [], // array of categories.
+  taxonomy: {
+    pullDate: '',
+    categories: [] // array of categories.
+  },
   active: {
     archive: '', // current archive.
     category: '', // active category
