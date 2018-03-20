@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import createStore from '../store'
 
 Vue.use( Router )
 
@@ -13,8 +14,8 @@ const routes = [
   },
   {
     path: '/blog/:page(\\d+)?',
-    name: 'blog',
-    component: createView( 'Blog' )
+    name: 'archive',
+    component: createView( 'Archive' )
   },
   {
     path: '/blog/:slug',
@@ -23,6 +24,19 @@ const routes = [
     beforeEnter: ( to, from, next ) => {
       // Handler for refresh or if we land and redirect to single component.
       if ( to.params.slug === '404' ) {
+        next({ name: '404', params: { slug: '404' } })
+      }
+      next()
+    }
+  },
+  {
+    path: '/category/:type/:page(\\d+)?',
+    name: 'category',
+    component: createView( 'Archive' ),
+    beforeEnter: ( to, from, next ) => {
+      // Access store and confirm that we have an archive before proceeding.
+      const store = createStore()
+      if ( ! store.state.archives.hasOwnProperty( to.params.type ) ) {
         next({ name: '404', params: { slug: '404' } })
       }
       next()
