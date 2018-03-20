@@ -11,7 +11,10 @@ export default {
     state.navigation.pullDate = pullTime
   },
   SET_CATEGORIES: ( state, categories ) => {
-    state.categories = categories
+    state.taxonomy.categories = categories
+  },
+  SET_CATEGORIES_PULL_DATE: ( state, pullTime ) => {
+    state.taxonomy.pullDate = pullTime
   },
   SET_ARCHIVE: ( state, { type, ids, count }) => {
 
@@ -44,10 +47,5 @@ export default {
   },
   SET_POST_COUNT: ( state, { type, postCount }) => {
     state.archives[type].postCount = postCount
-  },
-  SET_ARCHIVE_PULL_DATE: ( state, { type, count, date }) => {
-    const pageCount = count - 1
-
-    Vue.set( state.archives[type].pullDate, pageCount, date )
   }
 }
