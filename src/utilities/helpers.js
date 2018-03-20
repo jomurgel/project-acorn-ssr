@@ -103,3 +103,37 @@ export function findUniquePost( array ) {
     }).length > 1
   })
 }
+
+/**
+ * Return ID from category slug.
+ *
+ * @export
+ * @param {any} array array of categories
+ * @param {any} slug category slug
+ */
+export function matchCateogryToId( array, slug ) {
+
+  const categoryFilter = array.filter( ( cat ) => {
+    const valid = cat.slug === slug
+
+    if ( valid ) {
+      return valid // true
+    }
+  }).map( item => {
+    return item.id
+  })
+
+  // Return category id string or null.
+  return categoryFilter[0] || null
+}
+
+/**
+ * Captialize first letter.
+ *
+ * @export
+ * @param {any} string text string
+ * @returns capitalized first letter
+ */
+export function capitalize( string ) {
+  return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
+}
