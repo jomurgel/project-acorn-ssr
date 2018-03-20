@@ -5,16 +5,21 @@ import { matchCateogryToId, objectSize } from '../utilities/helpers'
 export default {
   getPage: ({ commit, state }, slug ) => {
 
-    return makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
+    console.log( slug )
 
-      if ( response.length > 0 ) {
+    if ( objectSize( state.pages[slug] ) === 0 || ( state.pages[slug] > 0 && ( ( new Date() ).getTime() - state.page[slug].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
 
-        // Get first object in array.
-        const page = response[0]
+      return makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
 
-        commit( 'SET_PAGE', { slug, page })
-      }
-    })
+        if ( response.length > 0 ) {
+
+          // Get first object in array.
+          const page = response[0]
+
+          commit( 'SET_PAGE', { slug, page })
+        }
+      })
+    }
   },
   getPost: ({ commit, state }, slug ) => {
 
