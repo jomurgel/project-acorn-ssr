@@ -64,6 +64,17 @@ export default {
     // Our total postes per page.
     const perPage = state.postsPerPage
 
+    // Set active types regardless of if we have posts.
+    if ( objectSize( state.archives[type].posts[( count - 1 )] ) > 0 ) {
+      // Set active type.
+      commit( 'SET_ACTIVE_TYPE', type )
+
+      if ( catId ) {
+        // Set active category if it exists.
+        commit( 'SET_ACTIVE_CAT', catId )
+      }
+    }
+
     // If our post on the page are empty.
     if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 ) {
 
