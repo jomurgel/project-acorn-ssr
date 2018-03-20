@@ -1,40 +1,29 @@
-import { findUniquePost } from '@src/utilities/helpers'
-
 export default {
   pages: ( state ) => {
     return state.pages
   },
-  posts: ( state ) => {
+  activeIds: ( state ) => {
+    const { active, archives } = state
 
-    let unique = findUniquePost( state.posts )
+    if ( ! active.archive ) {
+      return ''
+    }
 
-    let newPostsArray = state.posts.forEach( ( post, index ) => {
+    const page  = Number( state.route.params.page ) || 1
+    const count = page - 1
 
-      if ( post && post['pageNumber'] === 0 && unique === false ) {
-        state.posts.splice( index, 1 )
-      }
-    })
-
-    return newPostsArray
+    return archives[active.archive].posts[count]
   },
-  activePosts: ( state ) => {
-
-    const page = parseInt( state.route.params.page ) || 1
-
-    let activePosts = state.posts.filter( e => {
-      return e.pageNumber === page
-    })
-
-    return activePosts
+  // items that should be currently displayed.
+  // this Array may not be fully fetched.
+  activePosts: ( state, getters ) => {
+    if ( getters.activeIds ) {
+      return getters.activeIds.map( id => {
+        return state.posts[id]
+      })
+    }
   },
   singlePost: ( state ) => {
-
-    const post = state.route.params.slug
-
-    let singlePost = state.posts.filter( e => {
-      return e.slug === post
-    })
-
-    return singlePost[0]
+    return state.posts[state.active.post]
   }
 }
