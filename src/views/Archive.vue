@@ -58,7 +58,6 @@ export default {
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
-
       // Async to fix moving between routes where same component is used. Blog to Category for example.
       const { asyncData } = vm.$options
       asyncData({
