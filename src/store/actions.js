@@ -38,7 +38,7 @@ export default {
     const type = payload.type
     const count = payload.count
 
-    const catId = matchCateogryToId( state.categories, type )
+    const catId = matchCateogryToId( state.taxonomy.categories, type )
 
     // Cat query.
     const categories = catId ? '&categories=' + catId : ''
@@ -47,7 +47,7 @@ export default {
     const perPage = state.postsPerPage
 
     // If our post on the page are empty.
-    if ( objectSize( state.archives[type].posts[count] ) === 0 ) {
+    if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 ) {
 
       return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
 
@@ -79,14 +79,18 @@ export default {
       })
     }
 
+    // If we have posts, let's check each one to see which, if any, we need to pull again.
     if ( objectSize( state.archives[type].posts[count] ) > 0 ) {
-      const validPostCheck = state.archives[type].posts[count].map( ( post ) => {
+      const validPostCheck = state.archives[type].posts[count].filter( ( post ) => {
 
-        if ( ( ( new Date() ).getTime() - state.posts[post].pullDate >= 24 * 60 * 60 * 1000 ) ) {
-          return `include[]=${post}`
-        }
+        // If post was lasted pulled more than 24 hours ago.
+        return ( ( new Date() ).getTime() - state.posts[post].pullDate >= 24 * 60 * 60 * 1000 )
+
+      }).map( item => {
+        return `include[]=${item}`
       })
 
+      // If our check returned a result, make a new request of just those posts.
       if ( validPostCheck.length > 0 ) {
 
         const postIds = validPostCheck.join( '&' )
@@ -105,23 +109,34 @@ export default {
   },
   getMenus: ({ commit, state }) => {
 
-    // No fallback needed, fires only once on app init.
-    return makeSimpleRequest( modifier.menus ).then( response => {
+    // Pull if we don't have the menu OR if we do, but it's older than 24 hours.
+    if ( state.navigation.menus.length === 0 || ( state.navigation.menus.length > 0 && ( new Date() ).getTime() - state.navigation.pullDate >= 24 * 60 * 60 * 1000 ) ) {
 
-      // Set date of that pull.
-      commit( 'SET_MENU_PULL_DATE', ( new Date() ).getTime() )
+      // No fallback needed, fires only once on app init.
+      return makeSimpleRequest( modifier.menus ).then( response => {
 
-      // Set menu array.
-      commit( 'SET_MENUS', response )
-    })
+        // Set date of that pull.
+        commit( 'SET_MENU_PULL_DATE', ( new Date() ).getTime() )
+
+        // Set menu array.
+        commit( 'SET_MENUS', response )
+      })
+    }
   },
   getCategories: ({ commit, state }) => {
 
-    // No fallback needed, fires only once on app init.
-    return makeSimpleRequest( modifier.cat ).then( response => {
+    // Pull if we don't have the menu OR if we do, but it's older than 24 hours.
+    if ( state.taxonomy.categories.length === 0 || ( state.taxonomy.categories.length > 0 && ( new Date() ).getTime() - state.taxonomy.pullDate >= 24 * 60 * 60 * 1000 ) ) {
 
-      // Set category array.
-      commit( 'SET_CATEGORIES', response )
-    })
+      // No fallback needed, fires only once on app init.
+      return makeSimpleRequest( modifier.cat ).then( response => {
+
+        // Set date of that pull.
+        commit( 'SET_CATEGORIES_PULL_DATE', ( new Date() ).getTime() )
+
+        // Set category array.
+        commit( 'SET_CATEGORIES', response )
+      })
+    }
   }
 }
