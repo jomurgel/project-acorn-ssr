@@ -1,7 +1,9 @@
 export default {
+  // Set single page by slug.
   singlePage: ( state ) => {
     return state.pages[state.route.params.slug]
   },
+  // set active ids for use in pagination.
   activeIds: ( state ) => {
     const { active, archives } = state
 
@@ -23,6 +25,7 @@ export default {
       })
     }
   },
+  // Set single post by id.
   singlePost: ( state ) => {
     return state.posts[state.active.post]
   }
