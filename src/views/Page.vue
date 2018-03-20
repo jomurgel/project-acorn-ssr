@@ -27,11 +27,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pages: 'pages'
+      page: 'singlePage'
     }),
-    page: function() {
-      return this.$store.state.pages[this.$route.params.slug]
-    },
     title: function() {
       return setTitle( this.page )
     },

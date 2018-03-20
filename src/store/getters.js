@@ -1,6 +1,6 @@
 export default {
-  pages: ( state ) => {
-    return state.pages
+  singlePage: ( state ) => {
+    return state.pages[state.route.params.slug]
   },
   activeIds: ( state ) => {
     const { active, archives } = state
