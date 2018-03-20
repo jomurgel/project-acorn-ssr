@@ -49,7 +49,7 @@ export function makePostRequest( url ) {
 
 // Return promise from menu data.
 // Works with menues only
-export function makeMenuRequest( url ) {
+export function makeSimpleRequest( url ) {
 
   return HTTP.get( url ).then( ( response ) => {
 
@@ -59,4 +59,14 @@ export function makeMenuRequest( url ) {
   }).catch( ( error ) => {
     console.log( error )
   })
+}
+
+// Get all menus slug/description
+export function makeMenuRequest( url ) {
+  return HTTP.get( url )
+}
+
+// Get all pages.
+export function makeCategoryRequest( url ) {
+  return HTTP.get( url )
 }
