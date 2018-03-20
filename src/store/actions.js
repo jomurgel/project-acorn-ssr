@@ -5,8 +5,6 @@ import { matchCateogryToId, objectSize } from '../utilities/helpers'
 export default {
   getPage: ({ commit, state }, slug ) => {
 
-    console.log( slug )
-
     if ( objectSize( state.pages[slug] ) === 0 || ( state.pages[slug] > 0 && ( ( new Date() ).getTime() - state.page[slug].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
 
       return makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
