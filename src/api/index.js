@@ -24,12 +24,12 @@ export function makePostRequest( url ) {
     // Set placeholder array & Remove unecessary data from object.
     const postArray = response.data.map( ( post ) => {
       const filtered = {
+        pullDate: ( new Date() ).getTime(),
         content: post.content.rendered,
         excerpt: post.excerpt.rendered,
         featuredImage: post.featured_image,
         id: post.id,
         modifiedDate: post.modified,
-        pageNumber: 0,
         slug: post.slug,
         title: post.title.rendered,
         totalPosts: totalPostCount
