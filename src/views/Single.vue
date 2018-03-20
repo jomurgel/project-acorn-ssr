@@ -47,16 +47,11 @@ export default {
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
-      // Validate our route by comparing our existing posts to our route slug.
-      // Handler for changing route, but updating component.
-      const validRoute = Object.keys( vm.$store.state.posts ).filter( ( key ) => {
-        console.log( key )
-        return ( vm.$store.state.posts[key].slug === to.params.slug )
-      }).length > 0
-      if ( ! validRoute ) {
+      if ( ! vm.$store.getters.singlePost ) {
         next({ name: '404', params: { slug: '404' } })
       }
     })
+    next()
   }
 }
 </script>

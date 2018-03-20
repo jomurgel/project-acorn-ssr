@@ -40,14 +40,14 @@ export default {
     }
   },
   beforeRouteUpdate( to, from, next ) {
-    if ( ! this.$store.state.pages[to.params.slug] ) {
+    if ( ! this.$store.getters.singlePage ) {
       next({ name: '404', params: { slug: '404' } })
     }
     next()
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
-      if ( ! vm.$store.state.pages[to.params.slug] ) {
+      if ( ! vm.$store.getters.singlePage ) {
         next({ name: '404', params: { slug: '404' } })
       }
     })
