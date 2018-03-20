@@ -128,6 +128,21 @@ export function matchCateogryToId( array, slug ) {
 }
 
 /**
+ * Return size of object.
+ *
+ * @param {*} obj object full of posts.
+ */
+export function objectSize( object ) {
+  let size = 0
+  let key
+
+  for ( key in object ) {
+    if ( object.hasOwnProperty( key ) ) size ++
+  }
+  return size
+}
+
+/**
  * Captialize first letter.
  *
  * @export

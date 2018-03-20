@@ -1,6 +1,6 @@
 import { modifier } from '../api/location'
 import { makePostRequest, makeSimpleRequest } from '../api/index'
-import { matchCateogryToId } from '../utilities/helpers'
+import { matchCateogryToId, objectSize } from '../utilities/helpers'
 
 export default {
   getPage: ({ commit, state }, slug ) => {
@@ -46,34 +46,62 @@ export default {
     // Our total postes per page.
     const perPage = state.postsPerPage
 
-    return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
+    // If our post on the page are empty.
+    if ( objectSize( state.archives[type].posts[count] ) === 0 ) {
 
-      // Response.
-      const posts     = response
-      const postCount = parseInt( posts[0].totalPosts )
+      return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
 
-      const ids = posts.map( ( post ) => {
-        return post.id
+        // Response.
+        const posts     = response
+        const postCount = parseInt( posts[0].totalPosts )
+
+        const ids = posts.map( ( post ) => {
+          return post.id
+        })
+
+        // Set active type.
+        commit( 'SET_ACTIVE_TYPE', type )
+
+        if ( catId ) {
+          // Set active category if it exists.
+          commit( 'SET_ACTIVE_CAT', catId )
+        }
+
+        // Set ids by type.
+        commit( 'SET_ARCHIVE', { type, ids, count })
+
+        // Set total number of posts.
+        commit( 'SET_POST_COUNT', { type, postCount })
+
+        // Set post data and page location.
+        commit( 'SET_POSTS', { posts })
+
+      })
+    }
+
+    if ( objectSize( state.archives[type].posts[count] ) > 0 ) {
+      const validPostCheck = state.archives[type].posts[count].map( ( post ) => {
+
+        if ( ( ( new Date() ).getTime() - state.posts[post].pullDate >= 24 * 60 * 60 * 1000 ) ) {
+          return `include[]=${post}`
+        }
       })
 
-      // Set active type.
-      commit( 'SET_ACTIVE_TYPE', type )
+      if ( validPostCheck.length > 0 ) {
 
-      if ( catId ) {
-        // Set active category if it exists.
-        commit( 'SET_ACTIVE_CAT', catId )
+        const postIds = validPostCheck.join( '&' )
+
+        // Only get data if we don't already have it.
+        return makePostRequest( modifier.posts + '?' + postIds ).then( response => {
+
+          // Get object in array.
+          const posts = response
+
+          // Set post data and page location.
+          commit( 'SET_POSTS', { posts })
+        })
       }
-
-      // Set ids by type.
-      commit( 'SET_ARCHIVE', { type, ids, count })
-
-      // Set total number of posts.
-      commit( 'SET_POST_COUNT', { type, postCount })
-
-      // Set post data and page location.
-      commit( 'SET_POSTS', { posts })
-
-    })
+    }
   },
   getMenus: ({ commit, state }) => {
 
