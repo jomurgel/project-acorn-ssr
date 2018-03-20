@@ -4,8 +4,14 @@ import createRouter from '../router'
 // Create router.
 const router = createRouter()
 
-// Return promise from post data.
-// Works with posts (all) and individual pages or posts.
+/**
+ * Return promise from post data.
+ * Works with posts (all) and individual pages or posts.
+ *
+ * @export
+ * @param {any} url rest api url
+ * @returns array
+ */
 export function makePostRequest( url ) {
 
   return HTTP.get( url ).then( ( response ) => {
@@ -47,8 +53,13 @@ export function makePostRequest( url ) {
   })
 }
 
-// Return promise from menu data.
-// Works with menues only
+/**
+ * Return promise from ulr
+ *
+ * @export
+ * @param {any} url rest api url
+ * @returns array
+ */
 export function makeSimpleRequest( url ) {
 
   return HTTP.get( url ).then( ( response ) => {
@@ -59,14 +70,4 @@ export function makeSimpleRequest( url ) {
   }).catch( ( error ) => {
     console.log( error )
   })
-}
-
-// Get all menus slug/description
-export function makeMenuRequest( url ) {
-  return HTTP.get( url )
-}
-
-// Get all pages.
-export function makeCategoryRequest( url ) {
-  return HTTP.get( url )
 }
