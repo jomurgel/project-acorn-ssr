@@ -158,7 +158,7 @@ export default {
     if ( state.taxonomy.categories.length === 0 || ( state.taxonomy.categories.length > 0 && ( new Date() ).getTime() - state.taxonomy.pullDate >= 24 * 60 * 60 * 1000 ) ) {
 
       // No fallback needed, fires only once on app init.
-      return makeSimpleRequest( modifier.cat ).then( response => {
+      return makeSimpleRequest( modifier.categ ).then( response => {
 
         // Set date of that pull.
         commit( 'SET_CATEGORIES_PULL_DATE', ( new Date() ).getTime() )
