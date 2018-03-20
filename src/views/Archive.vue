@@ -57,7 +57,6 @@ export default {
     }
   },
   beforeRouteEnter( to, from, next ) {
-
     // If we're moving from one route to the next, but using the same component.
     if ( ( to.name === 'category' && from.name === 'archive' ) || ( to.name === 'archive' && from.name === 'category' ) ) {
       next( vm => {
