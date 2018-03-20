@@ -61,6 +61,8 @@ export default {
     // If we're moving from one route to the next, but using the same component.
     if ( ( to.name === 'category' && from.name === 'archive' ) || ( to.name === 'archive' && from.name === 'category' ) ) {
       next( vm => {
+
+        // Async to fix moving between routes where same component is used. Blog to Category for example.
         const { asyncData } = vm.$options
         asyncData({
           store: vm.$store,
