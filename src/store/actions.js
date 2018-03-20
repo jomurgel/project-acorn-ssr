@@ -23,19 +23,32 @@ export default {
   },
   getPost: ({ commit, state }, slug ) => {
 
-    // Only get data if we don't already have it.
-    return makePostRequest( modifier.posts + '?slug=' + slug ).then( response => {
-
-      if ( response.length > 0 ) {
-
-        // Get object in array.
-        const post = response[0]
-
-        commit( 'SET_ACTIVE_POST', post.id )
-
-        commit( 'SET_POST', { post })
-      }
+    const hasPost = Object.keys( state.posts ).filter( ( key ) => {
+      return state.posts[key].slug === slug
     })
+
+    if ( hasPost.length > 0 ) {
+      // Always set active post regardless of whether or not we request.
+      commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
+    }
+
+    // Pull if we don't have posts, or the ones we have are more than 24 hours old.
+    if ( hasPost.length === 0 || ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
+
+      // Only get data if we don't already have it.
+      return makePostRequest( modifier.posts + '?slug=' + slug ).then( response => {
+
+        if ( response.length > 0 ) {
+
+          // Get object in array.
+          const post = response[0]
+
+          commit( 'SET_ACTIVE_POST', post.id )
+
+          commit( 'SET_POST', { post })
+        }
+      })
+    }
   },
   getPosts: ({ commit, state }, payload ) => {
 
