@@ -51,7 +51,6 @@ export default {
         next({ name: '404', params: { slug: '404' } })
       }
     })
-    next()
   }
 }
 </script>

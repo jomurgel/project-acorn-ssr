@@ -57,20 +57,15 @@ export default {
     }
   },
   beforeRouteEnter( to, from, next ) {
-    // If we're moving from one route to the next, but using the same component.
-    if ( ( to.name === 'category' && from.name === 'archive' ) || ( to.name === 'archive' && from.name === 'category' ) ) {
-      next( vm => {
+    next( vm => {
 
-        // Async to fix moving between routes where same component is used. Blog to Category for example.
-        const { asyncData } = vm.$options
-        asyncData({
-          store: vm.$store,
-          route: to
-        }).then( next ).catch( next )
-      })
-    } else {
-      next()
-    }
+      // Async to fix moving between routes where same component is used. Blog to Category for example.
+      const { asyncData } = vm.$options
+      asyncData({
+        store: vm.$store,
+        route: to
+      }).then( next ).catch( next )
+    })
   }
 }
 </script>
