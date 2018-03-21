@@ -72,11 +72,61 @@ export default {
 <style lang="scss" scoped>
   li {
     list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .post-list {
+    position: relative;
+  }
+
+  .post-enter,
+  .post-enter-active {
+    animation: fadein 0.5s;
+  }
+
+  .post-leave,
+  .post-leave-active {
+    animation: fadeout 0.5s;
+  }
+
+  @keyframes fadein {
+      0% {
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+      }
+      50% {
+          opacity: 0.5;
+      }
+      100% {
+          opacity: 1;
+          max-height: auto;
+      }
+  }
+
+  @keyframes fadeout {
+      0% {
+          opacity: 1;
+          max-height: auto;
+          margin-top: -15px;
+      }
+      50% {
+          opacity: 0.5;
+      }
+      100% {
+          max-height: 0;
+          opacity: 0;
+          margin-top: 0;
+          overflow: hidden;
+      }
   }
 
   .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s ease-in-out;
+  .fade-leave-active,
+  .post-leave,
+  .post-enter {
+    transition: opacity 0.3s, margin-top 0.3s ease-in-out;
   }
 
   .fade-enter,
