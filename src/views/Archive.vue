@@ -4,10 +4,14 @@
     <hr/>
     <transition name="fade" mode="out-in">
       <div class="post-list" :key="page" v-if="page > 0">
-        <transition-group tag="ul" name="post" :key="page.id">
+        <transition-group
+          tag="ul"
+          name="post"
+          :key="page.id"
+        >
           <li v-for="post in posts" :key="post.id" class="post">
             <h2>
-              <router-link :to="'/blog/' + post.slug"> {{ post.title }}</router-link>
+              <router-link :to="{ name: 'archive', params: { slug: post.slug } }"> {{ post.title }}</router-link>
             </h2>
             <div v-html="post.excerpt"></div>
           </li>
@@ -20,10 +24,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import pagination from './components/Pagination'
-// import createStore from '../store'
-
-// Create router.
-// const store = createStore()
 
 export default {
   components: {
