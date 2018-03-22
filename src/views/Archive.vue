@@ -4,17 +4,8 @@
     <hr/>
     <transition name="fade" mode="out-in">
       <div class="post-list" :key="page" v-if="page > 0">
-        <transition-group
-          tag="ul"
-          name="post"
-          :key="page.id"
-        >
-          <li v-for="post in posts" :key="post.id" class="post">
-            <h2>
-              <router-link :to="{ name: 'archive', params: { slug: post.slug } }"> {{ post.title }}</router-link>
-            </h2>
-            <div v-html="post.excerpt"></div>
-          </li>
+        <transition-group tag="ul" name="post" :key="page.id">
+          <postItem v-for="post in posts" :key="post.id" :post="post" />
         </transition-group>
       </div>
     </transition>
@@ -24,10 +15,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import pagination from './components/Pagination'
+import postItem from './components/Post-Item'
 
 export default {
   components: {
-    pagination
+    pagination,
+    postItem
   },
   meta() {
     const meta = {
@@ -76,8 +69,16 @@ export default {
     margin: 0;
   }
 
-  .post-list {
-    position: relative;
+  // Switching routes, loading new getter posts transition.
+  .post-leave-to {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .post-enter,
+  .post-leave {
+    transition: opacity 0.3s, margin-top 0.3s ease-in-out;
   }
 
   .post-enter,
@@ -96,9 +97,6 @@ export default {
           opacity: 0;
           overflow: hidden;
       }
-      50% {
-          opacity: 0.5;
-      }
       100% {
           opacity: 1;
           max-height: auto;
@@ -111,9 +109,6 @@ export default {
           max-height: auto;
           margin-top: -15px;
       }
-      50% {
-          opacity: 0.5;
-      }
       100% {
           max-height: 0;
           opacity: 0;
@@ -122,11 +117,10 @@ export default {
       }
   }
 
+  // Pagination transitions.
   .fade-enter-active,
-  .fade-leave-active,
-  .post-leave,
-  .post-enter {
-    transition: opacity 0.3s, margin-top 0.3s ease-in-out;
+  .fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
   }
 
   .fade-enter,
