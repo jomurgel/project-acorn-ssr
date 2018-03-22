@@ -35,9 +35,6 @@ export default {
       return state.posts[key].slug === slug
     })
 
-    // Always set active post regardless of whether or not we request.
-    commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
-
     // Pull if we don't have posts.
     if ( hasPost.length === 0 ||
 
@@ -53,10 +50,16 @@ export default {
           // Get object in array.
           const post = response[0]
 
+          // Always set active post regardless of whether or not we request.
+          commit( 'SET_ACTIVE_POST', post.id )
+
           // Set post object to store. Getter handles all else.
           commit( 'SET_POST', { post })
         }
       })
+    } else {
+      // Always set active post regardless of whether or not we request.
+      commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
     }
   },
   // Handle Posts (bulk) Requests.
