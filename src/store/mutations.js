@@ -1,10 +1,6 @@
 import Vue from 'vue'
 
 export default {
-  // Pages
-  SET_PAGE: ( state, { slug, page }) => {
-    Vue.set( state.pages, slug, page )
-  },
   // Menues
   SET_MENUS: ( state, menus ) => {
     state.navigation.menus = menus
@@ -25,7 +21,6 @@ export default {
     const pageCount = count - 1
 
     Vue.set( state.archives[type].posts, pageCount, ids )
-
   },
   SET_ACTIVE_TYPE: ( state, type ) => {
     state.active.archive = type
@@ -48,7 +43,7 @@ export default {
   SET_POST_COUNT: ( state, { type, postCount }) => {
     state.archives[type].postCount = postCount
   },
-  // Single Post
+  // Single Post and Pages
   SET_POST: ( state, { post }) => {
     if ( post ) {
       Vue.set( state.posts, post.id, post )
