@@ -1,19 +1,16 @@
 <template>
-  <div v-if="page" :key="page.id">
-    <h1>{{ title }}</h1>
-    <div v-html="page.content"></div>
-  </div>
+  <postSingle v-if="post" :key="post.id" :post="post" class="post" />
   <div v-else><!-- 404 Handler --></div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import {
-  setTitle,
-  setDescription,
-  setFeaturedImage } from '@src/utilities/helpers'
+import postSingle from './components/Post-Single'
 
 export default {
+  components: {
+    postSingle
+  },
   meta() {
     const meta = {
       title: this.title,
@@ -27,27 +24,18 @@ export default {
   },
   computed: {
     ...mapGetters({
-      page: 'singlePage'
-    }),
-    title: function() {
-      return setTitle( this.page )
-    },
-    description: function() {
-      return setDescription( this.page )
-    },
-    featuredImage: function() {
-      return setFeaturedImage( this.page )
-    }
+      post: 'singlePost'
+    })
   },
   beforeRouteUpdate( to, from, next ) {
-    if ( ! this.$store.getters.singlePage ) {
+    if ( ! this.$store.getters.singlePost ) {
       next({ name: '404', params: { slug: '404' } })
     }
     next()
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
-      if ( ! vm.$store.getters.singlePage ) {
+      if ( ! vm.$store.getters.singlePost ) {
         next({ name: '404', params: { slug: '404' } })
       }
     })

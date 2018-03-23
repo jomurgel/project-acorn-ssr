@@ -20,7 +20,6 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    console.log( 'request' )
     return store.dispatch( 'getPost', route.params.slug )
   },
   computed: {
@@ -35,7 +34,6 @@ export default {
     next()
   },
   beforeRouteEnter( to, from, next ) {
-    console.log( 'test' )
     next( vm => {
       if ( ! vm.$store.getters.singlePost ) {
         next({ name: '404', params: { slug: '404' } })
