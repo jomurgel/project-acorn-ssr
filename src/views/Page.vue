@@ -1,11 +1,15 @@
 <template>
   <postSingle v-if="post" :key="post.id" :post="post" class="post" />
-  <div v-else><!-- 404 Handler --></div>
+  <div v-else>{{ $store.getters.singlePost }}<!-- 404 Handler --></div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import postSingle from './components/Post-Single'
+import {
+  setTitle,
+  setDescription,
+  setFeaturedImage } from '@src/utilities/helpers'
 
 export default {
   components: {
@@ -25,7 +29,16 @@ export default {
   computed: {
     ...mapGetters({
       post: 'singlePost'
-    })
+    }),
+    title: function() {
+      return setTitle( this.post )
+    },
+    description: function() {
+      return setDescription( this.post )
+    },
+    featuredImage: function() {
+      return setFeaturedImage( this.post )
+    }
   },
   beforeRouteUpdate( to, from, next ) {
     if ( ! this.$store.getters.singlePost ) {

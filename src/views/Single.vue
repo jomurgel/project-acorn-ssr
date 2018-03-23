@@ -6,6 +6,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import postSingle from './components/Post-Single'
+import {
+  setTitle,
+  setDescription,
+  setFeaturedImage } from '@src/utilities/helpers'
 
 export default {
   components: {
@@ -25,7 +29,16 @@ export default {
   computed: {
     ...mapGetters({
       post: 'singlePost'
-    })
+    }),
+    title: function() {
+      return setTitle( this.post )
+    },
+    description: function() {
+      return setDescription( this.post )
+    },
+    featuredImage: function() {
+      return setFeaturedImage( this.post )
+    }
   },
   beforeRouteUpdate( to, from, next ) {
     if ( ! this.$store.getters.singlePost ) {
