@@ -6,29 +6,7 @@ export default {
   // Handle page requests.
   getPage: ({ commit, state }, slug ) => {
 
-    // If we don't have a post that matches the slug.
-    if ( objectSize( state.pages[slug] ) === 0 ||
-
-      // Or if we do, but the date of pull is more than 24 hours ago.
-      ( state.pages[slug] > 0 && ( ( new Date() ).getTime() - state.page[slug].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
-
-      // Make api request for page by slug.
-      return makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
-
-        // Assume we have a response.
-        if ( response.length > 0 ) {
-
-          // Get first object in array.
-          const page = response[0]
-
-          // Set page to store, slug as key.
-          commit( 'SET_PAGE', { slug, page })
-        }
-      })
-    }
-  },
-  // Handle single post request.
-  getPost: ({ commit, state }, slug ) => {
+    const url = modifier.pages
 
     // If we have matching posts by slug.
     const hasPost = Object.keys( state.posts ).filter( ( key ) => {
@@ -42,10 +20,16 @@ export default {
       ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
 
       // Only get data if we don't already have it.
-      return makePostRequest( modifier.posts + '?slug=' + slug ).then( response => {
+      return makePostRequest( url + '?slug=' + slug ).then( response => {
+
+        console.log( response.length )
 
         // Assume we have a response.
-        if ( response.length > 0 ) {
+        if ( response.length === 0 ) {
+
+          // Reset active post.
+          commit( 'SET_ACTIVE_POST', '' )
+        } else {
 
           // Get object in array.
           const post = response[0]
@@ -57,10 +41,49 @@ export default {
           commit( 'SET_POST', { post })
         }
       })
-    } else {
-      // Always set active post regardless of whether or not we request.
-      commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
     }
+    // Always set active post regardless of whether or not we request.
+    commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
+  },
+  // Handle single post request.
+  getPost: ({ commit, state }, slug ) => {
+
+    const url = modifier.posts
+
+    // If we have matching posts by slug.
+    const hasPost = Object.keys( state.posts ).filter( ( key ) => {
+      return state.posts[key].slug === slug
+    })
+
+    // Pull if we don't have posts.
+    if ( hasPost.length === 0 ||
+
+      // Or if we do, but the date of pull is more than 24 hours ago.
+      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
+
+      // Only get data if we don't already have it.
+      return makePostRequest( url + '?slug=' + slug ).then( response => {
+
+        // Assume we have a response.
+        if ( response.length === 0 ) {
+
+          // Reset active post.
+          commit( 'SET_ACTIVE_POST', '' )
+        } else {
+
+          // Get object in array.
+          const post = response[0]
+
+          // Always set active post regardless of whether or not we request.
+          commit( 'SET_ACTIVE_POST', post.id )
+
+          // Set post object to store. Getter handles all else.
+          commit( 'SET_POST', { post })
+        }
+      })
+    }
+    // Always set active post regardless of whether or not we request.
+    commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
   },
   // Handle Posts (bulk) Requests.
   getPosts: ({ commit, state }, payload ) => {
