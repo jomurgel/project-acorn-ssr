@@ -18,18 +18,6 @@ const routes = [
     component: createView( 'Archive' )
   },
   {
-    path: '/blog/:slug',
-    name: 'single',
-    component: createView( 'Single' ),
-    beforeEnter: ( to, from, next ) => {
-      // Handler for refresh or if we land and redirect to single component.
-      if ( to.params.slug === '404' ) {
-        next({ name: '404', params: { slug: '404' } })
-      }
-      next()
-    }
-  },
-  {
     path: '/category/:type/:page(\\d+)?',
     name: 'category',
     component: createView( 'Archive' ),
@@ -43,11 +31,23 @@ const routes = [
     }
   },
   {
+    path: '/blog/:slug',
+    name: 'single',
+    component: createView( 'Single' ),
+    beforeEnter: ( to, from, next ) => {
+      // Handler for refresh or if we land and redirect to single component.
+      if ( to.params.slug === '404' ) {
+        next({ name: '404', params: { slug: '404' } })
+      }
+      next()
+    }
+  },
+  {
     path: '/:slug',
     name: 'page',
     component: createView( 'Page' ),
     beforeEnter: ( to, from, next ) => {
-      // Handler for refresh or if we land and redirect to page component.
+      // Handler for refresh or if we land and redirect to single component.
       if ( to.params.slug === '404' ) {
         next({ name: '404', params: { slug: '404' } })
       }
@@ -62,6 +62,7 @@ const routes = [
     component: createView( '404' )
   },
   {
+    // Total fallback. More or less unecessary with this setup.
     path: '*',
     redirect: '/404'
   }
