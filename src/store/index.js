@@ -30,7 +30,7 @@ const state = {
       postCount: '', // int.
       posts: [] // array of objects.
     },
-    category: { // category name — in this case a category named category.
+    vue: { // category name — in this case a category named category.
       postCount: '', // int.
       posts: [] // array of objects.
     }
