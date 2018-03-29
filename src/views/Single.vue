@@ -1,19 +1,20 @@
 <template>
-  <div v-if="post" :key="post.id" class="post">
-    <h1>{{ title }}</h1>
-    <div v-html="post.content"></div>
-  </div>
+  <postSingle v-if="post" :key="post.id" :post="post" class="post" />
   <div v-else><!-- 404 Handler --></div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import postSingle from './components/Post-Single'
 import {
   setTitle,
   setDescription,
   setFeaturedImage } from '@src/utilities/helpers'
 
 export default {
+  components: {
+    postSingle
+  },
   meta() {
     const meta = {
       title: this.title,
@@ -41,17 +42,16 @@ export default {
   },
   beforeRouteUpdate( to, from, next ) {
     if ( ! this.$store.getters.singlePost ) {
-      next({ name: '404', params: { slug: '404' } })
+      next({ name: '404', params: { error: '404' } })
     }
     next()
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
       if ( ! vm.$store.getters.singlePost ) {
-        next({ name: '404', params: { slug: '404' } })
+        next({ name: '404', params: { error: '404' } })
       }
     })
-    next()
   }
 }
 </script>

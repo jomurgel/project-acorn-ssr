@@ -1,0 +1,45 @@
+//--------------------------------------------------------------
+// WordPress Alignment
+//--------------------------------------------------------------
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.5em;
+}
+
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.5em;
+}
+
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+//-----------------------------------------
+// Captions
+//-----------------------------------------
+
+// sass-lint:disable no-qualifying-elements
+
+.wp-caption {
+	margin-bottom: 1.5em;
+	padding-top: 0.3125rem;
+	text-align: center;
+}
+
+.wp-caption img {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+}
+
+.wp-caption p.wp-caption-text {
+	font-size: 0.625rem;
+	line-height: 1.5;
+	margin: 0;
+}

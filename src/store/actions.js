@@ -1,130 +1,210 @@
 import { modifier } from '../api/location'
-import { getPagePullStatus } from '../utilities/helpers'
-import { makePostRequest, makeMenuRequest } from '../api/index'
+import { makePostRequest, makeSimpleRequest } from '../api/index'
+import { matchCateogryToId, objectSize } from '../utilities/helpers'
 
 export default {
+  // Handle page requests.
   getPage: ({ commit, state }, slug ) => {
 
-    // Let's check to see if the
-    // modified date is more than 24 hours old.
-    let needsUpdated = false
+    const url = modifier.pages
 
-    // Set check if we have unexpired posts.
-    if ( state.pages[slug] ) {
+    // If we have matching posts by slug.
+    const hasPost = Object.keys( state.posts ).filter( ( key ) => {
+      return state.posts[key].slug === slug
+    })
 
-      // Set modified date.
-      const postData = state.pages[slug]
-      const postModDate = new Date( postData.modifiedDate )
+    // Pull if we don't have posts.
+    if ( hasPost.length === 0 ||
 
-      needsUpdated = ( new Date() ).getTime() - postModDate >= 24 * 60 * 60 * 1000
-    }
-
-    if ( ! state.pages[slug] || needsUpdated === true ) {
-
-      return makePostRequest( modifier.pages + '?slug=' + slug ).then( response => {
-
-        if ( response.length > 0 ) {
-
-          // Get object in array.
-          const page = response[0]
-
-          commit( 'setPage', { slug, page })
-        }
-      })
-    }
-
-    return state.pages[slug]
-  },
-  getPost: ({ commit, state }, slug ) => {
-
-    // Find post by slug in posts state array.
-    const currentPost = state.posts.filter( post => { return post.slug === slug })[0]
-
-    if ( currentPost === undefined ) {
+      // Or if we do, but the date of pull is more than 24 hours ago.
+      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
 
       // Only get data if we don't already have it.
-      return makePostRequest( modifier.posts + '?slug=' + slug ).then( response => {
+      return makePostRequest( url + '?slug=' + slug ).then( response => {
 
-        if ( response.length > 0 ) {
+        // Assume we have a response.
+        if ( response.length === 0 ) {
+
+          // Reset active post.
+          commit( 'SET_ACTIVE_POST', '' )
+        } else {
 
           // Get object in array.
           const post = response[0]
 
-          commit( 'setPost', { slug, post })
+          // Always set active post regardless of whether or not we request.
+          commit( 'SET_ACTIVE_POST', post.id )
+
+          // Set post object to store. Getter handles all else.
+          commit( 'SET_POST', { post })
         }
       })
     }
-
-    return currentPost
+    // Always set active post regardless of whether or not we request.
+    commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
   },
-  getPosts: ({ commit, state }, count ) => {
+  // Handle single post request.
+  getPost: ({ commit, state }, slug ) => {
 
-    // Make int.
-    const pageCount = parseInt( count )
+    const url = modifier.posts
 
-    // Get post object length.
-    const postsLength = state.posts.length
+    // If we have matching posts by slug.
+    const hasPost = Object.keys( state.posts ).filter( ( key ) => {
+      return state.posts[key].slug === slug
+    })
 
-    // Check if we've already pulled our page.
-    const hasPage = getPagePullStatus( state.posts, pageCount )
+    // Pull if we don't have posts.
+    if ( hasPost.length === 0 ||
 
-    // Check if we have un-expired posts. More than 24 hours old.
-    const havePosts = state.blogPull === true && ( new Date() ).getTime() - state.blogPullDate >= 24 * 60 * 60 * 1000
+      // Or if we do, but the date of pull is more than 24 hours ago.
+      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
+
+      // Only get data if we don't already have it.
+      return makePostRequest( url + '?slug=' + slug ).then( response => {
+
+        // Assume we have a response.
+        if ( response.length === 0 ) {
+
+          // Reset active post.
+          commit( 'SET_ACTIVE_POST', '' )
+        } else {
+
+          // Get object in array.
+          const post = response[0]
+
+          // Always set active post regardless of whether or not we request.
+          commit( 'SET_ACTIVE_POST', post.id )
+
+          // Set post object to store. Getter handles all else.
+          commit( 'SET_POST', { post })
+        }
+      })
+    }
+    // Always set active post regardless of whether or not we request.
+    commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
+  },
+  // Handle Posts (bulk) Requests.
+  getPosts: ({ commit, state }, payload ) => {
+
+    // From payload.
+    const type  = payload.type
+    const count = payload.count
+
+    const catId = matchCateogryToId( state.taxonomy.categories, type )
+
+    // Cat query.
+    const categories = catId ? '&categories=' + catId : ''
 
     // Our total postes per page.
     const perPage = state.postsPerPage
 
-    if ( ( hasPage === false || postsLength === 0 ) && ! havePosts ) {
+    // Set active type.
+    commit( 'SET_ACTIVE_TYPE', type )
 
-      return makePostRequest( modifier.posts + '/?per_page=' + perPage + '&page=' + count ).then( response => {
+    if ( catId ) {
+      // Set active category if it exists.
+      commit( 'SET_ACTIVE_CAT', catId )
+    }
 
-        const posts          = response
-        const totalPostCount = parseInt( posts[0].totalPosts )
+    // If our post on the page are empty.
+    if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 ) {
 
-        // Set total number of posts.
-        commit( 'setPostCount', totalPostCount )
+      // Only get data if we don't already have it.
+      return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
 
-        // Set blog pull status to true.
-        commit( 'setBlogPullStatus', true )
+        // Response.
+        const posts = response
 
-        // Set date of that pull.
-        commit( 'setBlogPullTimeStamp', ( new Date() ).getTime() )
+        if ( posts.length !== 0 ) {
 
-        // Set post data and page location.
-        commit( 'setPosts', [ posts, count ] )
+          const postCount = parseInt( posts[0].totalPosts )
 
+          // Return post ids to server to archive object.
+          const ids = posts.map( ( post ) => {
+            return post.id
+          })
+
+          // Set ids by type.
+          commit( 'SET_ARCHIVE', { type, ids, count })
+
+          // Set total number of posts.
+          commit( 'SET_POST_COUNT', { type, postCount })
+
+          // Set post data and page location.
+          commit( 'SET_POSTS', { posts })
+        }
       })
     }
 
-    // Return our store.
-    return state.posts
+    // If we have posts, let's check each one to see which, if any, we need to pull again.
+    if ( objectSize( state.archives[type].posts[count] ) > 0 ) {
 
+      // Make sure we have valid posts — loop through and return query for posts that are outdated.
+      const validPostCheck = state.archives[type].posts[count].filter( ( post ) => {
+
+        // If post was lasted pulled more than 24 hours ago.
+        return ( ( new Date() ).getTime() - state.posts[post].pullDate >= 24 * 60 * 60 * 1000 )
+
+      }).map( item => {
+        return `include[]=${item}`
+      })
+
+      // If our check returned a result, make a new request of just those posts.
+      if ( validPostCheck.length > 0 ) {
+
+        // Join query data with & to successfully request API data.
+        const postIds = validPostCheck.join( '&' )
+
+        // Only get data if we don't already have it.
+        return makePostRequest( modifier.posts + '?' + postIds ).then( response => {
+
+          // Get object in array.
+          const posts = response
+
+          // Set post data and page location.
+          commit( 'SET_POSTS', { posts })
+        })
+      }
+    }
   },
+  // Get Menus.
   getMenus: ({ commit, state }) => {
 
-    // Let's check to see if the
-    // menu modified date is more than 10 min old.
-    let hasBeenUpdated = true
+    // Pull if we don't have the menu OR if we do.
+    if ( state.navigation.menus.length === 0 ||
 
-    // Set check if we have posts.
-    if ( state.menus.length > 0 ) {
-      hasBeenUpdated = ( new Date() ).getTime() - state.menuPullTime >= 10 * 60 * 1000
-    }
-
-    // If we have no menus OR we have menus and they're out of date.
-    if ( state.menus.length === 0 || hasBeenUpdated === true ) {
+      // Or if we do, but the date of pull is more than 24 hours ago.
+      ( state.navigation.menus.length > 0 && ( new Date() ).getTime() - state.navigation.pullDate >= 24 * 60 * 60 * 1000 ) ) {
 
       // No fallback needed, fires only once on app init.
-      return makeMenuRequest( modifier.menus ).then( response => {
+      return makeSimpleRequest( modifier.menus ).then( response => {
 
         // Set date of that pull.
-        commit( 'setMenuPullTimeStamp', ( new Date() ).getTime() )
+        commit( 'SET_MENU_PULL_DATE', ( new Date() ).getTime() )
 
         // Set menu array.
-        commit( 'setMenus', response )
+        commit( 'SET_MENUS', response )
       })
     }
+  },
+  // Get Categories.
+  getCategories: ({ commit, state }) => {
 
-    return state.menus
+    // Pull if we don't have the menu OR if we do
+    if ( state.taxonomy.categories.length === 0 ||
+
+      // Or if we do, but the date of pull is more than 24 hours ago.
+      ( state.taxonomy.categories.length > 0 && ( new Date() ).getTime() - state.taxonomy.pullDate >= 24 * 60 * 60 * 1000 ) ) {
+
+      // No fallback needed, fires only once on app init.
+      return makeSimpleRequest( modifier.categ ).then( response => {
+
+        // Set date of that pull.
+        commit( 'SET_CATEGORIES_PULL_DATE', ( new Date() ).getTime() )
+
+        // Set category array.
+        commit( 'SET_CATEGORIES', response )
+      })
+    }
   }
 }

@@ -22,6 +22,7 @@ Specifically we're returning a new object for each post item and cutting out the
 ``` javascript
 const postArray = response.data.map( ( post ) => {
 	const filtered = {
+	pullDate: ( new Date() ).getTime(), // Sets date/time of pull for reference later.
 	content: post.content.rendered,
 	excerpt: post.excerpt.rendered,
 	featuredImage: post.featured_image,
@@ -48,10 +49,12 @@ If our response status is `200` AND we don't have any data OR our response is em
 // 404 if we have a good response, but no data.
 // OR no response.
 // OR anything other than a 200 response.
-if ( ( response.status === 200 && response.data.length === 0 ) || response.length === 0 || response.status !== 200 ) {
+if ( ( response.status === 200 && response.data.length === 0 ) || response.status !== 200 ) {
 
 	// Push to 404 component.
-	router.push({ name: '404', params: { slug: '404' } })
+	router.push({ name: '404', params: { error: '404' } })
+
+	return []
 }
 ```
 
@@ -72,12 +75,13 @@ export const HTTP = axios.create({
 ```
 
 ## location.js
-Locations are an object of our endpoints in use. By default, posts, menus (as custom endpoint), and pages.
+Locations are an object of our endpoints in use. By default, posts, menus (as custom endpoint), categories, and pages.
 
 ``` javascript
 export const modifier = {
   posts: 'wp/v2/posts',
   menus: 'wp-api-menus/v2/menus',
-  pages: 'wp/v2/pages'
+  pages: 'wp/v2/pages',
+  categ: 'wp/v2/categories'
 }
 ```

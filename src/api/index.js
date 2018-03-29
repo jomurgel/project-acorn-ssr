@@ -4,8 +4,14 @@ import createRouter from '../router'
 // Create router.
 const router = createRouter()
 
-// Return promise from post data.
-// Works with posts (all) and individual pages or posts.
+/**
+ * Return promise from post data.
+ * Works with posts (all) and individual pages or posts.
+ *
+ * @export
+ * @param {any} url rest api url
+ * @returns array
+ */
 export function makePostRequest( url ) {
 
   return HTTP.get( url ).then( ( response ) => {
@@ -13,10 +19,12 @@ export function makePostRequest( url ) {
     // 404 if we have a good response, but no data.
     // OR no response.
     // OR anything other than a 200 response.
-    if ( ( response.status === 200 && response.data.length === 0 ) || response.length === 0 || response.status !== 200 ) {
+    if ( ( response.status === 200 && response.data.length === 0 ) || response.status !== 200 ) {
 
       // Push to 404 component.
-      router.push({ name: '404', params: { slug: '404' } })
+      router.push({ name: '404', params: { error: '404' } })
+
+      return []
     }
 
     const totalPostCount = response.headers['x-wp-total']
@@ -24,12 +32,12 @@ export function makePostRequest( url ) {
     // Set placeholder array & Remove unecessary data from object.
     const postArray = response.data.map( ( post ) => {
       const filtered = {
+        pullDate: ( new Date() ).getTime(),
         content: post.content.rendered,
         excerpt: post.excerpt.rendered,
         featuredImage: post.featured_image,
         id: post.id,
         modifiedDate: post.modified,
-        pageNumber: 0,
         slug: post.slug,
         title: post.title.rendered,
         totalPosts: totalPostCount
@@ -47,9 +55,14 @@ export function makePostRequest( url ) {
   })
 }
 
-// Return promise from menu data.
-// Works with menues only
-export function makeMenuRequest( url ) {
+/**
+ * Return promise from ulr
+ *
+ * @export
+ * @param {any} url rest api url
+ * @returns array
+ */
+export function makeSimpleRequest( url ) {
 
   return HTTP.get( url ).then( ( response ) => {
 

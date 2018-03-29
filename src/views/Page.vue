@@ -1,19 +1,20 @@
 <template>
-  <div v-if="page" :key="page.id">
-    <h1>{{ title }}</h1>
-    <div v-html="page.content"></div>
-  </div>
-  <div v-else><!-- 404 Handler --></div>
+  <postSingle v-if="post" :key="post.id" :post="post" class="post" />
+  <div v-else>{{ $store.getters.singlePost }}<!-- 404 Handler --></div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import postSingle from './components/Post-Single'
 import {
   setTitle,
   setDescription,
   setFeaturedImage } from '@src/utilities/helpers'
 
 export default {
+  components: {
+    postSingle
+  },
   meta() {
     const meta = {
       title: this.title,
@@ -27,34 +28,30 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pages: 'pages'
+      post: 'singlePost'
     }),
-    page: function() {
-      return this.$store.state.pages[this.$route.params.slug]
-    },
     title: function() {
-      return setTitle( this.page )
+      return setTitle( this.post )
     },
     description: function() {
-      return setDescription( this.page )
+      return setDescription( this.post )
     },
     featuredImage: function() {
-      return setFeaturedImage( this.page )
+      return setFeaturedImage( this.post )
     }
   },
   beforeRouteUpdate( to, from, next ) {
-    if ( ! this.$store.state.pages[to.params.slug] ) {
-      next({ name: '404', params: { slug: '404' } })
+    if ( ! this.$store.getters.singlePost ) {
+      next({ name: '404', params: { error: '404' } })
     }
     next()
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
-      if ( ! vm.$store.state.pages[to.params.slug] ) {
-        next({ name: '404', params: { slug: '404' } })
+      if ( ! vm.$store.getters.singlePost ) {
+        next({ name: '404', params: { error: '404' } })
       }
     })
-    next()
   }
 }
 </script>

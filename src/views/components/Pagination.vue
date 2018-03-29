@@ -1,10 +1,10 @@
 <template>
   <div class="pagination-group" v-if="maxPage > 1">
-    <router-link v-if="currentPage > 1" :to="'/blog/' + ( currentPage - 1 )">prev</router-link>
+    <router-link v-if="currentPage > 1" :to="{ name: route, params: { type: $store.state.active.archive, page: ( currentPage - 1 ) } }">prev</router-link>
 
     <span> {{ currentPage }}/{{ maxPage }} </span>
 
-    <router-link v-if="hasMore" :to="'/blog/' + ( currentPage + 1 )">next</router-link>
+    <router-link v-if="hasMore" :to="{ name: route, params: { type: $store.state.active.archive, page: ( currentPage + 1 ) } }">next</router-link>
   </div>
 </template>
 
@@ -20,6 +20,15 @@ export default {
     maxPage: Number,
     // Check if page is less than max page.
     hasMore: Boolean
+  },
+  computed: {
+    route: function() {
+      if ( this.$store.state.active.archive === 'blog' ) {
+        return 'archive'
+      } else {
+        return 'category'
+      }
+    }
   }
 }
 </script>
