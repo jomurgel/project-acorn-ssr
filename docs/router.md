@@ -17,7 +17,7 @@ Our heavy lifting takes place inside the [api](https://github.com/jomurgel/proje
 beforeEnter: ( to, from, next ) => {
 	// Handler for refresh or if we land and redirect to page component.
 	if ( to.params.slug === '404' ) {
-	next({ name: '404', params: { slug: '404' } })
+	next({ name: '404', params: { error: '404' } })
 	}
 	next()
 }
@@ -26,3 +26,22 @@ beforeEnter: ( to, from, next ) => {
 Our `beforeEnter` handler ensure that if our intended route is to the 404 component, we force the push there rather than re-rendering the `page` or `single` components, otherwise go about our business as usual.
 
 More on how we're handling errors [here](https://github.com/jomurgel/project-acorn-ssr/blob/master/docs/api.md).
+
+## Archives
+Archives, since we cannot dynamically generate our store before render, requires there to be a state object in order for a category or archive to render.  You can see in our [vuex state object](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/store/index.js) that we have a `blog` and `vue` archive. So `/category/vue/1` will render the first page of our archive but `/category/test/1` will 404.
+
+We utlize a `beforeEnter` function to check to make sure the requested is in our state object.
+
+``` javascript
+import createStore from '../store'
+
+beforeEnter: ( to, from, next ) => {
+	// Access store and confirm that we have an archive before proceeding.
+	const store = createStore()
+
+	if ( ! store.state.archives.hasOwnProperty( to.params.type ) ) {
+		next({ name: '404', params: { error: '404' } })
+	}
+	next()
+}
+```

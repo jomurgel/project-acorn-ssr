@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import createStore from '../store'
 
 Vue.use( Router )
 
@@ -13,8 +14,23 @@ const routes = [
   },
   {
     path: '/blog/:page(\\d+)?',
-    name: 'blog',
-    component: createView( 'Blog' )
+    name: 'archive',
+    component: createView( 'Archive' )
+  },
+  {
+    path: '/category/:type/:page(\\d+)?',
+    name: 'category',
+    component: createView( 'Archive' ),
+    beforeEnter: ( to, from, next ) => {
+      // Access store and confirm that we have an archive before proceeding.
+      const store = createStore()
+
+      // Handler for refresh or if we land and redirect to single component.
+      if ( ! store.state.archives.hasOwnProperty( to.params.type ) || to.params.slug === '404' ) {
+        next({ name: '404', params: { error: '404' } })
+      }
+      next()
+    }
   },
   {
     path: '/blog/:slug',
@@ -23,7 +39,7 @@ const routes = [
     beforeEnter: ( to, from, next ) => {
       // Handler for refresh or if we land and redirect to single component.
       if ( to.params.slug === '404' ) {
-        next({ name: '404', params: { slug: '404' } })
+        next({ name: '404', params: { error: '404' } })
       }
       next()
     }
@@ -33,9 +49,9 @@ const routes = [
     name: 'page',
     component: createView( 'Page' ),
     beforeEnter: ( to, from, next ) => {
-      // Handler for refresh or if we land and redirect to page component.
+      // Handler for refresh or if we land and redirect to single component.
       if ( to.params.slug === '404' ) {
-        next({ name: '404', params: { slug: '404' } })
+        next({ name: '404', params: { error: '404' } })
       }
       next()
     }
@@ -43,13 +59,9 @@ const routes = [
   {
     // Catch-all, though the 404 component is
     // called in templates to prevent issues.
-    path: '/404',
+    path: '/:error',
     name: '404',
     component: createView( '404' )
-  },
-  {
-    path: '*',
-    redirect: '/404'
   }
 ]
 

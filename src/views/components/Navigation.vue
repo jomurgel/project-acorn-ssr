@@ -5,7 +5,9 @@
     </li>
     <template v-if="setMenu">
     <li v-for="item of setMenu.items" :key="item.object_slug">
-      <router-link :to="{ path: '/' + item.object_slug }">{{ item.title }}</router-link>
+      <router-link v-if="'blog' === item.object_slug" :to="{ name: 'archive', params: { page: 1, type: 'blog' } }">{{ item.title }}</router-link>
+      <router-link v-else-if="'category' === item.object" :to="{ name: 'category', params: { page: 1, type: item.object_slug } }">{{ upperCase( item.title ) }}</router-link>
+      <router-link v-else :to="{ path: '/' + item.object_slug }">{{ item.title }}</router-link>
     </li>
     <li>
       <router-link :to="{ path: '/dfdsa' }">Page 404</router-link>
@@ -25,20 +27,25 @@
 </template>
 
 <script>
-import { returnQueriedMenu } from '@src/utilities/helpers'
+import { returnQueriedMenu, capitalize } from '@src/utilities/helpers'
 import { BASE_URL } from '@root/webconfig.js'
 
 export default {
   props: ['location'],
   data() {
     return {
-      'menu': this.$store.state.menus,
+      'menu': this.$store.state.navigation.menus,
       'addMenu': BASE_URL + '/wp-admin/nav-menus.php' // Reroute to server install.
     }
   },
   computed: {
     setMenu() {
       return returnQueriedMenu( this.menu, this.$props.location )
+    }
+  },
+  methods: {
+    upperCase: function( string ) {
+      return capitalize( string )
     }
   }
 }
@@ -74,4 +81,3 @@ ul {
   }
 }
 </style>
- 

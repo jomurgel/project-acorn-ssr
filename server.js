@@ -93,14 +93,16 @@ function render( req, res, context ) {
 
   const s = Date.now()
 
+  /* eslint-disable */
   res.setHeader( "Content-Type", "text/html" )
+  /* eslint-enable */
 
   // Do the errors. DO IT!
   const handleError = err => {
 
-		res.status( 500 ).end( '500 | Internal Server Error' )
+    res.status( 500 ).end( '500 | Internal Server Error' )
 
-    console.error(`Fatal error when rendering : ${req.url}`)
+    console.error( `Fatal error when rendering : ${req.url}` )
     console.error( `error during render : ${req.url}` )
     console.error( err.stack )
   }
@@ -123,7 +125,7 @@ function render( req, res, context ) {
 
     res.status( context.meta.statusCode || 200 )
 
-		console.log( `Whole request: ${Date.now() - s}ms` )
+    console.log( `Whole request: ${Date.now() - s}ms` )
 
     if ( err ) {
       return handleError( err )
@@ -150,15 +152,15 @@ app.get( '*', ( req, res ) => {
       title: defaultTitle, // default title
       description: defaultDescription, // default description
       card: defaultCardImage, // image to be used with og/twitter sharing
-      statusCode: 200, // header.status code
+      statusCode: 200 // header.status code
     },
     url: req.url, // path aka /about
     fullUrl: fullSiteUrl + req.originalUrl // full url + path
   }
 
-  isProduction ?
-    render( req, res, context ) :
-    readyPromise.then( () => render( req, res, context ) )
+  isProduction
+    ? render( req, res, context )
+    : readyPromise.then( () => render( req, res, context ) )
 })
 
 // Set dev port number from webconfig.js

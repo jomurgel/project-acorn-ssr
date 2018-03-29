@@ -22,5 +22,7 @@ Usage
 @import '~styles';
 ```
 
+This framework also has a few default WordPress styles located in the [default](https://github.com/jomurgel/project-acorn-ssr/blob/master/assets/scss/defaults) folder for handling media, alignments, and a couple other things.
+
 ## SSR
 This app renders client and server using the [vue-ssr](https://ssr.vuejs.org/en/) documentation and implements a service worker using [https://github.com/goldhand/sw-precache-webpack-plugin](sw-precache-webpack-plugin).

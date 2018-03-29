@@ -35,7 +35,12 @@ The `setTitle`, `setDescription`, and `setFeaturedImage` functions return those 
 
 The `getPagePullStatus` determines if a post object has already been pulled by confirming that it DOES have an assigned page number. Posts pulled by the `singlePost` action returns a `pageNumber` value of `0` which is not a valid option within the REST API.
 
+There is an `objectSize` function which, similar to determining the length of an array, returns a number from 0 for empty to 1, 2, 3 for length of an object.
+
+`capitalize` captitalizes a string — used on the navigation.
+
 The `findUniquePost` function does exactly what it suggests. It takes in a post array and returns only unique values comparing item values.
+
 
 ``` javascript
 /**
@@ -58,6 +63,34 @@ export function findUniquePost( array ) {
   })
 }
 ```
+
+`matchCateogryToId` takes an array of categrories and a slug and returns, if there is a match, and id else returns null.
+
+``` javascript
+/**
+ * Return ID from category slug.
+ *
+ * @export
+ * @param {any} array array of categories
+ * @param {any} slug category slug
+ */
+export function matchCateogryToId( array, slug ) {
+
+  const categoryFilter = array.filter( ( cat ) => {
+    const valid = cat.slug === slug
+
+    if ( valid ) {
+      return valid // true
+    }
+  }).map( item => {
+    return item.id
+  })
+
+  // Return category id string or null.
+  return categoryFilter[0] || null
+}
+```
+
 ## metaMixin.js
 This handles meta data both client and server side pulling data as defaults from the [webconfig.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/webconfig.js) file.
 
