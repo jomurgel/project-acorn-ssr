@@ -22,8 +22,6 @@ export default {
       // Only get data if we don't already have it.
       return makePostRequest( url + '?slug=' + slug ).then( response => {
 
-        console.log( response.length )
-
         // Assume we have a response.
         if ( response.length === 0 ) {
 
@@ -89,7 +87,7 @@ export default {
   getPosts: ({ commit, state }, payload ) => {
 
     // From payload.
-    const type = payload.type
+    const type  = payload.type
     const count = payload.count
 
     const catId = matchCateogryToId( state.taxonomy.categories, type )
@@ -115,22 +113,26 @@ export default {
       return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
 
         // Response.
-        const posts     = response
-        const postCount = parseInt( posts[0].totalPosts )
+        const posts = response
 
-        // Return post ids to server to archive object.
-        const ids = posts.map( ( post ) => {
-          return post.id
-        })
+        if ( posts.length !== 0 ) {
 
-        // Set ids by type.
-        commit( 'SET_ARCHIVE', { type, ids, count })
+          const postCount = parseInt( posts[0].totalPosts )
 
-        // Set total number of posts.
-        commit( 'SET_POST_COUNT', { type, postCount })
+          // Return post ids to server to archive object.
+          const ids = posts.map( ( post ) => {
+            return post.id
+          })
 
-        // Set post data and page location.
-        commit( 'SET_POSTS', { posts })
+          // Set ids by type.
+          commit( 'SET_ARCHIVE', { type, ids, count })
+
+          // Set total number of posts.
+          commit( 'SET_POST_COUNT', { type, postCount })
+
+          // Set post data and page location.
+          commit( 'SET_POSTS', { posts })
+        }
       })
     }
 
