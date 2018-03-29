@@ -11,6 +11,9 @@
 // Mixins and Variables
 @import 'functions/index';
 
+// WordPress Defaults
+@import 'defaults/index';
+
 //-----------------------------------------
 // Global View
 //-----------------------------------------
@@ -18,8 +21,8 @@
 	margin-top: 50px;
 
 	img {
-		max-width: 100%;
 		height: auto;
+		max-width: 100%;
 		vertical-align: bottom;
 	}
 }
@@ -28,7 +31,7 @@
 // Global
 //-----------------------------------------
 body {
-	font-size: 16px;
+	font-size: 1rem;
 }
 
 //-----------------------------------------
