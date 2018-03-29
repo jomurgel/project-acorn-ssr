@@ -22,7 +22,7 @@ export function makePostRequest( url ) {
     if ( ( response.status === 200 && response.data.length === 0 ) || response.status !== 200 ) {
 
       // Push to 404 component.
-      router.push({ name: '404', params: { slug: '404' } })
+      router.push({ name: '404', params: { error: '404' } })
 
       return []
     }
