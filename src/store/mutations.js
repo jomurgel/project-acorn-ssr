@@ -15,7 +15,7 @@ export default {
   SET_CATEGORIES_PULL_DATE: ( state, pullTime ) => {
     state.taxonomy.pullDate = pullTime
   },
-  // Archives
+  // Archives ids.
   SET_ARCHIVE: ( state, { type, ids, count }) => {
 
     const pageCount = count - 1
