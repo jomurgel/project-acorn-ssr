@@ -1,9 +1,9 @@
 # Change Log
 
 ## Category Support
-[0.1](https://github.com/jomurgel/project-acorn-ssr/tree/0.1) (2018-03-29)
+### [0.1](https://github.com/jomurgel/project-acorn-ssr/tree/0.1) (2018-03-29)
 
-### Added
+#### Added
 - Support of categories.
 - More robust store and better handling of post data.
 - Cleaner transition for Archive transition groups.
@@ -15,7 +15,7 @@
 - Adds category request with menus before render.
 - Basic Default WordPress element styles for media, alignment, etc.
 
-### Changed
+#### Changed
 - State object — all posts handled by post object regardless of post type.
 - Utilize the route name and params vs direct calls.
 - Renames Blog.vue to Archive.vue.
@@ -25,14 +25,14 @@
 - Uses post `pullDate` to pull only outdated posts instead of a full page or store requests.
 - Stores post objects by `id` and stores only ids for reference in new store archive object.
 
-### Deprecated
+#### Deprecated
 - Blog.vue
 
-### Removed
+#### Removed
 - Direct route calls.
 - Console logging left over from testing.
 
-### Fixed
+#### Fixed
 - Some issues with `beforeRouteEnter` which call in views making duplicate requests.
 - Issues when navigating routes, but utilizing the same view component.
 - Various 404 bugs.
@@ -40,4 +40,4 @@
 
 Feature/category support [\#1](https://github.com/jomurgel/project-acorn-ssr/pull/1) ([jomurgel](https://github.com/jomurgel))
 ## Initial Release
-[0.0.1](https://github.com/jomurgel/project-acorn-ssr/tree/0.0.1) (2018-03-02)
+### [0.0.1](https://github.com/jomurgel/project-acorn-ssr/tree/0.0.1) (2018-03-02)

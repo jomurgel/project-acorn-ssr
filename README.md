@@ -20,6 +20,7 @@ I intended to build a website framework for the "real world" which handles analy
   * [Contributing](#contributing)
   * [Roadmap](#roadmap)
   * [Credits](#credits)
+  * [Changelog](#changelog)
   * [License](#license)
 
 ## Getting Started
@@ -70,6 +71,9 @@ I've got big plans to keep this thing going and updated with updates to [vue.js]
 - [nuxt.js](https://nuxtjs.org/)
 - [vuejs/vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0)
 - [Eric Fuller](https://github.com/efuller) for helping cleanup and refactor all the things.
+
+## Changelog
+Full [changelog here](https://github.com/jomurgel/project-acorn-ssr/blob/master/CHANGELOG.md).
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)
