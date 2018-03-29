@@ -1,5 +1,5 @@
 <template>
-  <div class="posts">
+  <div v-if="posts" class="posts">
     <pagination :current-page="page" :max-page="maxPage" :has-more="hasMore" :route-name="$route.params.slug || 'blog'" />
     <hr/>
     <transition name="fade" mode="out-in">
@@ -10,6 +10,7 @@
       </div>
     </transition>
   </div>
+  <div v-else><!-- 404 Handler --></div>
 </template>
 
 <script>
@@ -51,6 +52,20 @@ export default {
   },
   beforeRouteEnter( to, from, next ) {
     next( vm => {
+
+      // If we're a category.
+      if ( to.params.type !== 'blog' ) {
+        // Make sure we have a valid category.
+        const hasZeroCount = vm.$store.state.taxonomy.categories.filter( ( category ) => {
+          return category.slug === to.params.type
+        })[0].count === 0
+
+        // If we don't have a valid category, 404.
+        if ( hasZeroCount ) {
+          next({ name: '404', params: { error: '404' } })
+        }
+      }
+
       // Async to fix moving between routes where same component is used. Blog to Category for example.
       const { asyncData } = vm.$options
       asyncData({
