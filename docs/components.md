@@ -57,5 +57,20 @@ Usage
 <pagination :current-page="NUMBER" :max-page="NUMBER" :has-more="BOOLEAN" />
 ```
 
+## Post-Item.vue
+Accepts a post object as props and renders a list item.
+
+Usage
+``` javascript
+<postItem :post="post" />
+```
+
+## Post-Single
+Accepts a post object as props and renders a post article.
+
+Usage
+``` javascript
+<postSingle :post="post" />
+```
 ## ProgressBar.vue
 This component was appropriated by [nuxt.js](https://nuxtjs.org/) https://github.com/nuxt/nuxt.js/blob/dev/lib/app/components/nuxt-loading.vue

@@ -11,16 +11,45 @@ This file handles the state and the registartion of the new store.
 
 ``` javascript
 const state = {
-  postCount: 0, // populates total post count.
-  blogPull: false, // the blog has been pulled.
-  blogPullTime: '', // time of blog pull.
-  postsPerPage: POSTS_PER_PAGE, // posts per page set from webconfig.js
-  posts: [], // posts array.
-  menus: [], // menu array.
-  menuPullTime: '', // last pull of menu.
-  pages: {} // page objects.
+  posts: {},
+  navigation: {
+    pullDate: '',
+    menus: [] // array of menus.
+  }, // array of menus.
+  pages: {}, // page objects.
+  postsPerPage: POSTS_PER_PAGE,
+  taxonomy: {
+    pullDate: '',
+    categories: [] // array of categories.
+  },
+  active: {
+    archive: '', // current archive.
+    category: '', // active category
+    post: '' // active post.
+  },
+  // posts: {}, // post objects
+  archives: {
+    blog: { // all posts
+      postCount: '', // int.
+      posts: [] // array of objects.
+    },
+    vue: { // category name — in this case a category named category.
+      postCount: '', // int.
+      posts: [] // array of objects.
+    }
+  },
+  cpt: { // all cpts.
+    placeholder: { // custom post type slug.
+      postCount: '', // int.
+      posts: [] // array of objects.
+    }
+  }
 }
 ```
+
+The only manual requirement at this moment is the archives object. In order for a category to work it must be registered in the state object. `/category/vue` will product an archive while `/category/another-category/` will not unless it's added to the archives object.
+
+The default check for whether or not the blog is the blog is based on the name of page, the name of the route, and the name of the main `blog` object in the archives object. If you want to change the name of the blog to, let's say, `writing`, you'll need to change it in the state and in the routes.
 
 ## actions.js
 [Vuex Reference: Actions](https://vuex.vuejs.org/en/actions.html).
@@ -29,10 +58,12 @@ Our actions handles all of our API pulls for pages, single posts, all posts by p
 
 You can get the idea of how actions work in general in the [vuex docs](https://vuex.vuejs.org/en/actions.html), but the important bits revolved around our data checks and our `commits` which influence our `getters` and `mutations`.
 
-You can take a look at [Line 77](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/store/actions.js#L77), `getPosts` which handles the data retrieved from our api request.
+You can start at [Line 110](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/store/actions.js#L110), `getPosts` which handles the data retrieved from our api request.
 
 ``` javascript
-if ( ( hasPage === false || postsLength === 0 ) && ! havePosts ) {
+if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 ) {
+// and
+if ( objectSize( state.archives[type].posts[count] ) > 0 ) {
 ```
 
 We are returning our vuex store unless we've met two criteria.
@@ -43,83 +74,95 @@ We are returning our vuex store unless we've met two criteria.
 If we do end up making a request, either initially, or subsiquently, we set several data points with our `commits` to update our vuex store. We, in this example, set the total post count, set our blog pull status to `true`, set the time of that pull and then send our data into the [mutations.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/store/mutations.js) file to tell our app where to store that data.
 
 ``` javascript
+// Set ids by type.
+commit( 'SET_ARCHIVE', { type, ids, count })
+
 // Set total number of posts.
-commit( 'setPostCount', totalPostCount )
-
-// Set blog pull status to true.
-commit( 'setBlogPullStatus', true )
-
-// Set date of that pull.
-commit( 'setBlogPullTimeStamp', ( new Date() ).getTime() )
+commit( 'SET_POST_COUNT', { type, postCount })
 
 // Set post data and page location.
-commit( 'setPosts', [ posts, count ] )
+commit( 'SET_POSTS', { posts })
 ```
+
+We need to always set our Active Category and Type regardless if we have a category (are in category).
+
+``` javascript
+// Set active type.
+commit( 'SET_ACTIVE_TYPE', type )
+
+if ( catId ) {
+  // Set active category if it exists.
+  commit( 'SET_ACTIVE_CAT', catId )
+}
+```
+
+I've tried my best to document how things work, so I'd recommend checking the file out, and you can always throw me a message or [open an issue](https://github.com/jomurgel/project-acorn-ssr/issues) if you have any questions or better ways of doing something.
 
 ## mutations.js
 [Vuex Reference: Mutations](https://vuex.vuejs.org/en/mutations.html).
 
 Our mutations handle data as expected. A couple of caveats to their functionalyt.
 
-The `setPage` mutation uses the [`Vue.set`](https://vuejs.org/v2/api/#Vue-set) function to adjust the object and `Array.push` to the store as we pull the data. We're only pulling page data here if the data is needed and not all at once.
+The `SET_POSTS` mutation uses the [`Vue.set`](https://vuejs.org/v2/api/#Vue-set) function to adjust the object and `Array.push` to the store as we pull the data. We're only pulling page data here if the data is needed and not all at once.
 
 ``` javascript
-setPage: ( state, { slug, page }) => {
-  Vue.set( state.pages, slug, page )
+// Posts
+SET_POSTS: ( state, { posts }) => {
+
+  posts.forEach( post => {
+    if ( post ) {
+      Vue.set( state.posts, post.id, post )
+    }
+  })
 },
 ```
 
-The `setPosts` and `setActivePosts` functions works in a similar ways.
+The `SET_POST` or `SET_ARCHIVE` functions works in a similar ways.
 
 ## getters.js
 [Vuex Reference: Getters](https://vuex.vuejs.org/en/getters.html).
 
 The getters for `pages` is pretty standard, returning the state array.
 
-Our `posts` getter returns the state array, but does some extra checks to make sure that we're only returning unique results in the event that we visit a single post, but then visit the blog. Rather than dealing with duplicates at the time of pull, we're weeding out the posts in our getters here.
+Our `activeIds` getter returns an array of ids for the given page. This gets used in the `activePosts` getter below in order to display posts by page on our archives.
 
 ``` javascript
-posts: ( state ) => {
+// set active ids for use in pagination.
+activeIds: ( state ) => {
+  const { active, archives } = state
 
-  let unique = findUniquePost( state.posts )
+  if ( ! active.archive ) {
+    return ''
+  }
 
-  let newPostsArray = state.posts.forEach( ( post, index ) => {
+  const page  = Number( state.route.params.page ) || 1
+  const count = page - 1
 
-    if ( post && post['pageNumber'] === 0 && unique === false ) {
-      state.posts.splice( index, 1 )
-    }
-  })
-
-  return newPostsArray
-}
+  return archives[active.archive].posts[count]
+},
 ```
 
-Our `activePosts` getter returns posts from our `posts` array which also share the page parameter with our blog.
+Our `activePosts` getter returns posts from our `posts` object that matches ids from our `activeIds` gettter above.
 
 ``` javascript
-activePosts: ( state ) => {
-
-  const page = parseInt( state.route.params.page ) || 1
-
-  let activePosts = state.posts.filter( e => {
-    return e.pageNumber === page
-  })
-
-  return activePosts
-}
+// items that should be currently displayed.
+// this Array may not be fully fetched.
+activePosts: ( state, getters ) => {
+  if ( getters.activeIds ) {
+    return getters.activeIds.map( id => {
+      return state.posts[id]
+    })
+  }
+},
 ```
 
-Our `singlePosts` getter returns a single post who's slug matches the slug in the `posts` array.
+Bot the `activeIds` and `activePosts` getters were unintentionally built in a very similar way to the Vue.js [hackernews 2.0 clone](https://github.com/vuejs/vue-hackernews-2.0/blob/master/src/store/getters.js#L4) which you can check out here. I guess you research enough and things just get stuck in your brain. 😜
+
+Our `singlePosts` getter returns a single post based on the slug of the active post set by the `SET_ACTIVE_POST` mutation.
 
 ``` javascript
+// Set single post by id.
 singlePost: ( state ) => {
-
-  const post = state.route.params.slug
-
-  let singlePost = state.posts.filter( e => {
-    return e.slug === post
-  })
-
-  return singlePost[0]
+  return state.posts[state.active.post]
 }
 ```
