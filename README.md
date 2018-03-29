@@ -66,6 +66,7 @@ I've got big plans to keep this thing going and updated with updates to [vue.js]
 
 - [ ] Internazionalization
 - [ ] Optimize webpack/bundling.
+- [ ] There's got to be a better way to handle 404s with the WordPress API.
 
 ## Credits
 - [nuxt.js](https://nuxtjs.org/)
