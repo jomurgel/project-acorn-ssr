@@ -9,30 +9,20 @@ const isProduction  = process.env.NODE_ENV === 'production'
 
 const config = merge( base, {
   entry: {
-    app: './src/entry-client.js',
-    vendor: ['axios', 'vue', 'vue-router', 'vuex', 'vuex-router-sync']
+    app: './src/entry-client.js'
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: { test: /[\\/]node_modules[\\/]/, name: "vendors", chunks: "all" }
+      }
+    }
   },
   plugins: [
     // strip dev-only code in Vue source
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify( process.env.NODE_ENV || 'development' ),
       'process.env.VUE_ENV': '"client"'
-    }),
-    // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor'],
-      children: true,
-      async: true,
-      minChunks: function( module ) {
-        // a module is extracted into the vendor chunk if...
-        return module.context && module.context.indexOf( 'node_modules' ) !== -1
-      }
-    }),
-    /**
-     * Extract webpack runtime & manifest to avoid vendor chunk hash changing on every build.
-     */
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest'
     }),
     new VueSSRClientPlugin()
   ]
