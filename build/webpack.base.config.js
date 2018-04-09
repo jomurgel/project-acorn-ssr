@@ -5,13 +5,15 @@ const ExtractTextPlugin    = require( 'extract-text-webpack-plugin' )
 const FriendlyErrorsPlugin = require( 'friendly-errors-webpack-plugin' )
 
 const isProduction         = process.env.NODE_ENV === 'production'
+const mode                 = isProduction || 'development'
 const resolve              = dir => path.join( __dirname, '..', dir )
 
 const config = {
   devtool: isProduction ? false : '#cheap-module-source-map',
 	entry: {
 		app: "./src/entry-client.js"
-	},
+  },
+  mode: mode,
   output: {
     path: resolve( 'dist' ),
     publicPath: '/dist/',
