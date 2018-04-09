@@ -55,14 +55,17 @@ export default {
 
       // If we're a category.
       if ( to.params.type !== 'blog' ) {
+
         // Make sure we have a valid category.
         const hasZeroCount = vm.$store.state.taxonomy.categories.filter( ( category ) => {
           return category.slug === to.params.type
-        })[0].count === 0
+        })
 
         // If we don't have a valid category, 404.
-        if ( hasZeroCount ) {
-          next({ name: '404', params: { error: '404' } })
+        if ( hasZeroCount.length > 0 ) {
+          if ( hasZeroCount[0].count === 0 ) {
+            next({ name: '404', params: { error: '404' } })
+          }
         }
       }
 
