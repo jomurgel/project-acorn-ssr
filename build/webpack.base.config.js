@@ -86,15 +86,14 @@ const config = {
     hints: isProduction ? 'warning' : false
   },
   plugins: isProduction
-    ? [
-      new webpack.optimize.UglifyJsPlugin({
-        compress: { warnings: false }
-      }),
+  ? [
+      new webpack.optimize.ModuleConcatenationPlugin(),
       new ExtractTextPlugin({
-        filename: 'css/[name].[contenthash:8].css'
+        filename: 'app.[chunkhash].css',
+        allChunks: true
       })
     ]
-    : [
+  : [
       new FriendlyErrorsPlugin()
     ]
 }
