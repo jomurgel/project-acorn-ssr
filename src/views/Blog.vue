@@ -27,7 +27,7 @@ export default {
     const meta = {
       title: 'Posts',
       description: 'Description for Posts',
-      card: 'https://placehold.it/1280x768/f60/fff?text=CATEGORY'
+      card: 'https://placehold.it/1280x768/f60/fff?text=POSTS'
     }
     return meta
   },

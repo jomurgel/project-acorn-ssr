@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/blog/:page(\\d+)?',
     name: 'archive',
-    component: createView( 'Archive' )
+    component: createView( 'Blog' )
   },
   {
     path: '/category/:type/:page(\\d+)?',
