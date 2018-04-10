@@ -9,9 +9,7 @@ const resolve              = dir => path.join( __dirname, '..', dir )
 
 const config = {
   devtool: isProduction ? false : '#cheap-module-source-map',
-	entry: {
-		app: "./src/entry-client.js"
-  },
+  mode: process.env.NODE_ENV || 'development',
   output: {
     path: resolve( 'dist' ),
     publicPath: '/dist/',
