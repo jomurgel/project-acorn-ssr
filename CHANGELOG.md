@@ -1,7 +1,21 @@
 # Change Log
 
+## Webpack 4 Update
+### [1.0.1](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.1) (2018-03-29)
+
+#### Changed
+- Updated dependencies.
+- Added component view for Blog.
+
+#### Fixed
+- Errors as a result of dependency updates.
+- Fixes issues with changing routes from category to archive (category to blog).
+
+#### Removes
+- Blog and Archive transition group styles — no longer in use.
+
 ## Category Support
-### [0.1](https://github.com/jomurgel/project-acorn-ssr/tree/0.1) (2018-03-29)
+### [1.0.0](https://github.com/jomurgel/project-acorn-ssr/tree/0.1) (2018-03-29)
 
 #### Added
 - Support of categories.

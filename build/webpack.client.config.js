@@ -12,23 +12,29 @@ const config = merge( base, {
     app: './src/entry-client.js',
     vendor: ['axios', 'vue', 'vue-router', 'vuex', 'vuex-router-sync']
   },
-  plugins: [
+  optimization:{
+    runtimeChunk: {
+        name: "manifest"
+    },
+    // extract webpack runtime & manifest to avoid vendor chunk hash changing
+    // on every build.
     // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor'],
-      children: true,
-      async: true,
-      minChunks: function( module ) {
-        // a module is extracted into the vendor chunk if...
-        return module.context && module.context.indexOf( 'node_modules' ) !== -1
+      splitChunks:{
+          chunks:"initial",
+          cacheGroups: {
+              vendors: function (module) {
+                  // a module is extracted into the vendor chunk if...
+                  return (
+                      // it's inside node_modules
+                      /node_modules/.test(module.context) &&
+                      // and not a CSS file (due to extract-text-webpack-plugin limitation)
+                      !/\.css$/.test(module.request)
+                  )
+              }
+          }
       }
-    }),
-    /**
-     * Extract webpack runtime & manifest to avoid vendor chunk hash changing on every build.
-     */
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest'
-    }),
+  },
+  plugins: [
     new VueSSRClientPlugin()
   ]
 })
