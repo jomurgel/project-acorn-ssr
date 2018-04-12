@@ -4,7 +4,7 @@ There are a few things throughout that have been customized beyond the default [
 ## Analytics
 Google Analytics baked in using [Vue Analytics](https://github.com/MatteoGabriele/vue-analytics).
 
-Simply add your Google Analytics code to the [app.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/app.js) file on [Line 43](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/app.js#L43).
+Simply add your Google Analytics code to the [entry-client.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/entry-client.js) file on [Line 21](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/entry-client.js#L21).
 
 ## SCSS
 The webpack config has been setup to compile the `scss` languge within components.
