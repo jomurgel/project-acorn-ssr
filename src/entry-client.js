@@ -1,7 +1,9 @@
 import Vue from 'vue'
+import { ANALYTICS } from '@root/webconfig'
 import { createApp } from './app'
-import sprite from '@assets/sprite.svg'
 import ProgressBar from './views/components/ProgressBar'
+import sprite from '@assets/sprite.svg'
+import VueAnalytics from 'vue-analytics'
 
 // inject svg sprite
 const spriteEl = document.createElement( 'div' )
@@ -37,6 +39,15 @@ const { app, router, store } = createApp()
 if ( window.__INITIAL_STATE__ ) {
   store.replaceState( window.__INITIAL_STATE__ )
 }
+
+// Setup analytics.
+Vue.use( VueAnalytics, {
+  id: ANALYTICS,
+  router,
+  autoTracking: {
+    skipSamePath: true
+  }
+})
 
 // wait until router has resolved all async before hooks
 // and async components...

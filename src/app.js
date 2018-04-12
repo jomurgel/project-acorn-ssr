@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import App from '_App'
-import VueAnalytics from 'vue-analytics'
 import Common from './views/common'
 import createStore from './store'
 import createRouter from './router'
 import { sync } from 'vuex-router-sync'
 import metaMixin from './utilities/metaMixin'
-import { ANALYTICS } from '@root/webconfig'
 
 Vue.config.productionTip = false
 
@@ -36,15 +34,6 @@ export function createApp( ssrContext ) {
     store,
     ssrContext,
     render: h => h( App )
-  })
-
-  // Setup analytics.
-  Vue.use( VueAnalytics, {
-    id: ANALYTICS,
-    router,
-    autoTracking: {
-      skipSamePath: true
-    }
   })
 
   // expose the app, the router and the store.
