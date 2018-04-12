@@ -6,6 +6,7 @@
 #### Changed
 - Updated dependencies.
 - Added component view for Blog.
+- Moves Vue Analytics from `app.js` to `entry-client.js`.
 
 #### Fixed
 - Errors as a result of dependency updates.
