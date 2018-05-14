@@ -2,6 +2,9 @@ import { modifier } from '../api/location'
 import { makePostRequest, makeSimpleRequest } from '../api/index'
 import { matchCateogryToId, objectSize } from '../utilities/helpers'
 
+// Check if we're in dev mode.
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
 export default {
   // Handle page requests.
   getPage: ({ commit, state }, slug ) => {
@@ -17,7 +20,7 @@ export default {
     if ( hasPost.length === 0 ||
 
       // Or if we do, but the date of pull is more than 24 hours ago.
-      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
+      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // Only get data if we don't already have it.
       return makePostRequest( url + '?slug=' + slug ).then( response => {
@@ -57,7 +60,7 @@ export default {
     if ( hasPost.length === 0 ||
 
       // Or if we do, but the date of pull is more than 24 hours ago.
-      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 ) ) ) {
+      ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // Only get data if we don't already have it.
       return makePostRequest( url + '?slug=' + slug ).then( response => {
@@ -107,7 +110,7 @@ export default {
     }
 
     // If our post on the page are empty.
-    if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 ) {
+    if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 || isDevelopment ) {
 
       // Only get data if we don't already have it.
       return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
@@ -174,7 +177,7 @@ export default {
     if ( state.navigation.menus.length === 0 ||
 
       // Or if we do, but the date of pull is more than 24 hours ago.
-      ( state.navigation.menus.length > 0 && ( new Date() ).getTime() - state.navigation.pullDate >= 24 * 60 * 60 * 1000 ) ) {
+      ( state.navigation.menus.length > 0 && ( ( new Date() ).getTime() - state.navigation.pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // No fallback needed, fires only once on app init.
       return makeSimpleRequest( modifier.menus ).then( response => {
@@ -194,7 +197,7 @@ export default {
     if ( state.taxonomy.categories.length === 0 ||
 
       // Or if we do, but the date of pull is more than 24 hours ago.
-      ( state.taxonomy.categories.length > 0 && ( new Date() ).getTime() - state.taxonomy.pullDate >= 24 * 60 * 60 * 1000 ) ) {
+      ( state.taxonomy.categories.length > 0 && ( ( new Date() ).getTime() - state.taxonomy.pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // No fallback needed, fires only once on app init.
       return makeSimpleRequest( modifier.categ ).then( response => {
