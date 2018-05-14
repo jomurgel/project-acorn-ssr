@@ -1,6 +1,8 @@
 # Change Log
 
 ## No Caching in Dev Mode
+### [1.0.2](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.2) (2018-05-13)
+
 #### Added
 - Check for `is Development` when making API requests.
 - Avoids caching vuex store data while in development mode.
