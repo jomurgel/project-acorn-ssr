@@ -1,6 +1,6 @@
 {
   "name": "project-acorn-ssr",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Vue.js SPA built around the WordPress REST API with Vuex, Vue Router, Axios and SSR.",
   "author": "jomurgel <dev@jomurgel.com>",
   "private": false,

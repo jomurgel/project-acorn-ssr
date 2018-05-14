@@ -1,5 +1,10 @@
 # Change Log
 
+## No Caching in Dev Mode
+#### Added
+- Check for `is Development` when making API requests.
+- Avoids caching vuex store data while in development mode.
+
 ## Webpack 4 Update
 ### [1.0.1](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.1) (2018-03-29)
 
