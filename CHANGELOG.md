@@ -25,6 +25,7 @@
 
 ### Fixed
 - Typo in `locations.js` file.
+- Issue with post/blog confusion after update.
 
 ## No Caching in Dev Mode
 ### [1.0.2](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.2) (2018-05-13)
