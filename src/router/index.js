@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/category/:type/:page(\\d+)?',
     name: 'category',
-    component: createView( 'Archive' ),
+    component: createView( 'Category' ),
     beforeEnter: ( to, from, next ) => {
       // Access store and confirm that we have an archive before proceeding.
       const store = createStore()
