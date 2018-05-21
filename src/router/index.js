@@ -33,7 +33,7 @@ const routes = [
     }
   },
   {
-    path: '/blog/:slug',
+    path: '/:post_type/:slug',
     name: 'single',
     component: createView( 'Single' ),
     beforeEnter: ( to, from, next ) => {
