@@ -24,9 +24,7 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    const postType = route.params.post_type === 'blog' ? 'posts' : route.params.post_type
-
-    const payload = { type: postType, slug: route.params.slug }
+    const payload = { type: route.params.post_type, slug: route.params.slug }
 
     return store.dispatch( 'getPost', payload )
   },

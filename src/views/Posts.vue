@@ -32,7 +32,9 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    const payload = { type: route.params.type || 'blog', count: parseInt( route.params.page ) || 1 }
+    const payload = { type: route.params.type, count: parseInt( route.params.page ) || 1 }
+
+    console.log( payload )
 
     return store.dispatch( 'getPosts', payload )
   },
