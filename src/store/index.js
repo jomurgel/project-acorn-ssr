@@ -26,7 +26,7 @@ const state = {
   },
   // posts: {}, // post objects
   archives: {
-    blog: { // all posts
+    post: { // all posts
       postCount: '', // int.
       posts: [] // array of objects.
     },
