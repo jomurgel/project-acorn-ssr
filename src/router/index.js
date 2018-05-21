@@ -13,9 +13,9 @@ const routes = [
     component: createView( 'Custom' )
   },
   {
-    path: '/blog/:page(\\d+)?',
-    name: 'archive',
-    component: createView( 'Blog' )
+    path: '/posts/:page(\\d+)?',
+    name: 'posts',
+    component: createView( 'Posts' )
   },
   {
     path: '/category/:type/:page(\\d+)?',
