@@ -5,7 +5,7 @@
     </li>
     <template v-if="setMenu">
     <li v-for="item of setMenu.items" :key="item.object_slug">
-      <router-link v-if="'blog' === item.object_slug" :to="{ name: 'archive', params: { page: 1, type: 'blog' } }">{{ item.title }}</router-link>
+      <router-link v-if="'blog' === item.object_slug" :to="{ name: 'posts', params: { page: 1, type: 'blog' } }">{{ item.title }}</router-link>
       <router-link v-else-if="'category' === item.object" :to="{ name: 'category', params: { page: 1, type: item.object_slug } }">{{ upperCase( item.title ) }}</router-link>
       <router-link v-else :to="{ path: '/' + item.object_slug }">{{ item.title }}</router-link>
     </li>
