@@ -15,7 +15,7 @@
 - Makes plural modifier routes singular in actions.js.
 - Renames Blog.vue to Posts.vue
 - Updates blog route name — now 'posts'.
-- Replaces single api call slug with payload which includes slug and post type
+- Replaces single api call slug with payload which includes slug and post type.
 
 ## No Caching in Dev Mode
 ### [1.0.2](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.2) (2018-05-13)
