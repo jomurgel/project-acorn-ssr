@@ -1,5 +1,22 @@
 # Change Log
 
+## Better CPT Support
+### [1.0.3](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.3) (2018-05-21)
+
+#### Added
+- `post.type` to post object.
+- `post_type` param to post `router-link`.
+
+#### Changed
+- Makes api locations singular.
+- Changes blog index slug to `posts` from `blog`.
+- Renames Archive template to Category — only used for categories.
+- Replaces hardcoded `/blog/:slug` route with `/:post_type/:slug` to make adding CPTs easier.
+- Makes plural modifier routes singular in actions.js.
+- Renames Blog.vue to Posts.vue
+- Updates blog route name — now 'posts'.
+- Replaces single api call slug with payload which includes slug and post type
+
 ## No Caching in Dev Mode
 ### [1.0.2](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.2) (2018-05-13)
 
