@@ -7,7 +7,7 @@ const baseLocation = 'wp/v2/'
 
 export const modifier = {
   base: '/' + baseLocation,
-  categegory: baseLocation + 'categories',
+  category: baseLocation + 'categories',
   menus: 'wp-api-menus/v2/menus',
   page: baseLocation + 'pages',
   post: baseLocation + 'posts'
