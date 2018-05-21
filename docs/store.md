@@ -29,7 +29,7 @@ const state = {
   },
   // posts: {}, // post objects
   archives: {
-    blog: { // all posts
+    posts: { // all posts
       postCount: '', // int.
       posts: [] // array of objects.
     },

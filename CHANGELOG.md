@@ -12,10 +12,19 @@
 - Changes blog index slug to `posts` from `blog`.
 - Renames Archive template to Category — only used for categories.
 - Replaces hardcoded `/blog/:slug` route with `/:post_type/:slug` to make adding CPTs easier.
-- Makes plural modifier routes singular in actions.js.
-- Renames Blog.vue to Posts.vue
+- Makes plural modifier routes singular in `actions.js`.
+- Renames `Blog.vue` to `Posts.vue`.
 - Updates blog route name — now 'posts'.
 - Replaces single api call slug with payload which includes slug and post type.
+- Updates store for archives.
+- Changes README.md where needed.
+- Store for archive `blog` to archive `post`.
+
+#### Removes
+- Ternary for post type setting backup to 'blog'
+
+### Fixed
+- Typo in `locations.js` file.
 
 ## No Caching in Dev Mode
 ### [1.0.2](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.2) (2018-05-13)

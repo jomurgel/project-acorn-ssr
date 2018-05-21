@@ -28,10 +28,10 @@ const postArray = response.data.map( ( post ) => {
 	featuredImage: post.featured_image,
 	id: post.id,
 	modifiedDate: post.modified,
-	pageNumber: 0,
 	slug: post.slug,
 	title: post.title.rendered,
-	totalPosts: totalPostCount
+	totalPosts: totalPostCount,
+	type: post.type
 	}
 
 	// Return new array object.
@@ -78,10 +78,13 @@ export const HTTP = axios.create({
 Locations are an object of our endpoints in use. By default, posts, menus (as custom endpoint), categories, and pages.
 
 ``` javascript
+const baseLocation = 'wp/v2/'
+
 export const modifier = {
-  posts: 'wp/v2/posts',
+  base: '/' + baseLocation,
+  category: baseLocation + 'categories',
   menus: 'wp-api-menus/v2/menus',
-  pages: 'wp/v2/pages',
-  categ: 'wp/v2/categories'
+  page: baseLocation + 'pages',
+  post: baseLocation + 'posts'
 }
 ```
