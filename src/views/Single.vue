@@ -24,7 +24,7 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    const payload = { type: route.params.post_type, slug: route.params.slug }
+    const payload = { type: route.params.type || 'post', count: parseInt( route.params.page ) || 1 }
 
     return store.dispatch( 'getPost', payload )
   },

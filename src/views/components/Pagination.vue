@@ -23,8 +23,8 @@ export default {
   },
   computed: {
     route: function() {
-      if ( this.$store.state.active.archive === 'blog' ) {
-        return 'archive'
+      if ( this.$store.state.active.archive === 'post' ) {
+        return 'posts'
       } else {
         return 'category'
       }

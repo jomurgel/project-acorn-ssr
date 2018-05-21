@@ -1,6 +1,6 @@
 <template>
   <div v-if="posts" class="posts">
-    <pagination :current-page="page" :max-page="maxPage" :has-more="hasMore" :route-name="$route.params.slug || 'blog'" />
+    <pagination :current-page="page" :max-page="maxPage" :has-more="hasMore" :route-name="$route.params.slug || 'posts'" />
     <hr/>
     <transition name="fade" mode="out-in">
       <div class="post-list" :key="page" v-if="page > 0">
@@ -32,9 +32,7 @@ export default {
     return meta
   },
   asyncData({ store, route }) {
-    const payload = { type: route.params.type, count: parseInt( route.params.page ) || 1 }
-
-    console.log( payload )
+    const payload = { type: route.params.type || 'post', count: parseInt( route.params.page ) || 1 }
 
     return store.dispatch( 'getPosts', payload )
   },

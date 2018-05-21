@@ -13,7 +13,7 @@
       <router-link :to="{ path: '/dfdsa' }">Page 404</router-link>
     </li>
     <li>
-      <router-link :to="{ path: '/blog/dfdsa' }">Single 404</router-link>
+      <router-link :to="{ path: '/post/dfdsa' }">Single 404</router-link>
     </li>
     </template>
     <template v-else>
