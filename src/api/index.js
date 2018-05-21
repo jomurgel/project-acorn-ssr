@@ -40,7 +40,8 @@ export function makePostRequest( url ) {
         modifiedDate: post.modified,
         slug: post.slug,
         title: post.title.rendered,
-        totalPosts: totalPostCount
+        totalPosts: totalPostCount,
+        type: post.type
       }
 
       // Return new array object.
