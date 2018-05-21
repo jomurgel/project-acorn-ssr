@@ -9,7 +9,7 @@ export default {
   // Handle page requests.
   getPage: ({ commit, state }, slug ) => {
 
-    const url = modifier.pages
+    const url = modifier.page
 
     // If we have matching posts by slug.
     const hasPost = Object.keys( state.posts ).filter( ( key ) => {
@@ -47,9 +47,14 @@ export default {
     commit( 'SET_ACTIVE_POST', parseInt( hasPost[0] ) )
   },
   // Handle single post request.
-  getPost: ({ commit, state }, slug ) => {
+  getPost: ({ commit, state }, payload ) => {
 
-    const url = modifier.posts
+    // From payload
+    const type = payload.type
+    const slug = payload.slug
+
+    // Generate url from location.
+    const url = modifier[type]
 
     // If we have matching posts by slug.
     const hasPost = Object.keys( state.posts ).filter( ( key ) => {
@@ -113,7 +118,7 @@ export default {
     if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 || isDevelopment ) {
 
       // Only get data if we don't already have it.
-      return makePostRequest( modifier.posts + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
+      return makePostRequest( modifier.post + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
 
         // Response.
         const posts = response
@@ -159,7 +164,7 @@ export default {
         const postIds = validPostCheck.join( '&' )
 
         // Only get data if we don't already have it.
-        return makePostRequest( modifier.posts + '?' + postIds ).then( response => {
+        return makePostRequest( modifier.post + '?' + postIds ).then( response => {
 
           // Get object in array.
           const posts = response
@@ -200,7 +205,7 @@ export default {
       ( state.taxonomy.categories.length > 0 && ( ( new Date() ).getTime() - state.taxonomy.pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // No fallback needed, fires only once on app init.
-      return makeSimpleRequest( modifier.categ ).then( response => {
+      return makeSimpleRequest( modifier.category ).then( response => {
 
         // Set date of that pull.
         commit( 'SET_CATEGORIES_PULL_DATE', ( new Date() ).getTime() )
