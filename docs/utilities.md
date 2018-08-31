@@ -1,10 +1,10 @@
 # Utilities
 A series of helper utilities to handle a variety of things.
 
-  * [helpers.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/utilities/helpers.js)
+  * [index.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/utilities/index.js)
   * [metaMixin.js](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/utilities/metaMixin.js)
 
-## helpers.js
+## index.js (utility helpers)
 This partial contains helpers for returning the menu to be used within the [Navigation.vue](https://github.com/jomurgel/project-acorn-ssr/blob/master/src/views/components/Navigation.vue) component.
 
 Takes in the menus array and returns the menu that matches the slug provided by props.
@@ -13,11 +13,11 @@ Takes in the menus array and returns the menu that matches the slug provided by 
 /**
  * Get the menu associated with a slug.
  *
- * @export function
+ * @export const
  * @param  {array} array array of menus.
  * @param  {string} slug specific menu to search.
  */
-export function returnQueriedMenu( array, slug ) {
+export const returnQueriedMenu = ( array, slug ) => {
 
   // Setup vars
   let menu         = array
@@ -50,7 +50,7 @@ The `findUniquePost` function does exactly what it suggests. It takes in a post 
  * @param {any} array list of posts.
  * @returns unique posts.
  */
-export function findUniquePost( array ) {
+export const findUniquePost = array => {
 
   var posts = array.map( ( postOne ) => {
     return postOne.slug
@@ -64,7 +64,7 @@ export function findUniquePost( array ) {
 }
 ```
 
-`matchCateogryToId` takes an array of categrories and a slug and returns, if there is a match, and id else returns null.
+`matchCategoryToId` takes an array of categrories and a slug and returns, if there is a match, and id else returns null.
 
 ``` javascript
 /**
@@ -74,7 +74,7 @@ export function findUniquePost( array ) {
  * @param {any} array array of categories
  * @param {any} slug category slug
  */
-export function matchCateogryToId( array, slug ) {
+export const matchCategoryToId =( array, slug ) => {
 
   const categoryFilter = array.filter( ( cat ) => {
     const valid = cat.slug === slug
