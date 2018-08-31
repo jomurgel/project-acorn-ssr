@@ -9,6 +9,9 @@
 - Updates documentation to reflect changes.
 - Webpack Client `cacheChunks` configuration.
 
+#### Removes
+- Unecessary/unused dependencies and imports.
+
 #### Fixed
 - Typo in category function.
 
