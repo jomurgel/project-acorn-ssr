@@ -1,6 +1,6 @@
 import { modifier } from '../api/location'
 import { makePostRequest, makeSimpleRequest } from '../api/index'
-import { matchCateogryToId, objectSize } from '../utilities/helpers'
+import * as utility from '../utilities'
 
 // Check if we're in dev mode.
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -98,7 +98,7 @@ export default {
     const type  = payload.type
     const count = payload.count
 
-    const catId = matchCateogryToId( state.taxonomy.categories, type )
+    const catId = utility.matchCategoryToId( state.taxonomy.categories, type )
 
     // Cat query.
     const categories = catId ? '&categories=' + catId : ''
@@ -115,7 +115,7 @@ export default {
     }
 
     // If our post on the page are empty.
-    if ( objectSize( state.archives[type].posts[( count - 1 )] ) === 0 || isDevelopment ) {
+    if ( utility.objectSize( state.archives[type].posts[( count - 1 )] ) === 0 || isDevelopment ) {
 
       // Only get data if we don't already have it.
       return makePostRequest( modifier.post + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
@@ -145,7 +145,7 @@ export default {
     }
 
     // If we have posts, let's check each one to see which, if any, we need to pull again.
-    if ( objectSize( state.archives[type].posts[count] ) > 0 ) {
+    if ( utility.objectSize( state.archives[type].posts[count] ) > 0 ) {
 
       // Make sure we have valid posts — loop through and return query for posts that are outdated.
       const validPostCheck = state.archives[type].posts[count].filter( ( post ) => {
