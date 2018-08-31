@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { returnQueriedMenu, capitalize } from '@src/utilities/helpers'
+import * as utility from '@src/utilities'
 import { BASE_URL } from '@root/webconfig.js'
 
 export default {
@@ -40,12 +40,12 @@ export default {
   },
   computed: {
     setMenu() {
-      return returnQueriedMenu( this.menu, this.$props.location )
+      return utility.returnQueriedMenu( this.menu, this.$props.location )
     }
   },
   methods: {
     upperCase: function( string ) {
-      return capitalize( string )
+      return utility.capitalize( string )
     }
   }
 }
