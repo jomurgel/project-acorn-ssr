@@ -1,5 +1,11 @@
 # Change Log
 
+## Single Routing Fix
+### [1.0.5](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.5) (2018-08-31)
+
+#### Fixed
+- 404 error when routing to Single post components.
+
 ## General Cleanup and Updates
 ### [1.0.4](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.4) (2018-08-31)
 
