@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Project Acorn + Vue.js</h1>
 <p align="center">
-	<img src="https://img.shields.io/badge/version-1.0.4-green.svg" alt="Version 1.0.4" />
+	<img src="https://img.shields.io/badge/version-1.0.5-green.svg" alt="Version 1.0.5" />
 </p>
 
 This is a simple-ish [Vue.js](https://vuejs.org/) SPA and PWA built around the WordPress REST API utilizing [vue-router](https://router.vuejs.org/en/), [vuex](https://vuex.vuejs.org/en/intro.html), and [axios](https://github.com/axios/axios), intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but can also be used independantly as a SPA with some modification.
