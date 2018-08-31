@@ -19,20 +19,20 @@ const config = merge( base, {
     // extract webpack runtime & manifest to avoid vendor chunk hash changing
     // on every build.
     // extract vendor chunks for better caching
-      splitChunks:{
-          chunks:"initial",
-          cacheGroups: {
-              vendors: function (module) {
-                  // a module is extracted into the vendor chunk if...
-                  return (
-                      // it's inside node_modules
-                      /node_modules/.test(module.context) &&
-                      // and not a CSS file (due to extract-text-webpack-plugin limitation)
-                      !/\.css$/.test(module.request)
-                  )
-              }
+    splitChunks:{
+        chunks:"initial",
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true
           }
-      }
+        }
+    }
   },
   plugins: [
     new VueSSRClientPlugin()
