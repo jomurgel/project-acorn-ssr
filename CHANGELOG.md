@@ -1,6 +1,6 @@
 # Change Log
 
-## Generaly Cleanup and Update
+## Generally Cleanup and Update
 ### [1.0.4](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.4) (2018-08-31)
 
 #### Changed
