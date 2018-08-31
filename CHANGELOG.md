@@ -1,5 +1,17 @@
 # Change Log
 
+## Generaly Cleanup and Update
+### [1.0.4](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.4) (2018-08-31)
+
+#### Changed
+- Updates utilities to ES6 format.
+- Imports utility functions, `* as utility`.
+- Updates documentation to reflect changes.
+- Webpack Client `cacheChunks` configuration.
+
+#### Fixed
+- Typo in category function.
+
 ## Better CPT Support
 ### [1.0.3](https://github.com/jomurgel/project-acorn-ssr/tree/1.0.3) (2018-05-21)
 
@@ -23,7 +35,7 @@
 #### Removes
 - Ternary for post type setting backup to 'blog'
 
-### Fixed
+#### Fixed
 - Typo in `locations.js` file.
 - Issue with post/blog confusion after update.
 
