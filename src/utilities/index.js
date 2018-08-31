@@ -3,11 +3,11 @@ import { CARD_IMAGE } from '@root/webconfig'
 /**
  * Get the menu associated with a slug.
  *
- * @export function
+ * @export const
  * @param  {array} array array of menus.
  * @param  {string} slug specific menu to search.
  */
-export function returnQueriedMenu( array, slug ) {
+export const returnQueriedMenu = ( array, slug ) => {
 
   // Setup vars
   let menu         = array
@@ -27,7 +27,7 @@ export function returnQueriedMenu( array, slug ) {
  * @param   {object} data post object.
  * @returns {string} title or empty string.
  */
-export function setTitle( data ) {
+export const setTitle = data => {
 
   // Assuming we have data, return WordPress title.
   // Helpful for error handling components.
@@ -41,7 +41,7 @@ export function setTitle( data ) {
  * @param   {object} data post object.
  * @returns {string} description or empty string.
  */
-export function setDescription( data ) {
+export const setDescription = data => {
 
   // Assuming we have data, return WordPress title.
   // Helpful for error handling components.
@@ -55,7 +55,7 @@ export function setDescription( data ) {
  * @param   {object} data post object.
  * @returns {string} featured image url or default config image url.
  */
-export function setFeaturedImage( data ) {
+export const setFeaturedImage = data => {
 
   // Get root to make sure we have a featured image.
   let source = data ? data.featuredImage : ''
@@ -72,7 +72,7 @@ export function setFeaturedImage( data ) {
  * @param {*} obj object full of posts.
  * @param int route current page.
  */
-export function getPagePullStatus( array, count ) {
+export const getPagePullStatus = ( array, count ) => {
 
   let posts = array
 
@@ -91,7 +91,7 @@ export function getPagePullStatus( array, count ) {
  * @param {any} array list of posts.
  * @returns unique posts.
  */
-export function findUniquePost( array ) {
+export const findUniquePost = array => {
 
   var posts = array.map( ( postOne ) => {
     return postOne.slug
@@ -111,7 +111,7 @@ export function findUniquePost( array ) {
  * @param {any} array array of categories
  * @param {any} slug category slug
  */
-export function matchCateogryToId( array, slug ) {
+export const matchCategoryToId = ( array, slug ) => {
 
   const categoryFilter = array.filter( ( cat ) => {
     const valid = cat.slug === slug
@@ -132,7 +132,7 @@ export function matchCateogryToId( array, slug ) {
  *
  * @param {*} obj object full of posts.
  */
-export function objectSize( object ) {
+export const objectSize = object => {
   let size = 0
   let key
 
@@ -149,6 +149,6 @@ export function objectSize( object ) {
  * @param {any} string text string
  * @returns capitalized first letter
  */
-export function capitalize( string ) {
+export const capitalize = string => {
   return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
 }
