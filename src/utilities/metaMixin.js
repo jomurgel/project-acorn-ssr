@@ -31,7 +31,7 @@ const serverMetaMixin = {
   }
 }
 
-function clientMeta( data ) {
+const clientMeta = data => {
 
   const meta = getMeta( data )
 
