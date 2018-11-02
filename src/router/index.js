@@ -35,33 +35,19 @@ const routes = [
   {
     path: '/:post_type/:slug',
     name: 'single',
-    component: createView( 'Single' ),
-    beforeEnter: ( to, from, next ) => {
-      // Handler for refresh or if we land and redirect to single component.
-      if ( to.params.slug === '404' ) {
-        next({ name: '404', params: { error: '404' } })
-      }
-      next()
-    }
-  },
-  {
-    path: '/:slug',
-    name: 'page',
-    component: createView( 'Page' ),
-    beforeEnter: ( to, from, next ) => {
-      // Handler for refresh or if we land and redirect to single component.
-      if ( to.params.slug === '404' ) {
-        next({ name: '404', params: { error: '404' } })
-      }
-      next()
-    }
+    component: createView( 'Single' )
   },
   {
     // Catch-all, though the 404 component is
     // called in templates to prevent issues.
-    path: '/:error',
+    path: '/404',
     name: '404',
     component: createView( '404' )
+  },
+  {
+    path: '/:slug',
+    name: 'page',
+    component: createView( 'Page' )
   }
 ]
 
