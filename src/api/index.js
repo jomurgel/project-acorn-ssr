@@ -5,6 +5,41 @@ import createRouter from '../router'
 const router = createRouter()
 
 /**
+ * Return updated filtered data from response.
+ * Remove unecessary/unused content.
+ *
+ * @param {array} response response.data
+ */
+export function filterPostData( response ) {
+
+  // Bail if we don't have any content.
+  if ( response.data.length === 0 ) {
+    return
+  }
+
+  const totalPostCount = response.headers['x-wp-total']
+
+  // Set placeholder array & Remove unecessary data from object.
+  return response.data.map( ( post ) => {
+    const filtered = {
+      pullDate: ( new Date() ).getTime(),
+      content: post.content.rendered,
+      excerpt: post.excerpt.rendered,
+      featuredImage: post.featured_image,
+      id: post.id,
+      modifiedDate: post.modified,
+      slug: post.slug,
+      title: post.title.rendered,
+      totalPosts: totalPostCount,
+      type: post.type
+    }
+
+    // Return new array object.
+    return filtered
+  })
+}
+
+/**
  * Return promise from post data.
  * Works with posts (all) and individual pages or posts.
  *
