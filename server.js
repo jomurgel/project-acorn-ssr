@@ -100,7 +100,7 @@ function render( req, res, context ) {
   // Do the errors. DO IT!
   const handleError = err => {
 
-    res.status( 500 ).end( '500 | Internal Server Error' )
+    res.redirect( '/404' ).status( 404 )
 
     console.error( `Fatal error when rendering : ${req.url}` )
     console.error( `error during render : ${req.url}` )
