@@ -3,12 +3,12 @@
  *
  * @export variable modifier
  */
-const baseLocation = 'wp/v2/'
+const baseURL = 'wp/v2/'
 
 export const modifier = {
-  base: '/' + baseLocation,
-  category: baseLocation + 'categories',
+  base: '/' + baseURL,
+  category: baseURL + 'categories',
   menus: 'wp-api-menus/v2/menus',
-  page: baseLocation + 'pages',
-  post: baseLocation + 'posts'
+  page: baseURL + 'pages',
+  post: baseURL + 'posts'
 }
