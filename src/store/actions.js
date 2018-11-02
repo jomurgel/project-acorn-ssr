@@ -1,6 +1,8 @@
 import { modifier } from '../api/location'
-import { makePostRequest, makeSimpleRequest } from '../api/index'
+import { makeSimpleRequest, filterPostData } from '../api/index'
 import * as utility from '../utilities'
+
+import { HTTP } from '../api/baseurl'
 
 // Check if we're in dev mode.
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -23,24 +25,32 @@ export default {
       ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // Only get data if we don't already have it.
-      return makePostRequest( url + '?slug=' + slug ).then( response => {
+      return new Promise( ( resolve, reject ) => {
 
-        // Assume we have a response.
-        if ( response.length === 0 ) {
+        HTTP.get( `${url}?slug=${slug}` ).then( ( response ) => {
 
-          // Reset active post.
-          commit( 'SET_ACTIVE_POST', '' )
-        } else {
+          if ( response.length === 0 ) {
 
-          // Get object in array.
-          const post = response[0]
+            // Reset active post.
+            commit( 'SET_ACTIVE_POST', '' )
+          }
 
-          // Always set active post regardless of whether or not we request.
-          commit( 'SET_ACTIVE_POST', post.id )
+          if ( response.status === 200 && response.data.length > 0 ) {
 
-          // Set post object to store. Getter handles all else.
-          commit( 'SET_POST', { post })
-        }
+            // Get object in array.
+            const post = filterPostData( response )[0]
+
+            // Always set active post regardless of whether or not we request.
+            commit( 'SET_ACTIVE_POST', post.id )
+
+            // Set post object to store. Getter handles all else.
+            commit( 'SET_POST', { post })
+
+            resolve( post )
+          } else {
+            reject( response )
+          }
+        })
       })
     }
     // Always set active post regardless of whether or not we request.
@@ -68,24 +78,32 @@ export default {
       ( hasPost.length > 0 && ( ( new Date() ).getTime() - state.posts[hasPost[0]].pullDate >= 24 * 60 * 60 * 1000 || isDevelopment ) ) ) {
 
       // Only get data if we don't already have it.
-      return makePostRequest( url + '?slug=' + slug ).then( response => {
+      return new Promise( ( resolve, reject ) => {
 
-        // Assume we have a response.
-        if ( response.length === 0 ) {
+        HTTP.get( `${url}?slug=${slug}` ).then( ( response ) => {
 
-          // Reset active post.
-          commit( 'SET_ACTIVE_POST', '' )
-        } else {
+          if ( response.length === 0 ) {
 
-          // Get object in array.
-          const post = response[0]
+            // Reset active post.
+            commit( 'SET_ACTIVE_POST', '' )
+          }
 
-          // Always set active post regardless of whether or not we request.
-          commit( 'SET_ACTIVE_POST', post.id )
+          if ( response.status === 200 && response.data.length > 0 ) {
 
-          // Set post object to store. Getter handles all else.
-          commit( 'SET_POST', { post })
-        }
+            // Get object in array.
+            const post = filterPostData( response )[0]
+
+            // Always set active post regardless of whether or not we request.
+            commit( 'SET_ACTIVE_POST', post.id )
+
+            // Set post object to store. Getter handles all else.
+            commit( 'SET_POST', { post })
+
+            resolve( post )
+          } else {
+            reject( response )
+          }
+        })
       })
     }
     // Always set active post regardless of whether or not we request.
@@ -93,6 +111,9 @@ export default {
   },
   // Handle Posts (bulk) Requests.
   getPosts: ({ commit, state }, payload ) => {
+
+    // Generate url from location.
+    const url = modifier.post
 
     // From payload.
     const type  = payload.type
@@ -118,29 +139,36 @@ export default {
     if ( utility.objectSize( state.archives[type].posts[( count - 1 )] ) === 0 || isDevelopment ) {
 
       // Only get data if we don't already have it.
-      return makePostRequest( modifier.post + '/?per_page=' + perPage + categories + '&page=' + count ).then( response => {
+      return new Promise( ( resolve, reject ) => {
 
-        // Response.
-        const posts = response
+        HTTP.get( `${url}/?per_page=${perPage}${categories}&page=${count}` ).then( ( response ) => {
 
-        if ( posts.length !== 0 ) {
+          if ( response.status === 200 && response.data.length > 0 ) {
 
-          const postCount = parseInt( posts[0].totalPosts )
+            // Response.
+            const posts = filterPostData( response )
 
-          // Return post ids to server to archive object.
-          const ids = posts.map( ( post ) => {
-            return post.id
-          })
+            const postCount = parseInt( posts[0].totalPosts )
 
-          // Set ids by type.
-          commit( 'SET_ARCHIVE', { type, ids, count })
+            // Return post ids to server to archive object.
+            const ids = posts.map( ( post ) => {
+              return post.id
+            })
 
-          // Set total number of posts.
-          commit( 'SET_POST_COUNT', { type, postCount })
+            // Set ids by type.
+            commit( 'SET_ARCHIVE', { type, ids, count })
 
-          // Set post data and page location.
-          commit( 'SET_POSTS', { posts })
-        }
+            // Set total number of posts.
+            commit( 'SET_POST_COUNT', { type, postCount })
+
+            // Set post data and page location.
+            commit( 'SET_POSTS', { posts })
+
+            resolve( posts )
+          } else {
+            reject( response )
+          }
+        })
       })
     }
 
@@ -164,13 +192,23 @@ export default {
         const postIds = validPostCheck.join( '&' )
 
         // Only get data if we don't already have it.
-        return makePostRequest( modifier.post + '?' + postIds ).then( response => {
+        return new Promise( ( resolve, reject ) => {
 
-          // Get object in array.
-          const posts = response
+          HTTP.get( `${url}?${postIds}` ).then( ( response ) => {
 
-          // Set post data and page location.
-          commit( 'SET_POSTS', { posts })
+            if ( response.status === 200 && response.data.length > 0 ) {
+
+              // Get object in array.
+              const posts = filterPostData( response )
+
+              // Set post data and page location.
+              commit( 'SET_POSTS', { posts })
+
+              resolve( posts )
+            } else {
+              reject( response )
+            }
+          })
         })
       }
     }
@@ -193,6 +231,28 @@ export default {
         // Set menu array.
         commit( 'SET_MENUS', response )
       })
+
+      // // No fallback needed, fires only once on app init.
+      // return new Promise( ( resolve, reject ) => {
+
+      //   HTTP.get( `${modifier.menus}` ).then( response => {
+
+      //     console.log( response )
+
+      //     if ( response.status === 200 && response.data.length > 0 ) {
+
+      //       // Set date of that pull.
+      //       commit( 'SET_MENU_PULL_DATE', ( new Date() ).getTime() )
+
+      //       // Set menu array.
+      //       commit( 'SET_MENUS', response )
+
+      //       resolve( response )
+      //     } else {
+      //       reject( response )
+      //     }
+      //   })
+      // })
     }
   },
   // Get Categories.
