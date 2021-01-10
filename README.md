@@ -6,7 +6,9 @@
 	<img src="https://img.shields.io/badge/version-1.0.5-green.svg" alt="Version 1.0.5" />
 </p>
 
-I still find value in keeping this project around, but also don't have any plans to update or continue to maintain is. The [demo](https://node.jomurgel.com/) will remain online until the package is archived.
+NOTE: I still find value in keeping this project around, but also don't have any plans to update or continue to maintain is. The [demo](https://node.jomurgel.com/) will remain online until the package is archived.
+
+---
 
 This is a simple-ish [Vue.js](https://vuejs.org/) SPA and PWA built around the WordPress REST API utilizing [vue-router](https://router.vuejs.org/en/), [vuex](https://vuex.vuejs.org/en/intro.html), and [axios](https://github.com/axios/axios), intended to be used in conjunction with the [Project Acorn Theme](https://github.com/jomurgel/project-acorn), but can also be used independantly as a SPA with some modification.
 
